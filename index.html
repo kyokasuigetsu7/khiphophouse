@@ -11,10 +11,10 @@
 :root{--black:#080808;--s1:#0f0e14;--s2:#171622;--s3:#201e2e;--b1:rgba(180,160,255,.07);--b2:rgba(180,160,255,.16);--t1:#ede8f5;--t2:rgba(237,232,245,.55);--t3:rgba(237,232,245,.3);--red:#8b5cf6;--red2:#6d36e0;--mono:'Space Mono',monospace;--body:'DM Sans',sans-serif;--lila:#8b5cf6;--lila2:#6d36e0}
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;min-height:100vh;background:var(--black);color:var(--t1);font-family:var(--body)}
-body{display:flex;flex-direction:row;align-items:stretch;min-height:100vh}
+body{display:flex;flex-direction:row;align-items:stretch;min-height:100vh}@media(max-width:700px){body{flex-direction:column}}
 
 /* TWO-PANEL FLEX LAYOUT */
-#sb{width:310px;min-width:310px;max-width:310px;min-height:100vh;background:var(--s1);border-right:1px solid var(--b1);display:flex;flex-direction:column;flex-shrink:0;z-index:2}
+#sb{width:310px;min-width:310px;max-width:310px;min-height:100vh;background:var(--s1);border-right:1px solid var(--b1);display:flex;flex-direction:column;flex-shrink:0;z-index:2}@media(max-width:700px){#sb{width:100%;max-width:100%;min-height:unset;border-right:none;border-bottom:1px solid var(--b1)}}
 #sbh{padding:18px 18px 0;flex-shrink:0}
 .brand{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px}.brand span{color:var(--lila,#8b5cf6)}
 .tabs{display:flex;margin-top:14px;border-bottom:1px solid var(--b1)}
@@ -22,7 +22,7 @@ body{display:flex;flex-direction:row;align-items:stretch;min-height:100vh}
 .tab:hover{color:var(--t2)}.tab.on{color:var(--t1);border-bottom-color:var(--red)}
 #ctrl{flex:1;overflow-y:auto;padding:14px 18px 24px}
 #ctrl::-webkit-scrollbar{width:3px}#ctrl::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
-#prev{flex:1;min-height:100vh;background:#050505;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:12px;overflow-y:auto;overflow-x:hidden;min-width:0}
+#prev{flex:1;min-height:100vh;background:#050505;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:12px;overflow-y:auto;overflow-x:hidden;min-width:0}@media(max-width:700px){#prev{min-height:unset;padding:20px 12px 40px;width:100%;box-sizing:border-box}}
 
 
 
@@ -86,7 +86,7 @@ input[type=file]{display:none}
 .plbl{font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--t3);text-transform:uppercase}
 
 /* ══ FLYER BASE ══ */
-.flyer{width:405px;height:506px;position:relative;overflow:hidden;flex-shrink:0;background:#080808;font-family:'Helvetica Neue',Arial,sans-serif;box-shadow:0 24px 64px rgba(0,0,0,.8)}
+.flyer{width:405px;height:506px;position:relative;overflow:hidden;flex-shrink:0;background:#080808;font-family:'Helvetica Neue',Arial,sans-serif;box-shadow:0 24px 64px rgba(0,0,0,.8)}@media(max-width:480px){.flyer,#mv-flyer,#mr-flyer{transform:scale(0.82);transform-origin:top center;margin-bottom:-50px}}
 .fbg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:1}
 .fov{position:absolute;inset:0;z-index:2;background:rgba(8,8,8,.72)}
 .ftop{position:absolute;top:0;left:0;right:0;height:4px;z-index:8;background:var(--red)}
@@ -508,7 +508,7 @@ Puede ser en varios idiomas
       <button class="dlbtn" id="r-dl" onclick="doDownload('release-flyer','r-dl','r-st','khiphophouse_release')">↓ Descargar</button>
       <div id="r-mv-export" style="display:none;margin-top:6px">
         <div style="font-size:9px;color:var(--t3);font-family:var(--mono);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px">Export video</div>
-        <div style="font-size:10px;color:var(--t3);font-family:var(--mono);margin-bottom:8px" id="r-mv-dur-info">Duración: según el video cargado</div>
+        <div style="font-size:10px;color:var(--t3);font-family:var(--mono);margin-bottom:8px;line-height:1.4" id="r-mv-dur-info">Duración: según el video cargado</div>
         <button class="dlbtn" id="r-mp4-dl" onclick="doExportMP4()" style="background:#3b1f6b">↓ Descargar</button>
         <div class="dlst" id="r-mp4-st"></div>
       </div>
@@ -1616,7 +1616,11 @@ async function doDownload(flyerId, dlBtnId, stId, filename) {
       document.body.removeChild(a); URL.revokeObjectURL(url);
       btn.disabled = false;
       btn.textContent = '↓ Descargar';
-      if(st){ st.textContent = '✓ Descargado'; setTimeout(function(){ st.textContent=''; }, 3000); }
+      if(st){
+        var msg = isMP4 ? '✓ Descargado como .MP4' : '✓ Descargado como .WEBM — en iPhone: importá en Fotos o convertí en cloudconvert.com';
+        st.textContent = msg;
+        setTimeout(function(){ st.textContent=''; }, isMP4 ? 3000 : 8000);
+      }
     }, 'image/png');
 
   } catch(err) {
@@ -1684,10 +1688,13 @@ async function doExportMP4() {
 
     /* ── Codec selection ── */
     var mimeType = '';
+    /* Try MP4/H264 first (Chrome 108+), then WebM fallback */
     var candidates = [
+      'video/mp4;codecs=avc1.42E01E,mp4a.40.2',
+      'video/mp4;codecs=avc1',
+      'video/mp4',
       'video/webm;codecs=vp9,opus',
       'video/webm;codecs=vp8,opus',
-      'video/webm;codecs=h264,opus',
       'video/webm'
     ];
     for(var ci = 0; ci < candidates.length; ci++){
@@ -1701,7 +1708,8 @@ async function doExportMP4() {
     recorder.ondataavailable = function(e){ if(e.data && e.data.size > 0) chunks.push(e.data); };
 
     var title  = (V('rt') || 'track').replace(/[^a-z0-9]/gi,'_').toLowerCase();
-    var ext    = mimeType.includes('mp4') ? 'mp4' : 'webm';
+    var isMP4  = mimeType.startsWith('video/mp4');
+    var ext    = isMP4 ? 'mp4' : 'webm';
 
     recorder.onstop = function(){
       var blob   = new Blob(chunks, { type: mimeType || 'video/webm' });
