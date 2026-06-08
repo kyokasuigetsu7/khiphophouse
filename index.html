@@ -1324,7 +1324,7 @@ function setNL(l,el){
   var encg=G('n-en-cg');if(encg)encg.style.display=l==='e'?'none':'block';
   var ntcg=G('n-text-cg');if(ntcg)ntcg.style.display=l==='e'?'none':'block';
   var nscg=G('n-style-cg');if(nscg)nscg.style.display=l==='e'?'none':'block';
-  var nacg=G('n-accent-cg');if(nacg)nacg.style.display=l==='e'?'none':'block';
+  var nacg=G('n-accent-cg');if(nacg)nacg.style.display='block';
   /* update download button target */
   var ndl=G('n-dl');if(ndl)ndl.onclick=isInfo?function(){doDownload('n-info-flyer','n-dl','n-st','khiphophouse_info');}:function(){doDownload('news-flyer','n-dl','n-st','khiphophouse_news');};
   un();
