@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>khiphophouse — Staff Kit</title>
+<title>khiphophouse — STAFF KIT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Bebas+Neue&family=Archivo+Black&family=Syne:wght@700;800&family=UnifrakturMaguntia&family=Dancing+Script:wght@600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Cinzel+Decorative:wght@400;700;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
 
@@ -76,6 +76,14 @@ input[type=file]{display:none}
 .capbox{background:var(--s2);border:1px solid var(--b1);border-radius:4px;padding:10px;margin-top:4px}
 .caplbl{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--t3);text-transform:uppercase;margin-bottom:5px}
 .captext{font-size:11px;color:var(--t1);line-height:1.6}
+
+
+
+/* ── Hashtag Box / Copy Button ──────────────────────────────────── */
+.cap-copy-btn{position:absolute;top:10px;right:10px;background:var(--s3);border:1px solid var(--b2);border-radius:3px;color:var(--t2);font-family:var(--mono);font-size:8px;letter-spacing:1px;padding:3px 7px;cursor:pointer;text-transform:uppercase}
+.cap-copy-btn:hover{color:var(--t1)}
+.hash-box{background:var(--s2);border:1px solid var(--b1);border-radius:6px;padding:11px 12px;margin-top:4px;position:relative}
+.hash-box .cap-text{font-size:11px;color:var(--lila);line-height:1.7;word-break:break-word;white-space:pre-wrap;user-select:text;-webkit-user-select:text;cursor:text;min-height:24px}
 
 /* layout toggle (design variants) */
 .lgrid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
@@ -417,6 +425,12 @@ Puede ser en varios idiomas
       </div>
       <button class="dlbtn" id="n-dl" onclick="doDownload('news-flyer','n-dl','n-st','khiphophouse_news')">↓ Descargar</button>
       <div class="dlst" id="n-st"></div>
+      <!-- Hashtags sugeridos -->
+      <div class="hash-box" style="margin-top:6px">
+        <div class="cgt">Hashtags sugeridos</div>
+        <div class="cap-text" id="n-hashtags">—</div>
+        <button class="cap-copy-btn" onclick="copyCaption('n-hashtags',this)">Copiar</button>
+      </div>
     </div>
 
     <!-- ══ RELEASE ══ -->
@@ -516,6 +530,12 @@ Puede ser en varios idiomas
         <div class="dlst" id="r-mp4-st"></div>
       </div>
       <div class="dlst" id="r-st"></div>
+      <!-- Hashtags sugeridos -->
+      <div class="hash-box" style="margin-top:10px">
+        <div class="cgt">Hashtags sugeridos</div>
+        <div class="cap-text" id="r-hashtags">—</div>
+        <button class="cap-copy-btn" onclick="copyCaption('r-hashtags',this)">Copiar</button>
+      </div>
     </div>
 
     <!-- ══ MULTI RELEASE ══ -->
@@ -564,6 +584,12 @@ Puede ser en varios idiomas
       </div>
       <button class="dlbtn" id="mr-dl" onclick="doDownload('mr-flyer','mr-dl','mr-st','khiphophouse_multi_release')">↓ Descargar</button>
       <div class="dlst" id="mr-st"></div>
+      <!-- Hashtags sugeridos -->
+      <div class="hash-box" style="margin-top:10px">
+        <div class="cgt">Hashtags sugeridos</div>
+        <div class="cap-text" id="mr-hashtags">—</div>
+        <button class="cap-copy-btn" onclick="copyCaption('mr-hashtags',this)">Copiar</button>
+      </div>
     </div>
 
     <!-- ══ BIRTHDAY ══ -->
@@ -620,6 +646,12 @@ Puede ser en varios idiomas
       </div>
       <button class="dlbtn" id="bd-dl" onclick="doDownload('bd-flyer','bd-dl','bd-st','khiphophouse_birthday')">↓ Descargar</button>
       <div class="dlst" id="bd-st"></div>
+      <!-- Hashtags sugeridos -->
+      <div class="hash-box" style="margin-top:10px">
+        <div class="cgt">Hashtags sugeridos</div>
+        <div class="cap-text" id="bd-hashtags">—</div>
+        <button class="cap-copy-btn" onclick="copyCaption('bd-hashtags',this)">Copiar</button>
+      </div>
     </div>
 
   </div><!-- /ctrl -->
@@ -925,6 +957,12 @@ switchTab = function(n, btn){
   setTimeout(scalePreview, 50);
 };
 
+
+/* ═══════════════════════════════════════════════════════════════
+   CAPTION & HASHTAG ENGINE
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Copy to clipboard ─────────────────────────────────────────── */
 </script>
 <script>
 var G=function(id){return document.getElementById(id)},V=function(id){var e=G(id);return e?e.value:''};
@@ -1324,7 +1362,7 @@ function setNL(l,el){
   var encg=G('n-en-cg');if(encg)encg.style.display=l==='e'?'none':'block';
   var ntcg=G('n-text-cg');if(ntcg)ntcg.style.display=l==='e'?'none':'block';
   var nscg=G('n-style-cg');if(nscg)nscg.style.display=l==='e'?'none':'block';
-  var nacg=G('n-accent-cg');if(nacg)nacg.style.display='block';
+  var nacg=G('n-accent-cg');if(nacg)nacg.style.display='block'; /* always show accent color */
   /* update download button target */
   var ndl=G('n-dl');if(ndl)ndl.onclick=isInfo?function(){doDownload('n-info-flyer','n-dl','n-st','khiphophouse_info');}:function(){doDownload('news-flyer','n-dl','n-st','khiphophouse_news');};
   un();
@@ -1911,6 +1949,95 @@ setTimeout(function(){
   var btn2x = document.querySelectorAll('.dlscale-btn')[1];
   if(btn2x) setDLScale(2, btn2x);
 }, 100);
+
+
+function buildHashtags(section){
+  var tags = [];
+  /* Fixed base tags always included — max 5 total */
+  var base2 = ['#힙합','#khiphophouse'];  /* always last 2 */
+  if(section === 'news'){
+    var art  = (V('n-art')||'').trim();
+    var head = (V('n-head')||'').trim();
+    var cat  = (V('n-cat')||'').trim();
+    /* up to 3 dynamic tags before the 2 fixed */
+    if(art && art !== 'INFO') tags.push('#' + slugify(art));
+    if(head && head !== 'Titular de la noticia'){
+      var fw = head.split(/\s+/)[0]; if(fw.length > 2) tags.push('#' + slugify(fw));
+    }
+    if(cat && cat !== 'NEWS' && tags.length < 3) tags.push('#' + slugify(cat));
+    tags = tags.slice(0,3).concat(base2);
+  } else if(section === 'release'){
+    var rart = (V('ra')||'').trim();
+    var rtit = (V('rt')||'').trim();
+    if(rart && rart !== 'Nombre Artista') tags.push('#' + slugify(rart));
+    if(rtit && rtit !== 'NOMBRE DEL TRACK') tags.push('#' + slugify(rtit));
+    if(tags.length < 3) tags.push('#NewMusic');
+    tags = tags.slice(0,3).concat(base2);
+  } else if(section === 'multi'){
+    var mart = (document.querySelector('.mr-art-input')||{}).value || '';
+    if(mart && mart.trim()) tags.push('#' + slugify(mart.trim()));
+    tags.push('#NewMusic');
+    tags = tags.slice(0,3).concat(base2);
+  } else if(section === 'birthday'){
+    var bdart = (V('bd-name')||'').trim();
+    if(bdart && bdart !== 'Artista') tags.push('#' + slugify(bdart));
+    tags.push('#HappyBirthday');
+    tags = tags.slice(0,3).concat(base2);
+  }
+  return tags.join(' ');
+}
+
+
+
+/* ── Update hashtag boxes ───────────────────────────────────────── */
+function copyCaption(id, btn){
+  var el=G(id);
+  if(!el) return;
+  var txt=(el.textContent||el.innerText||'').trim();
+  if(!txt||txt==='—') return;
+  function flash(){if(btn){var o=btn.textContent;btn.textContent='✓';setTimeout(function(){btn.textContent=o;},1500);}}
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(flash).catch(function(){fallbackCopy(txt,flash);});
+  } else { fallbackCopy(txt,flash); }
+}
+function fallbackCopy(txt,cb){
+  var ta=document.createElement('textarea');
+  ta.value=txt;ta.style.cssText='position:fixed;left:-9999px;top:0;opacity:0';
+  document.body.appendChild(ta);ta.focus();ta.select();
+  try{document.execCommand('copy');if(cb)cb();}catch(e){}
+  document.body.removeChild(ta);
+}
+
+function updateAllHashtags(){
+  var nh = G('n-hashtags');  if(nh) nh.textContent = buildHashtags('news');
+  var rh = G('r-hashtags');  if(rh) rh.textContent = buildHashtags('release');
+  var mh = G('mr-hashtags'); if(mh) mh.textContent = buildHashtags('multi');
+  var bh = G('bd-hashtags'); if(bh) bh.textContent = buildHashtags('birthday');
+}
+
+/* ── Hook into existing update functions ────────────────────────── */
+/* Wrap un() to also trigger caption + hashtags */
+var _origUn = un;
+un = function(){
+  _origUn();
+  updateAllHashtags();
+};
+
+/* Also wrap ur(), ubd() for hashtags on other sections */
+var _origUr = ur;
+ur = function(){
+  _origUr();
+  updateAllHashtags();
+};
+var _origUbd = ubd;
+ubd = function(){
+  _origUbd();
+  updateAllHashtags();
+};
+
+/* Init on load */
+setTimeout(function(){
+  updateAllHashtags();
+}, 800);
+
 </script>
-</body>
-</html>
