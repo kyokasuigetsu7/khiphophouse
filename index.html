@@ -1070,7 +1070,7 @@ function getMRCoverH(itemH,trackCount){
 function buildMR(){
   var n=parseInt(V('mr-count'))||6;
   MR_COUNT=n;
-  while(MR_DATA.length<n) MR_DATA.push({artist:'',badge:'SINGLE',tracks:[],coverSrc:null});
+  while(MR_DATA.length<n) MR_DATA.push({artist:'',relname:'',badge:'SINGLE',tracks:[],coverSrc:null});
   var ctrl=G('mr-items-ctrl'); ctrl.innerHTML='';
   for(var i=0;i<n;i++){
     (function(idx){
@@ -1086,10 +1086,11 @@ function buildMR(){
           '<input type="file" id="mrup-'+idx+'" accept="image/*" onchange="loadMRCover('+idx+',this)">'+
         '</div>'+
         '<input class="fi" id="mra-'+idx+'" placeholder="Artista" value="'+escHtml(d.artist)+'" oninput="updateMRItem('+idx+')">'+
+        '<input class="fi" id="mrn-'+idx+'" placeholder="Nombre del release (ej: Solo, Amanecer...)" value="'+escHtml(d.relname||'')+'" oninput="updateMRItem('+idx+')">'+
         '<select class="fsel fi" id="mrb-'+idx+'" onchange="updateMRItem('+idx+')">'+
           ['SINGLE','ALBUM','EP','LP','MV','COLLAB'].map(function(o){return'<option'+(d.badge===o?' selected':'')+'>'+o+'</option>'}).join('')+
         '</select>'+
-        '<textarea class="fi" id="mrt-'+idx+'" rows="3" placeholder="Tracks (una por línea, hasta 9)" oninput="updateMRItem('+idx+')">'+escHtml((d.tracks||[]).join('\n'))+'</textarea>';
+        '<textarea class="fi" id="mrt-'+idx+'" rows="3" placeholder="Tracks (una por línea, hasta 9. Si es single dejar vacío)" oninput="updateMRItem('+idx+')">'+escHtml((d.tracks||[]).join('\n'))+'</textarea>';
       ctrl.appendChild(form);
       if(d.coverSrc){
         var timg=document.getElementById('mrthumb-img-'+idx);
@@ -1119,6 +1120,7 @@ function loadMRCover(idx,inp){
 function updateMRItem(idx){
   var d=MR_DATA[idx];
   d.artist=V('mra-'+idx);
+  d.relname=V('mrn-'+idx)||'';
   d.badge=V('mrb-'+idx);
   var raw=V('mrt-'+idx);
   d.tracks=raw.split('\n').map(function(t){return t.trim();}).filter(function(t){return t;});
@@ -1205,9 +1207,16 @@ function renderMRFlyer(){
     var artist=document.createElement('div');
     artist.className='mr-item-artist';
     artist.style.fontSize=aArt+'px';
-    artist.style.marginBottom='2px';
+    artist.style.marginBottom='1px';
     artist.textContent=d.artist||'Artista';
     body.appendChild(artist);
+
+    if(d.relname){
+      var rn=document.createElement('div');
+      rn.style.cssText='font-size:'+(aArt-2)+'px;color:rgba(240,237,232,.55);font-family:var(--mono);letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;line-height:1.2';
+      rn.textContent=d.relname;
+      body.appendChild(rn);
+    }
 
     if(trackCount>0){
       var tl=document.createElement('div'); tl.className='mr-item-tracks';
