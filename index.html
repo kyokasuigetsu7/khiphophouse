@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>khiphophouse — STAFF KIT</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Bebas+Neue&family=Archivo+Black&family=Syne:wght@700;800&family=UnifrakturMaguntia&family=Dancing+Script:wght@600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Cinzel+Decorative:wght@400;700;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Bebas+Neue&family=Archivo+Black&family=Syne:wght@700;800&family=UnifrakturMaguntia&family=Dancing+Script:wght@600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Cinzel+Decorative:wght@400;700;900&family=Quicksand:wght@500;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
 
 <style>
 :root{--black:#080808;--s1:#0f0e14;--s2:#171622;--s3:#201e2e;--b1:rgba(180,160,255,.07);--b2:rgba(180,160,255,.16);--t1:#ede8f5;--t2:rgba(237,232,245,.55);--t3:rgba(237,232,245,.3);--red:#8b5cf6;--red2:#6d36e0;--mono:'Space Mono',monospace;--body:'DM Sans',sans-serif;--lila:#8b5cf6;--lila2:#6d36e0}
@@ -82,7 +82,6 @@ input[type=file]{display:none}
 /* ── Hashtag Box / Copy Button ──────────────────────────────────── */
 .cap-copy-btn{position:absolute;top:10px;right:10px;background:var(--s3);border:1px solid var(--b2);border-radius:3px;color:var(--t2);font-family:var(--mono);font-size:8px;letter-spacing:1px;padding:3px 7px;cursor:pointer;text-transform:uppercase}
 .cap-copy-btn:hover{color:var(--t1)}
-.hash-box{background:var(--s2);border:1px solid var(--b1);border-radius:6px;padding:11px 12px;margin-top:4px;position:relative}
 .hash-box .cap-text{font-size:11px;color:var(--lila);line-height:1.7;word-break:break-word;white-space:pre-wrap;user-select:text;-webkit-user-select:text;cursor:text;min-height:24px}
 
 /* layout toggle (design variants) */
@@ -314,6 +313,20 @@ input[type=file]{display:none}
 .dlscale-btn.on{border-color:var(--red);color:var(--t1);background:var(--s3)}
 .dlscale-lbl{font-size:9px;color:var(--t3);font-family:var(--mono);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
 
+
+/* ── Hashtag Box ────────────────────────────────────────────────── */
+.hash-box{background:var(--s2);border:1px solid var(--b1);border-radius:6px;padding:11px 12px 28px;margin-top:4px;position:relative}
+.hash-box .cap-text{font-size:11px;color:var(--lila);line-height:1.7;word-break:break-word;white-space:pre-wrap;user-select:text;-webkit-user-select:text;cursor:text;min-height:24px}
+/* ── Copy Button ────────────────────────────────────────────────── */
+.cap-copy-btn{position:absolute;top:10px;right:10px;background:var(--s3);border:1px solid var(--b2);border-radius:3px;color:var(--t2);font-family:var(--mono);font-size:8px;letter-spacing:1px;padding:3px 7px;cursor:pointer;text-transform:uppercase}
+.cap-copy-btn:hover{color:var(--t1)}
+/* ── Rich text toolbar ──────────────────────────────────────────── */
+.rtbar{display:flex;flex-wrap:wrap;gap:3px;margin-bottom:6px;align-items:center}
+.rtbtn{background:var(--s3);border:1px solid var(--b2);border-radius:3px;color:var(--t2);font-family:var(--mono);font-size:10px;padding:3px 8px;cursor:pointer;min-width:28px;text-align:center;user-select:none}
+.rtbtn:hover{color:var(--t1);background:var(--s2)}.rtbtn.on{background:var(--lila);color:#fff;border-color:var(--lila)}
+.rtsel{background:var(--s3);border:1px solid var(--b2);border-radius:3px;color:var(--t2);font-size:10px;padding:2px 4px;cursor:pointer;font-family:var(--mono)}
+.rtsep{width:1px;height:18px;background:var(--b2);margin:0 2px}
+
 </style>
 </head>
 <body>
@@ -359,9 +372,16 @@ input[type=file]{display:none}
             <div class="dlscale-btn" id="nal-r" onclick="setNAlign('right',this)">Der</div>
             <div class="dlscale-btn" id="nal-j" onclick="setNAlign('justify',this)">Just</div>
           </div>
-          <textarea class="fi" id="n-free-text" rows="5" placeholder="Texto libre para el flyer..." oninput="un()" style="font-size:11px;line-height:1.5">Texto del post
-Texto del post
-Texto del post</textarea>
+                    <div class="rtbar">
+            <button class="rtbtn" onclick="rtCmd('bold')"><b>B</b></button>
+            <button class="rtbtn" onclick="rtCmd('italic')"><i>I</i></button>
+            <button class="rtbtn" onclick="rtCmd('underline')"><u>U</u></button>
+            <div class="rtsep"></div>
+            <select class="rtsel" onchange="rtSize(this.value)"><option value="">Tam</option><option value="11">11</option><option value="13">13</option><option value="15" selected>15</option><option value="18">18</option><option value="22">22</option><option value="26">26</option><option value="32">32</option><option value="40">40</option></select>
+            <div class="rtsep"></div>
+            <select class="rtsel" onchange="rtFont(this.value)"><option value="'DM Sans',sans-serif">DM Sans</option><option value="'Syne',sans-serif">Syne</option><option value="'Bebas Neue',sans-serif">Bebas</option><option value="'Playfair Display',serif">Playfair</option><option value="'Dancing Script',cursive">Dancing</option><option value="'IM Fell English',serif">IM Fell</option><option value="'Space Mono',monospace">Mono</option></select>
+          </div>
+          <div class="fi" id="n-free-text" contenteditable="true" spellcheck="false" style="font-size:11px;line-height:1.65;min-height:70px;cursor:text;white-space:pre-wrap;overflow-y:auto" oninput="un()">Texto del post</div>
         </div>
       </div>
 
@@ -384,6 +404,7 @@ Texto del post</textarea>
             <div class="fopt" onclick="setNF('bebas',this)"><span class="fp" style="font-family:'Bebas Neue';font-size:19px;letter-spacing:2px">BEBAS</span><span class="fn">Display</span></div>
             <div class="fopt" onclick="setNF('fraktur',this)"><span class="fp" style="font-family:'UnifrakturMaguntia';font-size:17px">Fraktur</span><span class="fn">Victoriana</span></div>
             <div class="fopt" onclick="setNF('playfair',this)"><span class="fp" style="font-family:'Playfair Display';font-weight:900;font-size:15px;font-style:italic">Playfair</span><span class="fn">Elegante</span></div>
+            <div class="fopt" onclick="setNF('imfell',this)"><span class="fp" style="font-family:'IM Fell English';font-size:14px;font-style:italic">IM Fell</span><span class="fn">Clasica</span></div>
             <div class="fopt fopt-wide" onclick="setNF('dancing',this)"><span class="fp" style="font-family:'Dancing Script';font-weight:700;font-size:16px">Dancing Script</span><span class="fn">Cursiva</span></div>
             <div class="fopt" onclick="setNF('cinzel',this)"><span class="fp" style="font-family:'Cinzel Decorative';font-weight:700;font-size:13px">Cinzel</span><span class="fn">Gótico</span></div>
             <div class="fopt" onclick="setNF('quicksand',this)"><span class="fp" style="font-family:'Quicksand';font-weight:700;font-size:16px">Quicksand</span><span class="fn">Cute</span></div>
@@ -394,7 +415,7 @@ Texto del post</textarea>
       <div class="cg"><div class="cgt">Imagen</div>
         <label class="upl" for="n-bg-up" id="n-bg-lbl">+ Subir imagen de fondo</label>
         <input type="file" id="n-bg-up" accept="image/*" onchange="loadNBg(this)">
-        <div class="ovrow"><label>Overlay</label><input type="range" id="n-ov" min="20" max="95" value="62" oninput="setOv('n',this.value)"><span id="n-ov-v">62%</span></div>
+        <div class="ovrow"><label>Overlay</label><input type="range" id="n-ov" min="0" max="100" value="100" oninput="setOv('n',this.value)"><span id="n-ov-v">62%</span></div>
         <div id="n-img-slot" style="display:none;margin-top:6px">
           <label class="upl" for="n-img-up" id="n-img-lbl">+ Subir foto del artista (diseño Split)</label>
           <input type="file" id="n-img-up" accept="image/*" onchange="loadNImg(this)">
@@ -405,13 +426,13 @@ Texto del post</textarea>
       <div id="n-accent-cg">
         <div class="cg"><div class="cgt">Color acento</div>
           <div class="acdots" id="n-acd">
-            <div class="acd on" style="background:#c0392b" data-c="#c0392b" onclick="setAc('n',this)"></div>
+            <div class="acd" style="background:#c0392b" data-c="#c0392b" onclick="setAc('n',this)"></div>
             <div class="acd" style="background:#7b3fa0" data-c="#7b3fa0" onclick="setAc('n',this)"></div>
             <div class="acd" style="background:#2d6647" data-c="#2d6647" onclick="setAc('n',this)"></div>
             <div class="acd" style="background:#1a5276" data-c="#1a5276" onclick="setAc('n',this)"></div>
             <div class="acd" style="background:#c8a84b" data-c="#c8a84b" onclick="setAc('n',this)"></div>
             <div class="acd" style="background:#888" data-c="#888" onclick="setAc('n',this)"></div>
-            <div class="acd" style="background:#7b1010" data-c="#7b1010" onclick="setAc('n',this)" title="Rojo sangre"></div>
+            <div class="acd on" style="background:#7b1010" data-c="#7b1010" onclick="setAc('n',this)" title="Rojo sangre"></div>
             <div class="acd" style="background:#e8a0b0" data-c="#e8a0b0" onclick="setAc('n',this)" title="Rosa pastel"></div>
           </div>
         </div>
@@ -502,17 +523,17 @@ Texto del post</textarea>
       <div class="cg"><div class="cgt">Fondo (opcional)</div>
         <label class="upl" for="r-bu" id="r-bu-lbl">+ Subir imagen de fondo</label>
         <input type="file" id="r-bu" accept="image/*" onchange="loadBg('r',this,'r-bu-lbl')">
-        <div class="ovrow"><label>Overlay</label><input type="range" id="r-ov" min="20" max="95" value="75" oninput="setOv('r',this.value)"><span id="r-ov-v">75%</span></div>
+        <div class="ovrow"><label>Overlay</label><input type="range" id="r-ov" min="0" max="100" value="100" oninput="setOv('r',this.value)"><span id="r-ov-v">75%</span></div>
       </div>
       <div class="cg"><div class="cgt">Color acento</div>
         <div class="acdots" id="r-acd">
-          <div class="acd on" style="background:#c0392b" data-c="#c0392b" onclick="setAc('r',this)"></div>
+          <div class="acd" style="background:#c0392b" data-c="#c0392b" onclick="setAc('r',this)"></div>
           <div class="acd" style="background:#7b3fa0" data-c="#7b3fa0" onclick="setAc('r',this)"></div>
           <div class="acd" style="background:#2d6647" data-c="#2d6647" onclick="setAc('r',this)"></div>
           <div class="acd" style="background:#1a5276" data-c="#1a5276" onclick="setAc('r',this)"></div>
           <div class="acd" style="background:#c8a84b" data-c="#c8a84b" onclick="setAc('r',this)"></div>
           <div class="acd" style="background:#888" data-c="#888" onclick="setAc('r',this)"></div>
-          <div class="acd" style="background:#7b1010" data-c="#7b1010" onclick="setAc('r',this)" title="Rojo sangre"></div>
+          <div class="acd on" style="background:#7b1010" data-c="#7b1010" onclick="setAc('r',this)" title="Rojo sangre"></div>
           <div class="acd" style="background:#e8a0b0" data-c="#e8a0b0" onclick="setAc('r',this)" title="Rosa pastel"></div>
         </div>
       </div>
@@ -559,17 +580,17 @@ Texto del post</textarea>
       <div class="cg"><div class="cgt">Fondo (opcional)</div>
         <label class="upl" for="mr-bg-up" id="mr-bg-lbl">+ Subir imagen de fondo</label>
         <input type="file" id="mr-bg-up" accept="image/*" onchange="loadBg('mr',this,'mr-bg-lbl')">
-        <div class="ovrow"><label>Overlay</label><input type="range" id="mr-ov" min="50" max="97" value="84" oninput="setOvMR(this.value)"><span id="mr-ov-v">84%</span></div>
+        <div class="ovrow"><label>Overlay</label><input type="range" id="mr-ov" min="0" max="100" value="100" oninput="setOvMR(this.value)"><span id="mr-ov-v">84%</span></div>
       </div>
       <div class="cg"><div class="cgt">Color acento</div>
         <div class="acdots" id="mr-acd">
-          <div class="acd on" style="background:#c0392b" data-c="#c0392b" onclick="setAcMR(this)"></div>
+          <div class="acd" style="background:#c0392b" data-c="#c0392b" onclick="setAcMR(this)"></div>
           <div class="acd" style="background:#7b3fa0" data-c="#7b3fa0" onclick="setAcMR(this)"></div>
           <div class="acd" style="background:#2d6647" data-c="#2d6647" onclick="setAcMR(this)"></div>
           <div class="acd" style="background:#1a5276" data-c="#1a5276" onclick="setAcMR(this)"></div>
           <div class="acd" style="background:#c8a84b" data-c="#c8a84b" onclick="setAcMR(this)"></div>
           <div class="acd" style="background:#888" data-c="#888" onclick="setAcMR(this)"></div>
-          <div class="acd" style="background:#7b1010" data-c="#7b1010" onclick="setAcMR(this)" title="Rojo sangre"></div>
+          <div class="acd on" style="background:#7b1010" data-c="#7b1010" onclick="setAcMR(this)" title="Rojo sangre"></div>
           <div class="acd" style="background:#e8a0b0" data-c="#e8a0b0" onclick="setAcMR(this)" title="Rosa pastel"></div>
         </div>
       </div>
@@ -616,6 +637,7 @@ Texto del post</textarea>
           <div class="fopt" onclick="setBF('bebas',this)"><span class="fp" style="font-family:'Bebas Neue';font-size:19px;letter-spacing:2px">BEBAS</span><span class="fn">Display</span></div>
           <div class="fopt" onclick="setBF('fraktur',this)"><span class="fp" style="font-family:'UnifrakturMaguntia';font-size:17px">Fraktur</span><span class="fn">Victoriana</span></div>
           <div class="fopt" onclick="setBF('playfair',this)"><span class="fp" style="font-family:'Playfair Display';font-weight:900;font-size:14px;font-style:italic">Playfair</span><span class="fn">Elegante</span></div>
+          <div class="fopt" onclick="setBF('imfell',this)"><span class="fp" style="font-family:'IM Fell English';font-size:14px;font-style:italic">IM Fell</span><span class="fn">Clasica</span></div>
           <div class="fopt fopt-wide" onclick="setBF('dancing',this)"><span class="fp" style="font-family:'Dancing Script';font-weight:700;font-size:16px">Dancing Script</span><span class="fn">Cursiva</span></div>
           <div class="fopt" onclick="setBF('cinzel',this)"><span class="fp" style="font-family:'Cinzel Decorative';font-weight:700;font-size:13px">Cinzel</span><span class="fn">Gótico</span></div>
           <div class="fopt" onclick="setBF('quicksand',this)"><span class="fp" style="font-family:'Quicksand';font-weight:700;font-size:15px">Quicksand</span><span class="fn">Cute</span></div>
@@ -628,13 +650,13 @@ Texto del post</textarea>
       </div>
       <div class="cg"><div class="cgt">Color acento</div>
         <div class="acdots" id="bd-acd">
-          <div class="acd on" style="background:#c0392b" data-c="#c0392b" onclick="setAc('bd',this)"></div>
+          <div class="acd" style="background:#c0392b" data-c="#c0392b" onclick="setAc('bd',this)"></div>
           <div class="acd" style="background:#7b3fa0" data-c="#7b3fa0" onclick="setAc('bd',this)"></div>
           <div class="acd" style="background:#2d6647" data-c="#2d6647" onclick="setAc('bd',this)"></div>
           <div class="acd" style="background:#1a5276" data-c="#1a5276" onclick="setAc('bd',this)"></div>
           <div class="acd" style="background:#c8a84b" data-c="#c8a84b" onclick="setAc('bd',this)"></div>
           <div class="acd" style="background:#888" data-c="#888" onclick="setAc('bd',this)"></div>
-          <div class="acd" style="background:#7b1010" data-c="#7b1010" onclick="setAc('bd',this)" title="Rojo sangre"></div>
+          <div class="acd on" style="background:#7b1010" data-c="#7b1010" onclick="setAc('bd',this)" title="Rojo sangre"></div>
           <div class="acd" style="background:#e8a0b0" data-c="#e8a0b0" onclick="setAc('bd',this)" title="Rosa pastel"></div>
         </div>
       </div>
@@ -666,14 +688,14 @@ Texto del post</textarea>
   <!-- NEWS FLYER -->
   <div class="flyer" id="news-flyer">
     <div class="fbg" id="n-fbg"></div>
-    <div class="fov" id="n-fov" style="background:rgba(8,8,8,.62)"></div>
+    <div class="fov" id="n-fov" style="background:rgba(8,8,8,1)"></div>
     <div class="ftop" id="n-ftop"></div>
     <div id="n-accent" style="background:#c0392b"></div>
     <!-- Layout A (editorial) -->
     <div class="fin" id="n-fin-a">
       <div class="n-la">
         <div>
-          <div class="ntag" id="n-tag" style="color:#c0392b"><span class="ntag-line" id="n-tline" style="background:#c0392b"></span><span id="n-cat-d">NEWS</span></div>
+          <div class="ntag" id="n-tag" style="color:#7b1010"><span class="ntag-line" id="n-tline" style="background:#c0392b"></span><span id="n-cat-d">NEWS</span></div>
           <div id="n-artist-d" style="font-family:'Syne',sans-serif;font-weight:800;font-size:44px">INFO</div>
           <div id="n-headline-d" style="font-size:14px">Titular de la noticia</div>
         </div>
@@ -690,7 +712,7 @@ Texto del post</textarea>
         <div class="n-lb-bar" id="n-lb-bar" style="background:#c0392b"></div>
         <div class="n-lb-body" style="padding:14px 26px">
           <div>
-            <div class="ntag" id="n-tag-b" style="color:#c0392b"><span class="ntag-line" id="n-tline-b" style="background:#c0392b"></span><span id="n-cat-b">NEWS</span></div>
+            <div class="ntag" id="n-tag-b" style="color:#7b1010"><span class="ntag-line" id="n-tline-b" style="background:#c0392b"></span><span id="n-cat-b">NEWS</span></div>
             <div id="n-artist-b" style="font-family:'Syne',sans-serif;font-weight:800;font-size:44px;color:#f0ede8;line-height:.88;word-break:break-word">INFO</div>
             <div id="n-headline-b" style="font-size:14px;color:rgba(240,237,232,.7);line-height:1.45;word-break:break-word;margin-top:7px">Titular de la noticia</div>
           </div>
@@ -704,9 +726,9 @@ Texto del post</textarea>
     <!-- Layout C (bold centered) -->
     <div class="fin" id="n-fin-c" style="display:none">
       <div class="n-lc">
-        <div class="n-lc-tag" id="n-lc-tag" style="background:rgba(139,92,246,.15);color:#8b5cf6;border:1px solid #8b5cf6">NEWS</div>
+        <div class="n-lc-tag" id="n-lc-tag" style="background:rgba(123,16,16,.1);color:#7b1010;border:1px solid #7b1010">NEWS</div>
         <div id="n-lc-artist" style="font-family:'Syne',sans-serif;font-weight:800;font-size:44px;color:#f0ede8;line-height:.88;word-break:break-word;text-align:center">INFO</div>
-        <div class="n-lc-divider" id="n-lc-div" style="background:#8b5cf6"></div>
+        <div class="n-lc-divider" id="n-lc-div" style="background:#7b1010"></div>
         <div id="n-lc-head" style="font-size:14px;color:rgba(237,232,245,.75);line-height:1.45;word-break:break-word;max-width:320px;text-align:center">Titular de la noticia</div>
         <div id="n-lc-en" style="font-size:12px;color:rgba(237,232,245,.5);line-height:1.5;word-break:break-word;max-width:320px;text-align:center;font-style:italic">Description.</div>
       </div>
@@ -717,11 +739,11 @@ Texto del post</textarea>
       <div class="n-ld">
         <div class="n-ld-num" id="n-ld-num">01</div>
         <div class="n-ld-topzone">
-          <div class="n-ld-catpill" id="n-ld-pill" style="background:#8b5cf6;color:#fff">NEWS</div>
+          <div class="n-ld-catpill" id="n-ld-pill" style="background:#7b1010;color:#fff">NEWS</div>
         </div>
         <div class="n-ld-body">
           <div class="n-ld-artist" id="n-ld-artist" style="font-family:'Syne',sans-serif;font-weight:800;font-size:44px">INFO</div>
-          <div class="n-ld-divline" id="n-ld-divline" style="background:#8b5cf6"></div>
+          <div class="n-ld-divline" id="n-ld-divline" style="background:#7b1010"></div>
           <div class="n-ld-head" id="n-ld-head" style="font-size:14px">Titular de la noticia</div>
           <div class="n-ld-en" id="n-ld-en" style="font-size:12px">Description.</div>
           <div class="ffoot"><span class="fwm">@khiphophouse · 힙합하우스</span></div>
@@ -791,7 +813,7 @@ Puede ser en varios idiomas
 
   <!-- MV FLYER 9:16 (shown in MV mode) -->
   <div id="mv-flyer" style="display:none;width:405px;min-width:405px;max-width:405px;height:720px;min-height:720px;max-height:720px;position:relative;overflow:hidden;flex-shrink:0;background:#080808;box-shadow:0 24px 64px rgba(0,0,0,.8)">
-    <div style="position:absolute;top:0;left:0;right:0;height:4px;z-index:8;background:#c0392b" id="mv-ftop"></div>
+    <div style="position:absolute;top:0;left:0;right:0;height:4px;z-index:8;background:#7b1010" id="mv-ftop"></div>
 
     <!-- Layout A: 16:9 video (fits inside flyer), info centered below -->
     <div id="mv-fin-a" style="display:block;position:absolute;inset:0">
@@ -804,7 +826,7 @@ Puede ser en varios idiomas
       </div>
       <!-- info zone: 492px below video, vertically centered -->
       <div style="position:absolute;top:228px;left:0;width:405px;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:20px 28px;gap:10px">
-        <div class="mv-badge" id="mv-badge-a" style="background:#c0392b;align-self:flex-start">MV</div>
+        <div class="mv-badge" id="mv-badge-a" style="background:#7b1010;align-self:flex-start">MV</div>
         <div id="mv-title-a" style="font-size:30px;font-weight:900;color:#f0ede8;line-height:.9;word-break:break-word">NOMBRE DEL TRACK</div>
         <div id="mv-artist-a" style="font-size:15px;color:rgba(240,237,232,.55);font-family:'DM Sans',sans-serif">Nombre Artista</div>
         <div class="mv-tags"><span class="mv-tag" id="mv-type-a">MV</span><span class="mv-tag">OUT NOW</span></div>
@@ -816,7 +838,7 @@ Puede ser en varios idiomas
     <div id="mv-fin-b" style="display:none;position:absolute;inset:0">
       <!-- badge top-left -->
       <div style="position:absolute;top:24px;left:24px;z-index:5">
-        <div class="mv-badge" id="mv-badge-b" style="background:#c0392b">MV</div>
+        <div class="mv-badge" id="mv-badge-b" style="background:#7b1010">MV</div>
       </div>
       <!-- square video centered -->
       <div class="dw" id="mv-wrap-vid-b" style="position:absolute;top:80px;left:50%;transform:translateX(-50%);width:330px;height:330px;overflow:hidden;background:#111">
@@ -1315,7 +1337,7 @@ function setAc(p,el){
   document.querySelectorAll('#'+p+'-acd .acd').forEach(function(d){d.classList.remove('on')});el.classList.add('on');
   var c=el.dataset.c;
   if(p==='n'){G('n-ftop').style.background=c;G('n-accent').style.background=c;['n-tag','n-tag-b'].forEach(function(id){var e=G(id);if(e)e.style.color=c});['n-tline','n-tline-b'].forEach(function(id){var e=G(id);if(e)e.style.background=c});var lct=G('n-lc-tag');if(lct){lct.style.color=c;lct.style.borderColor=c;lct.style.background='rgba('+hexToRGB(c)+',.1)';}var lcd=G('n-lc-div');if(lcd)lcd.style.background=c;var nlb=G('n-lb-bar');if(nlb)nlb.style.background=c;var dpill=G('n-ld-pill');if(dpill)dpill.style.background=c;var ddiv=G('n-ld-divline');if(ddiv)ddiv.style.background=c;var etb=G('n-e-topbar');if(etb)etb.style.background=c;}
-  else if(p==='r'){G('r-ftop').style.background=c;G('r-bdg').style.background=c;}
+  else if(p==='r'){G('r-ftop').style.background=c;G('r-bdg').style.background=c;var mvft=G('mv-ftop');if(mvft)mvft.style.background=c;['mv-badge-a','mv-badge-b','mv-badge-c'].forEach(function(id){var e=G(id);if(e)e.style.background=c;});}
   else if(p==='bd'){G('bd-stripe').style.background=c;drawBdDots(c);}
 }
 function hexToRGB(hex){if(!hex||hex[0]!=='#')return'192,57,43';var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return r+','+g+','+b}
@@ -1330,10 +1352,10 @@ function setOv(p,v){G(p+'-ov-v').textContent=v+'%';G(p+'-fov').style.background=
 
 /* ══ NEWS ══ */
 var nFont='syne',nLyt='a';
-var nFonts={syne:"'Syne',sans-serif",archivo:"'Archivo Black',sans-serif",bebas:"'Bebas Neue',sans-serif",fraktur:"'UnifrakturMaguntia',cursive",playfair:"'Playfair Display',serif",dancing:"'Dancing Script',cursive",cinzel:"'Cinzel Decorative',serif",quicksand:"'Quicksand',sans-serif"};
-var nFontW={syne:800,archivo:400,bebas:400,fraktur:400,playfair:900,dancing:700,cinzel:700,quicksand:700};
-var nFontLH={syne:.88,archivo:.88,bebas:.85,fraktur:1,playfair:.9,dancing:1.05,cinzel:.9,quicksand:.95};
-var nFontLS={syne:'0',archivo:'0',bebas:'2px',fraktur:'0',playfair:'-.5px',dancing:'0',cinzel:'1px',quicksand:'0'};
+var nFonts={syne:"'Syne',sans-serif",archivo:"'Archivo Black',sans-serif",bebas:"'Bebas Neue',sans-serif",fraktur:"'UnifrakturMaguntia',cursive",playfair:"'Playfair Display',serif",dancing:"'Dancing Script',cursive",cinzel:"'Cinzel Decorative',serif",quicksand:"'Quicksand',sans-serif",imfell:"'IM Fell English',serif"};
+var nFontW={syne:800,archivo:400,bebas:400,fraktur:400,playfair:900,dancing:700,cinzel:700,quicksand:700,imfell:400};
+var nFontLH={syne:.88,archivo:.88,bebas:.85,fraktur:1,playfair:.9,dancing:1.05,cinzel:.9,quicksand:.95,imfell:.95};
+var nFontLS={syne:'0',archivo:'0',bebas:'2px',fraktur:'0',playfair:'-.5px',dancing:'0',cinzel:'1px',quicksand:'0',imfell:'0'};
 
 var nAlign = 'left';
 function setNAlign(a,el){
@@ -1415,8 +1437,8 @@ function loadNImg(inp){
 
 /* ══ RELEASE ══ */
 var rMode='s',rCS='sq',rCover=null,rFont2='hv';
-var rFonts={hv:"'Helvetica Neue',Arial,sans-serif",syne:"'Syne',sans-serif",bebas:"'Bebas Neue',sans-serif",archivo:"'Archivo Black',sans-serif",playfair:"'Playfair Display',serif",cinzel:"'Cinzel Decorative',serif",quicksand:"'Quicksand',sans-serif"};
-var rFontW={hv:900,syne:800,bebas:400,archivo:400,playfair:900,cinzel:700,quicksand:700};
+var rFonts={hv:"'Helvetica Neue',Arial,sans-serif",syne:"'Syne',sans-serif",bebas:"'Bebas Neue',sans-serif",archivo:"'Archivo Black',sans-serif",playfair:"'Playfair Display',serif",cinzel:"'Cinzel Decorative',serif",quicksand:"'Quicksand',sans-serif",imfell:"'IM Fell English',serif"};
+var rFontW={hv:900,syne:800,bebas:400,archivo:400,playfair:900,cinzel:700,quicksand:700,imfell:400};
 var rFontLS={hv:'-.5px',syne:'-.5px',bebas:'1px',archivo:'-.5px',playfair:'-.5px'};
 var RSIZES={1:{ch:168,g:4},2:{ch:156,g:4},3:{ch:142,g:3},4:{ch:130,g:3},5:{ch:118,g:3},6:{ch:106,g:2},7:{ch:96,g:2},8:{ch:88,g:2},9:{ch:80,g:1},10:{ch:73,g:1},11:{ch:66,g:1},12:{ch:60,g:1}};
 
@@ -1571,9 +1593,9 @@ function ur(){
 
 /* ══ BIRTHDAY ══ */
 var bFont='syne',bdLyt='a';
-var bFonts={syne:"'Syne',sans-serif",archivo:"'Archivo Black',sans-serif",bebas:"'Bebas Neue',sans-serif",fraktur:"'UnifrakturMaguntia',cursive",playfair:"'Playfair Display',serif",dancing:"'Dancing Script',cursive",cinzel:"'Cinzel Decorative',serif",quicksand:"'Quicksand',sans-serif"};
-var bFontW={syne:800,archivo:400,bebas:400,fraktur:400,playfair:900,dancing:700,cinzel:700,quicksand:700};
-var bFontLH={syne:.9,archivo:.9,bebas:.85,fraktur:1,playfair:.9,dancing:1.05,cinzel:.9,quicksand:.95};
+var bFonts={syne:"'Syne',sans-serif",archivo:"'Archivo Black',sans-serif",bebas:"'Bebas Neue',sans-serif",fraktur:"'UnifrakturMaguntia',cursive",playfair:"'Playfair Display',serif",dancing:"'Dancing Script',cursive",cinzel:"'Cinzel Decorative',serif",quicksand:"'Quicksand',sans-serif",imfell:"'IM Fell English',serif"};
+var bFontW={syne:800,archivo:400,bebas:400,fraktur:400,playfair:900,dancing:700,cinzel:700,quicksand:700,imfell:400};
+var bFontLH={syne:.9,archivo:.9,bebas:.85,fraktur:1,playfair:.9,dancing:1.05,cinzel:.9,quicksand:.95,imfell:.95};
 var bFontLS={syne:'-1px',archivo:'0',bebas:'2px',fraktur:'0',playfair:'-.5px',dancing:'0'};
 
 function setBDL(l,el){
@@ -2039,5 +2061,106 @@ ubd = function(){
 setTimeout(function(){
   updateAllHashtags();
 }, 800);
+
+
+/* ── Copy to clipboard ─────────────────────────────────── */
+function copyCaption(id,btn){
+  var el=G(id);if(!el)return;
+  var txt=(el.textContent||el.innerText||'').trim();
+  if(!txt||txt==='—')return;
+  function flash(){if(btn){var o=btn.textContent;btn.textContent='✓';setTimeout(function(){btn.textContent=o;},1500);}}
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(flash).catch(function(){fbCopy(txt,flash);});
+  }else{fbCopy(txt,flash);}
+}
+function fbCopy(txt,cb){
+  var ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;left:-9999px;top:0;opacity:0';
+  document.body.appendChild(ta);ta.focus();ta.select();try{document.execCommand('copy');if(cb)cb();}catch(e){}document.body.removeChild(ta);
+}
+/* ── Hashtags ──────────────────────────────────────────── */
+function slugify(s){return (s||'').replace(/\s+/g,'').replace(/[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]/g,'');}
+function buildHashtags(section){
+  var tags=[],base2=['#힙합','#khiphophouse'];
+  if(section==='n'){
+    var art=slugify(V('n-art')||''),head=(V('n-head')||'').trim(),cat=slugify(V('n-cat')||'');
+    if(art&&art!=='INFO')tags.push('#'+art);
+    if(head&&head!=='Titular de la noticia'){var fw=head.split(/\s+/)[0];if(fw.length>2)tags.push('#'+slugify(fw));}
+    if(cat&&cat!=='NEWS'&&tags.length<3)tags.push('#'+cat);
+    tags=tags.slice(0,3).concat(base2);
+  }else if(section==='r'){
+    var rart=slugify(V('ra')||''),rtit=slugify(V('rt')||'');
+    if(rart&&rart!=='NombreArtista')tags.push('#'+rart);
+    if(rtit&&rtit!=='NOMBREDELTRACK')tags.push('#'+rtit);
+    if(tags.length<3)tags.push('#NewMusic');
+    tags=tags.slice(0,3).concat(base2);
+  }else if(section==='mr'){
+    tags.push('#NewMusic');tags=tags.slice(0,3).concat(base2);
+  }else if(section==='bd'){
+    var bdart=slugify(V('bd-name')||'');
+    if(bdart&&bdart!=='Artista')tags.push('#'+bdart);
+    tags.push('#HappyBirthday');tags=tags.slice(0,3).concat(base2);
+  }
+  return tags.join(' ');
+}
+function updateAllHashtags(){
+  var nh=G('n-hashtags');if(nh)nh.textContent=buildHashtags('n');
+  var rh=G('r-hashtags');if(rh)rh.textContent=buildHashtags('r');
+  var mh=G('mr-hashtags');if(mh)mh.textContent=buildHashtags('mr');
+  var bh=G('bd-hashtags');if(bh)bh.textContent=buildHashtags('bd');
+}
+/* Hook into un/ur/ubd */
+var _un0=un,_ur0=ur,_ubd0=ubd;
+un=function(){_un0();updateAllHashtags();};
+ur=function(){_ur0();updateAllHashtags();};
+ubd=function(){_ubd0();updateAllHashtags();};
+/* ── Rich text editor ──────────────────────────────────── */
+function rtCmd(cmd){
+  var ed=G('n-free-text');if(!ed)return;ed.focus();
+  document.execCommand(cmd,false,null);rtUpdateBtns();un();
+}
+function rtUpdateBtns(){
+  ['bold','italic','underline'].forEach(function(c){
+    var b=document.querySelector('.rtbar .rtbtn[onclick*="\''+c+'\'"]');
+    if(b)b.classList.toggle('on',document.queryCommandState(c));
+  });
+}
+function rtSize(sz){
+  if(!sz)return;
+  var ed=G('n-free-text');if(!ed)return;ed.focus();
+  var sel=window.getSelection();
+  if(sel&&sel.rangeCount>0&&sel.toString().length>0){
+    document.execCommand('fontSize',false,'7');
+    ed.querySelectorAll('font[size="7"]').forEach(function(f){
+      var sp=document.createElement('span');sp.style.fontSize=sz+'px';sp.innerHTML=f.innerHTML;f.parentNode.replaceChild(sp,f);
+    });
+  }else{var et=G('n-e-text');if(et)et.style.fontSize=sz+'px';}
+  un();
+}
+function rtFont(fv){
+  if(!fv)return;
+  var ed=G('n-free-text');if(!ed)return;ed.focus();
+  var sel=window.getSelection();
+  if(sel&&sel.rangeCount>0&&sel.toString().length>0){document.execCommand('fontName',false,fv);}
+  else{var et=G('n-e-text');if(et)et.style.fontFamily=fv;}
+  un();
+}
+document.addEventListener('selectionchange',function(){
+  if(document.activeElement&&document.activeElement.id==='n-free-text')rtUpdateBtns();
+});
+/* Fix un() to read innerHTML for contenteditable */
+var _origUnInfo=un;
+un=function(){
+  _origUnInfo();
+  var fte=G('n-free-text');
+  var et=G('n-e-text');
+  if(fte&&et&&fte.getAttribute('contenteditable')==='true')et.innerHTML=fte.innerHTML;
+};
+/* ── Apply default accent color on load ─────────────────── */
+setTimeout(function(){
+  updateAllHashtags();
+  var dn=document.querySelector('#n-acd .acd.on');if(dn)setAc('n',dn);
+  var dr=document.querySelector('#r-acd .acd.on');if(dr)setAc('r',dr);
+  var dbd=document.querySelector('#bd-acd .acd.on');if(dbd)setAc('bd',dbd);
+},300);
 
 </script>
