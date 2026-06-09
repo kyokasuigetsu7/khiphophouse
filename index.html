@@ -263,7 +263,7 @@ input[type=file]{display:none}
 .mr-item-cover.dw{cursor:grab}.mr-item-cover.dw:active{cursor:grabbing}
 .mr-item-body{flex:1;padding:5px 6px 5px;display:flex;flex-direction:column;min-height:0;overflow:hidden}
 .mr-item-badge{font-family:var(--mono);font-size:6px;letter-spacing:2px;text-transform:uppercase;color:rgba(240,237,232,.3);margin-bottom:2px}
-.mr-item-artist{font-weight:700;color:#f0ede8;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'DM Sans',sans-serif}
+.mr-item-artist{font-weight:700;color:#f0ede8;line-height:1.15;white-space:normal;word-break:break-word;overflow:hidden;font-family:'DM Sans',sans-serif}
 .mr-item-tracks{margin-top:3px;display:flex;flex-direction:column;gap:0;overflow:hidden}
 .mr-item-track{font-size:9px;color:rgba(240,237,232,.5);font-family:'DM Sans',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;gap:4px;align-items:baseline;line-height:1.5}
 .mr-item-track .tn{font-family:var(--mono);font-size:8px;color:rgba(240,237,232,.22);flex-shrink:0}
@@ -1059,20 +1059,29 @@ function getMRItemH(n){
   var innerH=506-36-22-7*(rows-1);
   return Math.floor(innerH/rows);
 }
-function getMRCoverH(itemH,trackCount,relname,aArt,cardW){
-  /* badge=12 artist≈aArt trackLine=12px each + padding=10 */
+function getMRCoverH(itemH,trackCount,relname,aArt,cardW,artist){
   var tracks=Math.min(trackCount,9);
-  var artistH=(aArt||12)+2;
+  var artSz=(aArt||12);
+  /* Estimate lines for artist name */
+  var artCharsPerLine=Math.max(1,Math.floor((cardW||67)/(artSz*0.58)));
+  var artLines=artist?Math.max(1,Math.ceil(artist.length/artCharsPerLine)):1;
+  var artistH=Math.ceil(artLines*(artSz*1.2))+3;
+  /* Estimate lines for release name */
   var relnameH=0;
   if(relname){
-    var fnSz=(aArt||12)-2;
-    var charsPerLine=Math.max(1,Math.floor((cardW||67)/((fnSz)*0.55)));
-    var lines=Math.ceil(relname.length/charsPerLine);
-    relnameH=lines*(fnSz*1.3)+2;
+    var fnSz=Math.max(artSz-2,7);
+    var rnCharsPerLine=Math.max(1,Math.floor((cardW||67)/(fnSz*0.55)));
+    var rnLines=Math.max(1,Math.ceil(relname.length/rnCharsPerLine));
+    relnameH=Math.ceil(rnLines*(fnSz*1.3))+3;
   }
-  var textH=12+2+artistH+relnameH+(tracks*(11+2))+10;
-  var ch=itemH-textH;
-  return Math.max(ch,20);
+  /* badge=11px, bottom padding=10px, track lines */
+  var badgeH=11+3;
+  var trackH=tracks*(11+3);
+  var padH=10;
+  var textH=badgeH+artistH+relnameH+trackH+padH;
+  /* add 4px safety margin */
+  var ch=itemH-textH-4;
+  return Math.max(ch,16);
 }
 
 function buildMR(){
@@ -1178,9 +1187,9 @@ function renderMRFlyer(){
     var maxTrk=Math.min(trackCount,9);
     var nCols=MR_GRID_SIZES[n]?MR_GRID_SIZES[n].cols:3;
     var cardW=Math.floor((405-(nCols-1)*4)/nCols);
-    var coverH=getMRCoverH(itemH,maxTrk,d.relname,aArt,cardW);
+    var coverH=getMRCoverH(itemH,maxTrk,d.relname,aArt,cardW,d.artist);
     /* if cover would be too small (<18px), reduce tracks shown */
-    while(coverH<18&&maxTrk>0){maxTrk--;coverH=getMRCoverH(itemH,maxTrk,d.relname,aArt,cardW);}
+    while(coverH<18&&maxTrk>0){maxTrk--;coverH=getMRCoverH(itemH,maxTrk,d.relname,aArt,cardW,d.artist);}
 
     var item=document.createElement('div');
     item.className='mr-item';
@@ -1201,11 +1210,13 @@ function renderMRFlyer(){
     cover.appendChild(cimg);
     item.appendChild(cover);
 
-    /* body */
+    /* body — fixed height so it never overflows the card */
     var body=document.createElement('div');
     body.className='mr-item-body';
-    body.style.flex='1';
+    body.style.height=(itemH-coverH)+'px';
+    body.style.flex='none';
     body.style.overflow='hidden';
+    body.style.boxSizing='border-box';
 
     var badge=document.createElement('div');
     badge.className='mr-item-badge';
@@ -1218,6 +1229,10 @@ function renderMRFlyer(){
     artist.className='mr-item-artist';
     artist.style.fontSize=aArt+'px';
     artist.style.marginBottom='1px';
+    artist.style.whiteSpace='normal';
+    artist.style.overflow='hidden';
+    artist.style.textOverflow='unset';
+    artist.style.wordBreak='break-word';
     artist.textContent=d.artist||'Artista';
     body.appendChild(artist);
 
