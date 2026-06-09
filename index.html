@@ -1059,10 +1059,18 @@ function getMRItemH(n){
   var innerH=506-36-22-7*(rows-1);
   return Math.floor(innerH/rows);
 }
-function getMRCoverH(itemH,trackCount){
-  /* badge=12 artist=18 trackLine=12px each + 2px gap + padding=10 */
+function getMRCoverH(itemH,trackCount,relname,aArt,cardW){
+  /* badge=12 artist≈aArt trackLine=12px each + padding=10 */
   var tracks=Math.min(trackCount,9);
-  var textH=12+4+18+4+(tracks*(12+3))+10;
+  var artistH=(aArt||12)+2;
+  var relnameH=0;
+  if(relname){
+    var fnSz=(aArt||12)-2;
+    var charsPerLine=Math.max(1,Math.floor((cardW||67)/((fnSz)*0.55)));
+    var lines=Math.ceil(relname.length/charsPerLine);
+    relnameH=lines*(fnSz*1.3)+2;
+  }
+  var textH=12+2+artistH+relnameH+(tracks*(11+2))+10;
   var ch=itemH-textH;
   return Math.max(ch,20);
 }
@@ -1090,7 +1098,7 @@ function buildMR(){
         '<select class="fsel fi" id="mrb-'+idx+'" onchange="updateMRItem('+idx+')">'+
           ['SINGLE','ALBUM','EP','LP','MV','COLLAB'].map(function(o){return'<option'+(d.badge===o?' selected':'')+'>'+o+'</option>'}).join('')+
         '</select>'+
-        '<textarea class="fi" id="mrt-'+idx+'" rows="3" placeholder="Tracks (una por línea, hasta 9. Si es single dejar vacío)" oninput="updateMRItem('+idx+')">'+escHtml((d.tracks||[]).join('\n'))+'</textarea>';
+        '<textarea class="fi" id="mrt-'+idx+'" rows="3" placeholder="Tracks (una por línea, hasta 9)" oninput="updateMRItem('+idx+')">'+escHtml((d.tracks||[]).join('\n'))+'</textarea>';
       ctrl.appendChild(form);
       if(d.coverSrc){
         var timg=document.getElementById('mrthumb-img-'+idx);
@@ -1168,9 +1176,11 @@ function renderMRFlyer(){
 
     /* always show up to 9 tracks — reduce cover height to make room */
     var maxTrk=Math.min(trackCount,9);
-    var coverH=getMRCoverH(itemH,maxTrk);
+    var nCols=MR_GRID_SIZES[n]?MR_GRID_SIZES[n].cols:3;
+    var cardW=Math.floor((405-(nCols-1)*4)/nCols);
+    var coverH=getMRCoverH(itemH,maxTrk,d.relname,aArt,cardW);
     /* if cover would be too small (<18px), reduce tracks shown */
-    while(coverH<18&&maxTrk>0){maxTrk--;coverH=getMRCoverH(itemH,maxTrk);}
+    while(coverH<18&&maxTrk>0){maxTrk--;coverH=getMRCoverH(itemH,maxTrk,d.relname,aArt,cardW);}
 
     var item=document.createElement('div');
     item.className='mr-item';
@@ -1213,7 +1223,7 @@ function renderMRFlyer(){
 
     if(d.relname){
       var rn=document.createElement('div');
-      rn.style.cssText='font-size:'+(aArt-2)+'px;color:rgba(240,237,232,.55);font-family:var(--mono);letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px;line-height:1.2';
+      rn.style.cssText='font-size:'+(aArt-2)+'px;color:rgba(240,237,232,.55);font-family:var(--mono);letter-spacing:1px;white-space:normal;word-break:break-word;overflow:hidden;margin-bottom:2px;line-height:1.2';
       rn.textContent=d.relname;
       body.appendChild(rn);
     }
