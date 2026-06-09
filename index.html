@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Bebas+Neue&family=Archivo+Black&family=Syne:wght@700;800&family=UnifrakturMaguntia&family=Dancing+Script:wght@600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Cinzel+Decorative:wght@400;700;900&family=Quicksand:wght@500;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
 
 <style>
-:root{--black:#080808;--s1:#0f0e14;--s2:#171622;--s3:#201e2e;--b1:rgba(180,160,255,.07);--b2:rgba(180,160,255,.16);--t1:#ede8f5;--t2:rgba(237,232,245,.55);--t3:rgba(237,232,245,.3);--red:#8b5cf6;--red2:#6d36e0;--mono:'Space Mono',monospace;--body:'DM Sans',sans-serif;--lila:#8b5cf6;--lila2:#6d36e0}
+:root{--black:#080808;--s1:#0f0e14;--s2:#171622;--s3:#201e2e;--b1:rgba(180,160,255,.07);--b2:rgba(180,160,255,.16);--t1:#ede8f5;--t2:rgba(237,232,245,.55);--t3:rgba(237,232,245,.3);--red:#8b5cf6;--red2:#6d36e0;--acc:#7b1010;--mono:'Space Mono',monospace;--body:'DM Sans',sans-serif;--lila:#8b5cf6;--lila2:#6d36e0}
 *{margin:0;padding:0;box-sizing:border-box}
 html{background:var(--black)}body{min-height:100vh;background:var(--black);color:var(--t1);font-family:var(--body)}
 body{display:flex;flex-direction:row;align-items:flex-start;min-height:100vh}@media(max-width:700px){body{flex-direction:column;}}
@@ -99,10 +99,10 @@ input[type=file]{display:none}
 .flyer{width:405px;height:506px;position:relative;overflow:hidden;flex-shrink:0;background:#080808;font-family:'Helvetica Neue',Arial,sans-serif;box-shadow:0 24px 64px rgba(0,0,0,.8)}
 .fbg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:1}
 .fov{position:absolute;inset:0;z-index:2;background:rgba(8,8,8,.72)}
-.ftop{position:absolute;top:0;left:0;right:0;height:4px;z-index:8;background:var(--red)}
+.ftop{position:absolute;top:0;left:0;right:0;height:4px;z-index:8;background:var(--acc)}
 .fin{position:relative;z-index:4;padding:22px 26px;height:100%;display:flex;flex-direction:column}
 .fhdr{display:flex;justify-content:flex-start;margin-bottom:12px;flex-shrink:0}
-.fbdg{font-size:10px;letter-spacing:4px;text-transform:uppercase;padding:5px 11px;border-radius:2px;font-weight:700;background:var(--red);color:#fff;font-family:var(--mono)}
+.fbdg{font-size:10px;letter-spacing:4px;text-transform:uppercase;padding:5px 11px;border-radius:2px;font-weight:700;background:var(--acc);color:#fff;font-family:var(--mono)}
 .ffoot{display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.07);padding-top:9px;flex-shrink:0;margin-top:auto}
 .fwm{font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.25);font-family:var(--mono)}
 .cph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,.18);text-transform:uppercase;text-align:center;line-height:2;font-family:var(--mono)}
@@ -245,11 +245,11 @@ input[type=file]{display:none}
 #mr-flyer{width:405px;height:506px;position:relative;overflow:hidden;flex-shrink:0;background:#080808;font-family:'Helvetica Neue',Arial,sans-serif;box-shadow:0 24px 64px rgba(0,0,0,.8)}
 .mr-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:1}
 .mr-ov{position:absolute;inset:0;z-index:2;background:rgba(8,8,8,.82)}
-.mr-top{position:absolute;top:0;left:0;right:0;height:4px;z-index:8;background:var(--red)}
+.mr-top{position:absolute;top:0;left:0;right:0;height:4px;z-index:8;background:var(--acc)}
 .mr-inner{position:relative;z-index:4;padding:16px 18px 14px;height:100%;display:flex;flex-direction:column}
 .mr-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:11px;flex-shrink:0}
 .mr-title{font-family:var(--mono);font-size:9px;letter-spacing:4px;text-transform:uppercase;color:rgba(240,237,232,.35)}
-.mr-badge{font-family:var(--mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:2px;background:var(--red);color:#fff}
+.mr-badge{font-family:var(--mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:2px;background:var(--acc);color:#fff}
 .mr-grid{flex:1;display:grid;gap:7px;min-height:0}
 /* adaptive grid layouts */
 .mr-grid.n2{grid-template-columns:1fr 1fr;grid-template-rows:1fr}
@@ -299,14 +299,14 @@ input[type=file]{display:none}
 .mv-lc .mvvf video,.mv-lc .mvvf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
 .mv-lc .mv-info-c{position:absolute;bottom:32px;left:0;right:0;padding:0 24px;display:flex;flex-direction:column;gap:8px;z-index:3}
 /* shared mv info elements */
-.mv-badge{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:4px 10px;border-radius:2px;font-weight:700;background:var(--red);color:#fff;align-self:flex-start}
+.mv-badge{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:4px 10px;border-radius:2px;font-weight:700;background:var(--acc);color:#fff;align-self:flex-start}
 .mv-title{color:#f0ede8;line-height:.9;word-break:break-word}
 .mv-artist{color:rgba(240,237,232,.55);font-family:'DM Sans',sans-serif}
 .mv-tags{display:flex;gap:6px;flex-wrap:wrap}
 .mv-tag{font-size:8px;letter-spacing:1px;font-family:var(--mono);color:rgba(240,237,232,.3);border:1px solid rgba(255,255,255,.12);padding:2px 7px;border-radius:2px;text-transform:uppercase}
 .mv-vplay{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;z-index:3}
 .mv-vplay svg{width:15px;height:15px;fill:#fff;margin-left:3px}
-.mv-ftop{position:absolute;top:0;left:0;right:0;height:4px;z-index:8;background:var(--red)}
+.mv-ftop{position:absolute;top:0;left:0;right:0;height:4px;z-index:8;background:var(--acc)}
 .dlscale-row{display:flex;gap:4px;margin-bottom:8px}
 .dlscale-btn{flex:1;padding:6px 3px;background:var(--s2);border:1px solid var(--b1);border-radius:4px;font-family:var(--mono);font-size:9px;color:var(--t3);cursor:pointer;text-align:center;letter-spacing:1px}
 .dlscale-btn:hover{border-color:var(--b2);color:var(--t2)}
@@ -326,6 +326,14 @@ input[type=file]{display:none}
 .rtbtn:hover{color:var(--t1);background:var(--s2)}.rtbtn.on{background:var(--lila);color:#fff;border-color:var(--lila)}
 .rtsel{background:var(--s3);border:1px solid var(--b2);border-radius:3px;color:var(--t2);font-size:10px;padding:2px 4px;cursor:pointer;font-family:var(--mono)}
 .rtsep{width:1px;height:18px;background:var(--b2);margin:0 2px}
+
+
+/* ── Mini field style row ──────────────────────────────────────── */
+.fstrow{display:flex;gap:3px;margin-top:3px;align-items:center;flex-wrap:wrap}
+.fstbtn{background:var(--s3);border:1px solid var(--b2);border-radius:3px;color:var(--t3);font-family:var(--mono);font-size:9px;padding:2px 7px;cursor:pointer;transition:background .1s}
+.fstbtn:hover{color:var(--t1)}.fstbtn.on{background:var(--s2);color:var(--t1);border-color:var(--t2)}
+.fclr{width:16px;height:16px;border-radius:3px;border:1px solid var(--b2);cursor:pointer;flex-shrink:0}
+.fclr.on{outline:2px solid var(--t1);outline-offset:1px}
 
 </style>
 </head>
@@ -359,7 +367,21 @@ input[type=file]{display:none}
         <div class="cg"><div class="cgt">Texto</div>
           <div class="f"><label>Categoría</label><input class="fi" id="n-cat" value="NEWS" oninput="un()"></div>
           <div class="f"><label>INFO / Artista</label><input class="fi" id="n-art" value="INFO" oninput="un()"></div>
+          <div class="fstrow">
+            <button class="fstbtn" id="nart-b" onclick="toggleNStyle('art','bold',this)"><b>B</b></button>
+            <button class="fstbtn" id="nart-i" onclick="toggleNStyle('art','italic',this)"><i>I</i></button>
+            <div class="rtsep"></div>
+            <div class="fclr on" style="background:#f0ede8" title="Blanco" onclick="setNFieldColor('art','#f0ede8',this)"></div>
+            <div class="fclr" style="background:#111" title="Negro" onclick="setNFieldColor('art','#111111',this)"></div>
+          </div>
           <div class="f"><label>Titular</label><input class="fi" id="n-head" value="Titular de la noticia" oninput="un()"></div>
+          <div class="fstrow">
+            <button class="fstbtn" id="nhead-b" onclick="toggleNStyle('head','bold',this)"><b>B</b></button>
+            <button class="fstbtn" id="nhead-i" onclick="toggleNStyle('head','italic',this)"><i>I</i></button>
+            <div class="rtsep"></div>
+            <div class="fclr on" style="background:#f0ede8" title="Blanco" onclick="setNFieldColor('head','#f0ede8',this)"></div>
+            <div class="fclr" style="background:#111" title="Negro" onclick="setNFieldColor('head','#111111',this)"></div>
+          </div>
         </div>
       </div>
 
@@ -387,7 +409,16 @@ input[type=file]{display:none}
 
       <!-- hidden in Info mode -->
       <div id="n-en-cg">
-        <div class="f"><label>Descripción EN (flyer)</label><textarea class="fi" id="n-en" oninput="un()">Description.</textarea></div>
+        <div class="cg" style="margin-bottom:8px">
+          <div class="f"><label>Descripción EN (flyer)</label><textarea class="fi" id="n-en" oninput="un()">Description.</textarea></div>
+          <div class="fstrow">
+            <button class="fstbtn" id="nen-b" onclick="toggleNStyle('en','bold',this)"><b>B</b></button>
+            <button class="fstbtn" id="nen-i" onclick="toggleNStyle('en','italic',this)"><i>I</i></button>
+            <div class="rtsep"></div>
+            <div class="fclr on" style="background:#f0ede8" title="Blanco" onclick="setNFieldColor('en','#f0ede8',this)"></div>
+            <div class="fclr" style="background:#111" title="Negro" onclick="setNFieldColor('en','#111111',this)"></div>
+          </div>
+        </div>
       </div>
 
       <!-- hidden in Info mode -->
@@ -415,7 +446,7 @@ input[type=file]{display:none}
       <div class="cg"><div class="cgt">Imagen</div>
         <label class="upl" for="n-bg-up" id="n-bg-lbl">+ Subir imagen de fondo</label>
         <input type="file" id="n-bg-up" accept="image/*" onchange="loadNBg(this)">
-        <div class="ovrow"><label>Overlay</label><input type="range" id="n-ov" min="0" max="100" value="100" oninput="setOv('n',this.value)"><span id="n-ov-v">62%</span></div>
+        <div class="ovrow"><label>Overlay</label><input type="range" id="n-ov" min="0" max="100" value="0" oninput="setOv('n',this.value)"><span id="n-ov-v">0%</span></div>
         <div id="n-img-slot" style="display:none;margin-top:6px">
           <label class="upl" for="n-img-up" id="n-img-lbl">+ Subir foto del artista (diseño Split)</label>
           <input type="file" id="n-img-up" accept="image/*" onchange="loadNImg(this)">
@@ -523,7 +554,7 @@ input[type=file]{display:none}
       <div class="cg"><div class="cgt">Fondo (opcional)</div>
         <label class="upl" for="r-bu" id="r-bu-lbl">+ Subir imagen de fondo</label>
         <input type="file" id="r-bu" accept="image/*" onchange="loadBg('r',this,'r-bu-lbl')">
-        <div class="ovrow"><label>Overlay</label><input type="range" id="r-ov" min="0" max="100" value="100" oninput="setOv('r',this.value)"><span id="r-ov-v">75%</span></div>
+        <div class="ovrow"><label>Overlay</label><input type="range" id="r-ov" min="0" max="100" value="0" oninput="setOv('r',this.value)"><span id="r-ov-v">0%</span></div>
       </div>
       <div class="cg"><div class="cgt">Color acento</div>
         <div class="acdots" id="r-acd">
@@ -580,7 +611,7 @@ input[type=file]{display:none}
       <div class="cg"><div class="cgt">Fondo (opcional)</div>
         <label class="upl" for="mr-bg-up" id="mr-bg-lbl">+ Subir imagen de fondo</label>
         <input type="file" id="mr-bg-up" accept="image/*" onchange="loadBg('mr',this,'mr-bg-lbl')">
-        <div class="ovrow"><label>Overlay</label><input type="range" id="mr-ov" min="0" max="100" value="100" oninput="setOvMR(this.value)"><span id="mr-ov-v">84%</span></div>
+        <div class="ovrow"><label>Overlay</label><input type="range" id="mr-ov" min="0" max="100" value="0" oninput="setOvMR(this.value)"><span id="mr-ov-v">0%</span></div>
       </div>
       <div class="cg"><div class="cgt">Color acento</div>
         <div class="acdots" id="mr-acd">
@@ -688,7 +719,7 @@ input[type=file]{display:none}
   <!-- NEWS FLYER -->
   <div class="flyer" id="news-flyer">
     <div class="fbg" id="n-fbg"></div>
-    <div class="fov" id="n-fov" style="background:rgba(8,8,8,1)"></div>
+    <div class="fov" id="n-fov" style="background:rgba(8,8,8,0)"></div>
     <div class="ftop" id="n-ftop"></div>
     <div id="n-accent" style="background:#c0392b"></div>
     <!-- Layout A (editorial) -->
@@ -2162,5 +2193,49 @@ setTimeout(function(){
   var dr=document.querySelector('#r-acd .acd.on');if(dr)setAc('r',dr);
   var dbd=document.querySelector('#bd-acd .acd.on');if(dbd)setAc('bd',dbd);
 },300);
+
+
+/* ── NEWS field styles (art / head / en) ────────────────────────── */
+var nFieldStyle = {
+  art:  {bold:false, italic:false, color:'#f0ede8'},
+  head: {bold:false, italic:false, color:'#f0ede8'},
+  en:   {bold:false, italic:false, color:'#f0ede8'}
+};
+var nFieldEls = {
+  art:  ['n-artist-d','n-artist-b','n-lc-artist','n-ld-artist'],
+  head: ['n-headline-d','n-headline-b','n-lc-head','n-ld-head'],
+  en:   ['n-en-d','n-en-b','n-lc-en','n-ld-en']
+};
+function toggleNStyle(field,prop,btn){
+  nFieldStyle[field][prop]=!nFieldStyle[field][prop];
+  if(btn)btn.classList.toggle('on',nFieldStyle[field][prop]);
+  applyAllNFieldStyles();
+}
+function setNFieldColor(field,col,dot){
+  nFieldStyle[field].color=col;
+  dot.parentElement.querySelectorAll('.fclr').forEach(function(d){d.classList.remove('on');});
+  dot.classList.add('on');
+  applyAllNFieldStyles();
+}
+function applyAllNFieldStyles(){
+  Object.keys(nFieldStyle).forEach(function(field){
+    var s=nFieldStyle[field];
+    nFieldEls[field].forEach(function(id){
+      var el=G(id);if(!el)return;
+      el.style.color=s.color;
+      el.style.fontStyle=s.italic?'italic':(field==='art'&&(nFont==='playfair'||nFont==='imfell'))?'italic':'normal';
+      if(s.bold){
+        el.style.fontWeight='900';
+      } else if(field==='art'){
+        el.style.fontWeight=nFontW[nFont]||700;
+      } else {
+        el.style.fontWeight='400';
+      }
+    });
+  });
+}
+/* Hook applyAllNFieldStyles into un() */
+var _unNFs=un;
+un=function(){_unNFs();applyAllNFieldStyles();};
 
 </script>
