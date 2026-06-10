@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Bebas+Neue&family=Archivo+Black&family=Syne:wght@700;800&family=UnifrakturMaguntia&family=Dancing+Script:wght@600;700&family=Space+Mono:wght@400;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Cinzel+Decorative:wght@400;700;900&family=Quicksand:wght@500;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
 
 <style>
-:root{--black:#080808;--s1:#0f0e14;--s2:#171622;--s3:#201e2e;--b1:rgba(180,160,255,.07);--b2:rgba(180,160,255,.16);--t1:#ede8f5;--t2:rgba(237,232,245,.55);--t3:rgba(237,232,245,.3);--red:#8b5cf6;--red2:#6d36e0;--acc:#7b1010;--mono:'Space Mono',monospace;--body:'DM Sans',sans-serif;--lila:#8b5cf6;--lila2:#6d36e0}
+:root{--black:#111318;--s1:#1a1925;--s2:#22212f;--s3:#2c2a3d;--b1:rgba(180,160,255,.10);--b2:rgba(180,160,255,.22);--t1:#ede8f5;--t2:rgba(237,232,245,.78);--t3:rgba(237,232,245,.52);--red:#8b5cf6;--red2:#6d36e0;--acc:#7b1010;--mono:'Space Mono',monospace;--body:'DM Sans',sans-serif;--lila:#8b5cf6;--lila2:#6d36e0}
 *{margin:0;padding:0;box-sizing:border-box}
 html{background:var(--black)}body{min-height:100vh;background:var(--black);color:var(--t1);font-family:var(--body)}
 body{display:flex;flex-direction:row;align-items:flex-start;min-height:100vh}@media(max-width:700px){body{flex-direction:column;}}
@@ -22,7 +22,7 @@ body{display:flex;flex-direction:row;align-items:flex-start;min-height:100vh}@me
 .tab:hover{color:var(--t2)}.tab.on{color:var(--t1);border-bottom-color:var(--red)}
 #ctrl{flex:1;overflow-y:auto;padding:14px 18px 24px}
 #ctrl::-webkit-scrollbar{width:3px}#ctrl::-webkit-scrollbar-thumb{background:var(--s3);border-radius:2px}
-#prev{flex:1;min-height:100vh;background:#050505;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:12px;overflow:visible;min-width:0}@media(max-width:700px){#prev{min-height:unset;padding:32px 0 60px;width:100%;}}
+#prev{flex:1;min-height:100vh;background:#0c0c12;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;gap:12px;overflow:visible;min-width:0}@media(max-width:700px){#prev{min-height:unset;padding:32px 0 60px;width:100%;}}
 
 
 
@@ -287,17 +287,17 @@ input[type=file]{display:none}
 .mv-la .mvvf{position:absolute;top:0;left:0;right:0;height:228px;overflow:hidden}
 .mv-la .mvvf video,.mv-la .mvvf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
 .mv-la .mvvf .cph{pointer-events:none}
-.mv-la .mv-info{position:absolute;top:228px;left:0;right:0;bottom:0;padding:20px 24px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.mv-la .mv-info{position:absolute;top:228px;left:0;right:0;bottom:100px;padding:20px 24px;display:flex;flex-direction:column;justify-content:center;gap:8px}
 
 /* Layout B: centered square — info vertically centered below square */
 .mv-lb .mvvf{position:absolute;top:50px;left:50%;transform:translateX(-50%);width:340px;height:340px;overflow:hidden}
 .mv-lb .mvvf video,.mv-lb .mvvf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
-.mv-lb .mv-info-b{position:absolute;top:410px;left:0;right:0;bottom:20px;padding:0 24px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;text-align:center}
+.mv-lb .mv-info-b{position:absolute;top:410px;left:0;right:0;bottom:100px;padding:0 24px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;text-align:center}
 
 /* Layout C: full bleed video — NO overlay, NO gradient, completely clean */
 .mv-lc .mvvf{position:absolute;inset:0}
 .mv-lc .mvvf video,.mv-lc .mvvf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
-.mv-lc .mv-info-c{position:absolute;bottom:32px;left:0;right:0;padding:0 24px;display:flex;flex-direction:column;gap:8px;z-index:3}
+.mv-lc .mv-info-c{position:absolute;bottom:110px;left:0;right:0;padding:0 24px;display:flex;flex-direction:column;gap:8px;z-index:3}
 /* shared mv info elements */
 .mv-badge{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:4px 10px;border-radius:2px;font-weight:700;background:var(--acc);color:#fff;align-self:flex-start}
 .mv-title{color:#f0ede8;line-height:.9;word-break:break-word}
@@ -845,6 +845,8 @@ Puede ser en varios idiomas
   <!-- MV FLYER 9:16 (shown in MV mode) -->
   <div id="mv-flyer" style="display:none;width:405px;min-width:405px;max-width:405px;height:720px;min-height:720px;max-height:720px;position:relative;overflow:hidden;flex-shrink:0;background:#080808;box-shadow:0 24px 64px rgba(0,0,0,.8)">
     <div style="position:absolute;top:0;left:0;right:0;height:4px;z-index:8;background:#7b1010" id="mv-ftop"></div>
+    <div class="fbg" id="mv-fbg" style="z-index:0"></div>
+    <div class="fov" id="mv-fov" style="background:rgba(8,8,8,0);z-index:0"></div>
 
     <!-- Layout A: 16:9 video (fits inside flyer), info centered below -->
     <div id="mv-fin-a" style="display:block;position:absolute;inset:0">
@@ -865,25 +867,24 @@ Puede ser en varios idiomas
       </div>
     </div>
 
-    <!-- Layout B: centered square video, info vertically centered below -->
+    <!-- Layout B: centered square video + text as one centered block -->
     <div id="mv-fin-b" style="display:none;position:absolute;inset:0">
-      <!-- badge top-left -->
-      <div style="position:absolute;top:24px;left:24px;z-index:5">
-        <div class="mv-badge" id="mv-badge-b" style="background:#7b1010">MV</div>
-      </div>
-      <!-- square video centered -->
-      <div class="dw" id="mv-wrap-vid-b" style="position:absolute;top:80px;left:50%;transform:translateX(-50%);width:330px;height:330px;overflow:hidden;background:#111">
-        <div class="cph" id="mv-cph-b">Video</div>
-        <img id="mv-img-b" alt="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
-        <video id="mv-vid-b" autoplay muted loop playsinline style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
-        <div class="mv-vplay" id="mv-play-b" style="display:none"><svg viewBox="0 0 14 14"><polygon points="3,1 13,7 3,13"/></svg></div>
-      </div>
-      <!-- info: vertically centered in space below square (80+330=410 to 720) -->
-      <div style="position:absolute;top:420px;left:0;right:0;bottom:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:0 28px;gap:8px;text-align:center">
-        <div id="mv-title-b" style="font-size:28px;font-weight:900;color:#f0ede8;line-height:.9;word-break:break-word;text-align:center">NOMBRE DEL TRACK</div>
-        <div id="mv-artist-b" style="font-size:14px;color:rgba(240,237,232,.55);font-family:'DM Sans',sans-serif">Nombre Artista</div>
-        <div class="mv-tags" style="justify-content:center"><span class="mv-tag" id="mv-type-b">MV</span><span class="mv-tag">OUT NOW</span></div>
-        <div style="border-top:1px solid rgba(255,255,255,.07);padding-top:8px;width:100%;text-align:center"><span class="fwm">@khiphophouse · 힙합하우스</span></div>
+      <!-- full-height flex column, center everything together -->
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:40px 28px">
+        <!-- square video -->
+        <div class="dw" id="mv-wrap-vid-b" style="position:relative;width:310px;height:310px;flex-shrink:0;overflow:hidden;background:#111">
+          <div class="cph" id="mv-cph-b">Video</div>
+          <img id="mv-img-b" alt="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+          <video id="mv-vid-b" autoplay muted loop playsinline style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
+          <div class="mv-vplay" id="mv-play-b" style="display:none"><svg viewBox="0 0 14 14"><polygon points="3,1 13,7 3,13"/></svg></div>
+        </div>
+        <!-- text block, same width as video, centered -->
+        <div style="width:310px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding-top:22px">
+          <div id="mv-title-b" style="font-size:28px;font-weight:900;color:#f0ede8;line-height:.9;word-break:break-word;text-align:center">NOMBRE DEL TRACK</div>
+          <div id="mv-artist-b" style="font-size:14px;color:rgba(240,237,232,.55);font-family:'DM Sans',sans-serif">Nombre Artista</div>
+          <div class="mv-tags" style="justify-content:center"><span class="mv-tag" id="mv-type-b">MV</span><span class="mv-tag">OUT NOW</span></div>
+          <div style="border-top:1px solid rgba(255,255,255,.07);padding-top:8px;width:100%;text-align:center"><span class="fwm">@khiphophouse · 힙합하우스</span></div>
+        </div>
       </div>
     </div>
 
@@ -896,7 +897,7 @@ Puede ser en varios idiomas
         <div class="mv-vplay" id="mv-play-c" style="display:none"><svg viewBox="0 0 14 14"><polygon points="3,1 13,7 3,13"/></svg></div>
       </div>
       <!-- Titles + watermark overlay, raised from bottom for reel/tiktok safe zone -->
-      <div style="position:absolute;bottom:90px;left:0;right:0;padding:0 28px;z-index:4;display:flex;flex-direction:column;gap:7px">
+      <div style="position:absolute;bottom:160px;left:0;right:0;padding:0 28px;z-index:4;display:flex;flex-direction:column;gap:7px">
         <div class="mv-tags" style="margin-bottom:2px"><span class="mv-tag" id="mv-type-c" style="border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.6)">MV</span></div>
         <div id="mv-title-c" style="font-size:30px;font-weight:900;color:#f0ede8;line-height:.9;word-break:break-word;text-shadow:0 2px 16px rgba(0,0,0,.95)">NOMBRE DEL TRACK</div>
         <div id="mv-artist-c" style="font-size:15px;color:rgba(240,237,232,.85);font-family:'DM Sans',sans-serif;text-shadow:0 1px 8px rgba(0,0,0,.95)">Nombre Artista</div>
@@ -1063,14 +1064,14 @@ function getMRCoverH(itemH,trackCount,relname,aArt,cardW,artist){
   var tracks=Math.min(trackCount,9);
   var artSz=(aArt||12);
   /* Estimate lines for artist name */
-  var artCharsPerLine=Math.max(1,Math.floor((cardW||67)/(artSz*0.58)));
+  var artCharsPerLine=Math.max(1,Math.floor((cardW||67)/(artSz*0.65)));
   var artLines=artist?Math.max(1,Math.ceil(artist.length/artCharsPerLine)):1;
   var artistH=Math.ceil(artLines*(artSz*1.2))+3;
   /* Estimate lines for release name */
   var relnameH=0;
   if(relname){
     var fnSz=Math.max(artSz-2,7);
-    var rnCharsPerLine=Math.max(1,Math.floor((cardW||67)/(fnSz*0.55)));
+    var rnCharsPerLine=Math.max(1,Math.floor((cardW||67)/(fnSz*0.60)));
     var rnLines=Math.max(1,Math.ceil(relname.length/rnCharsPerLine));
     relnameH=Math.ceil(rnLines*(fnSz*1.3))+3;
   }
@@ -1079,8 +1080,8 @@ function getMRCoverH(itemH,trackCount,relname,aArt,cardW,artist){
   var trackH=tracks*(11+3);
   var padH=10;
   var textH=badgeH+artistH+relnameH+trackH+padH;
-  /* add 4px safety margin */
-  var ch=itemH-textH-4;
+  /* add 16px safety margin to prevent overflow */
+  var ch=itemH-textH-16;
   return Math.max(ch,16);
 }
 
@@ -1410,10 +1411,11 @@ function loadBg(p,inp,lblId){
   if(!inp.files||!inp.files[0])return;
   var r=new FileReader();r.onload=function(e){
     G(p+'-fbg').style.backgroundImage='url('+e.target.result+')';
+    if(p==='r'){var mvbg=G('mv-fbg');if(mvbg)mvbg.style.backgroundImage='url('+e.target.result+')';}
     if(lblId)G(lblId).textContent='Fondo cargado — cambiar';
   };r.readAsDataURL(inp.files[0]);
 }
-function setOv(p,v){G(p+'-ov-v').textContent=v+'%';G(p+'-fov').style.background='rgba(8,8,8,'+(Math.round(v)/100)+')';}
+function setOv(p,v){G(p+'-ov-v').textContent=v+'%';G(p+'-fov').style.background='rgba(8,8,8,'+(Math.round(v)/100)+')';if(p==='r'){var mvo=G('mv-fov');if(mvo)mvo.style.background='rgba(8,8,8,'+(Math.round(v)/100)+')';}}
 
 /* ══ NEWS ══ */
 var nFont='syne',nLyt='a';
