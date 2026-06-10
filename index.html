@@ -1916,95 +1916,221 @@ async function doExportMP4() {
     recorder.start(200); /* chunk every 200ms */
     if(st) st.textContent = 'Grabando… 0%';
 
-    /* ── Draw loop: render the actual MV flyer div each frame ── */
+    /* ── Draw loop: render the actual MV flyer each frame ── */
     function drawFrame() {
       var elapsed = performance.now() - startTime;
       var pct = Math.min(100, Math.round(elapsed / duration * 100));
       if(st) st.textContent = 'Grabando… ' + pct + '%';
 
-      /* Draw background */
-      rctx.fillStyle = '#080808';
-      rctx.fillRect(0, 0, OW, OH);
+      /* ── Common values ── */
+      var tit    = V('rt')     || 'NOMBRE DEL TRACK';
+      var art    = V('ra')     || 'Nombre Artista';
+      var vtype  = V('r-vtype')|| 'MV';
+      var acColor= G('mv-ftop') ? (G('mv-ftop').style.background||'#7b1010') : '#7b1010';
+      var ff     = rFonts[rFont2] || "'Helvetica Neue',Arial,sans-serif";
+      var fw     = rFontW[rFont2] || 900;
+      var tsz    = (parseInt(V('r-tsz'))||27) * SCALE;
+      var asz    = (parseInt(V('r-asz'))||14) * SCALE;
+      var pad    = 28 * SCALE;
+      var monoF  = 'Space Mono,monospace';
+      var smF    = Math.round(9*SCALE);
+      var wm     = '@khiphophouse · 힙합하우스';
 
-      /* Draw the video frame directly into the canvas, scaled to match flyer layout */
-      if(srcVid.readyState >= 2) {
-        /* Determine video zone based on layout */
-        var vx=0, vy=0, vw=OW, vh=OH; /* default: full for layout C */
-        if(mvLyt === 'a'){
-          /* 16:9 top strip: 56.25% of flyer height */
-          vh = Math.round(OH * 0.5625);
-        } else if(mvLyt === 'b'){
-          /* centered square 330×330 at top:80 in 405-wide, scaled */
-          var sqSize = Math.round(330 * SCALE);
-          vx = Math.round((OW - sqSize) / 2);
-          vy = Math.round(80 * SCALE);
-          vw = sqSize; vh = sqSize;
-        }
-        /* Draw video frame with cover fit */
+      /* Helper: draw video into a clipped zone */
+      function drawVid(vx,vy,vw,vh){
+        if(srcVid.readyState < 2) return;
         var vidAR = srcVid.videoWidth / srcVid.videoHeight;
-        var zoneAR = vw / vh;
-        var drawW, drawH, drawX, drawY;
-        if(vidAR > zoneAR){ drawH=vh; drawW=vh*vidAR; drawX=vx-(drawW-vw)/2; drawY=vy; }
-        else { drawW=vw; drawH=vw/vidAR; drawX=vx; drawY=vy-(drawH-vh)/2; }
+        var zoneAR = vw/vh;
+        var dW,dH,dX,dY;
+        if(vidAR>zoneAR){dH=vh;dW=vh*vidAR;dX=vx-(dW-vw)/2;dY=vy;}
+        else{dW=vw;dH=vw/vidAR;dX=vx;dY=vy-(dH-vh)/2;}
         rctx.save();
-        rctx.beginPath();
-        rctx.rect(vx, vy, vw, vh);
-        rctx.clip();
-        rctx.drawImage(srcVid, drawX, drawY, drawW, drawH);
+        rctx.beginPath(); rctx.rect(vx,vy,vw,vh); rctx.clip();
+        rctx.drawImage(srcVid,dX,dY,dW,dH);
         rctx.restore();
       }
 
-      /* ── Overlay text per layout ── */
-      var tit = V('rt') || 'NOMBRE DEL TRACK';
-      var art = V('ra') || 'Nombre Artista';
-      var vtype = V('r-vtype') || 'MV';
-      var acColor = G('mv-ftop') ? G('mv-ftop').style.background || '#c0392b' : '#c0392b';
-      var ff = rFonts[rFont2] || "'Helvetica Neue',Arial,sans-serif";
-      var fw = rFontW[rFont2] || 900;
-      var tsz = (parseInt(V('r-tsz')) || 27) * SCALE;
-      var asz = (parseInt(V('r-asz')) || 14) * SCALE;
-      var pad = 28 * SCALE;
-
-      if(mvLyt === 'a'){
-        /* info centered in lower zone */
-        var zoneTop = Math.round(OH * 0.5625);
-        var zoneH   = OH - zoneTop;
-        var infoY   = zoneTop + (zoneH - (tsz + asz + 20*SCALE)) / 2 + tsz;
-        rctx.fillStyle = acColor;
-        rctx.fillRect(pad, infoY - tsz - 18*SCALE, (vtype.length*7+20)*SCALE, 18*SCALE);
-        rctx.fillStyle = '#fff'; rctx.font = '700 '+Math.round(9*SCALE)+'px Space Mono,monospace'; rctx.textAlign='left';
-        rctx.fillText(vtype, pad+8*SCALE, infoY - tsz - 5*SCALE);
-        rctx.fillStyle = '#f0ede8'; rctx.font = fw+' '+tsz+'px '+ff; rctx.textAlign='left';
-        rctx.fillText(tit, pad, infoY);
-        rctx.fillStyle = 'rgba(240,237,232,.55)'; rctx.font = '400 '+asz+'px DM Sans,sans-serif';
-        rctx.fillText(art, pad, infoY + asz + 6*SCALE);
-      } else if(mvLyt === 'b'){
-        /* info centered below square */
-        var sqBottom = Math.round((80+330)*SCALE);
-        var infoZoneH = OH - sqBottom;
-        var infoCenter = sqBottom + infoZoneH/2;
-        var totalTextH = tsz + asz + 10*SCALE;
-        var startY = infoCenter - totalTextH/2 + tsz;
-        rctx.fillStyle = '#f0ede8'; rctx.font = fw+' '+tsz+'px '+ff; rctx.textAlign='center';
-        rctx.fillText(tit, OW/2, startY);
-        rctx.fillStyle = 'rgba(240,237,232,.55)'; rctx.font = '400 '+asz+'px DM Sans,sans-serif';
-        rctx.fillText(art, OW/2, startY+asz+8*SCALE);
-        rctx.fillStyle = 'rgba(240,237,232,.35)'; rctx.font = '700 '+Math.round(9*SCALE)+'px Space Mono,monospace';
-        rctx.fillText(vtype, OW/2, startY+asz+24*SCALE);
-      } else {
-        /* Layout C: full bleed — titles at very bottom, text shadow */
-        var botY = OH - 24*SCALE;
-        rctx.shadowColor = 'rgba(0,0,0,.95)'; rctx.shadowBlur = 8;
-        rctx.fillStyle = 'rgba(240,237,232,.35)'; rctx.font = '700 '+Math.round(8*SCALE)+'px Space Mono,monospace'; rctx.textAlign='left';
-        rctx.fillText(vtype, pad, botY - tsz - asz - 14*SCALE);
-        rctx.fillStyle = '#f0ede8'; rctx.font = fw+' '+tsz+'px '+ff;
-        rctx.fillText(tit, pad, botY - asz - 8*SCALE);
-        rctx.fillStyle = 'rgba(240,237,232,.7)'; rctx.font = '400 '+asz+'px DM Sans,sans-serif';
-        rctx.fillText(art, pad, botY);
-        rctx.shadowBlur = 0;
+      /* Helper: draw background image if loaded */
+      function drawBgImage(){
+        var fbg = G('mv-fbg');
+        if(!fbg) return;
+        var bgUrl = fbg.style.backgroundImage;
+        if(!bgUrl||bgUrl==='none'||bgUrl==='') return;
+        /* bgImg is cached on the element */
+        if(!fbg._bgImg){
+          var img=new Image(); img.crossOrigin='anonymous';
+          img.src=bgUrl.replace(/^url\(["']?/,'').replace(/["']?\)$/,'');
+          fbg._bgImg=img;
+        }
+        var bi=fbg._bgImg;
+        if(!bi.complete||!bi.naturalWidth) return;
+        /* cover-fit */
+        var ar=bi.naturalWidth/bi.naturalHeight, zar=OW/OH;
+        var dW2,dH2,dX2,dY2;
+        if(ar>zar){dH2=OH;dW2=OH*ar;dX2=-(dW2-OW)/2;dY2=0;}
+        else{dW2=OW;dH2=OW/ar;dX2=0;dY2=-(dH2-OH)/2;}
+        rctx.drawImage(bi,dX2,dY2,dW2,dH2);
       }
 
-      /* Top accent bar */
+      /* Helper: apply overlay — reads from slider value directly */
+      function drawOverlay(){
+        var ovVal = parseInt(V('r-ov')||'0');
+        if(ovVal <= 0) return;
+        rctx.fillStyle='rgba(8,8,8,'+(ovVal/100)+')';
+        rctx.fillRect(0,0,OW,OH);
+      }
+
+      /* Helper: draw @khiphophouse footer with divider */
+      function drawWatermark(y, align, color){
+        /* divider line */
+        rctx.fillStyle='rgba(255,255,255,.08)';
+        var lineX = (align==='center') ? pad : pad;
+        rctx.fillRect(lineX, y-18*SCALE, OW-pad*2, SCALE);
+        /* watermark text */
+        rctx.fillStyle = color||'rgba(240,237,232,.4)';
+        rctx.font = '400 '+smF+'px '+monoF;
+        rctx.textAlign = align||'left';
+        var x = (align==='center') ? OW/2 : pad;
+        rctx.fillText(wm, x, y);
+      }
+
+      /* Helper: tag pills (vtype + OUT NOW side by side) */
+      function drawTags(x, y, align){
+        var tags=[vtype,'OUT NOW'];
+        var tagFsz=Math.round(7.5*SCALE);
+        var hPad=8*SCALE, vPad=5*SCALE, gap=5*SCALE;
+        rctx.font='700 '+tagFsz+'px '+monoF;
+        /* measure real widths */
+        var widths=tags.map(function(t){return rctx.measureText(t).width+hPad*2;});
+        var th=tagFsz+vPad*2;
+        var totalW=widths.reduce(function(a,b){return a+b;},0)+(tags.length-1)*gap;
+        if(align==='center') x=OW/2-totalW/2;
+        tags.forEach(function(tag,i){
+          var tw=widths[i];
+          rctx.strokeStyle='rgba(255,255,255,.3)'; rctx.lineWidth=SCALE;
+          rctx.strokeRect(x, y-th, tw, th);
+          rctx.fillStyle='rgba(255,255,255,.65)'; rctx.textAlign='left';
+          rctx.fillText(tag, x+hPad, y-vPad+1);
+          x+=tw+gap;
+        });
+      }
+
+      /* Helper: badge pill */
+      function drawBadge(x, y, label){
+        var bw=(label.length*6+16)*SCALE, bh=16*SCALE;
+        rctx.fillStyle=acColor;
+        rctx.fillRect(x,y-bh,bw,bh);
+        rctx.fillStyle='#fff';
+        rctx.font='700 '+Math.round(8*SCALE)+'px '+monoF;
+        rctx.textAlign='left';
+        rctx.fillText(label,x+6*SCALE,y-4*SCALE);
+      }
+
+      /* ── Solid background ── */
+      rctx.fillStyle = '#111318';
+      rctx.fillRect(0, 0, OW, OH);
+
+      /* ── Optional background image + overlay ── */
+      drawBgImage();
+      drawOverlay();
+
+      /* row heights */
+      var badgeH  = 16*SCALE;   /* badge pill height */
+      var tagH    = Math.round(7.5*SCALE) + 10*SCALE; /* tag pill height */
+      var gap1    = 10*SCALE;   /* badge → title */
+      var gap2    = 10*SCALE;   /* title → artist */
+      var gap3    = 12*SCALE;   /* artist → tags */
+      var gap4    = 14*SCALE;   /* tags → divider */
+      var gap5    = 18*SCALE;   /* divider → watermark */
+      var wmH     = smF;
+
+      /* ═══ LAYOUT A: 16:9 video top, info block below ═══ */
+      if(mvLyt === 'a'){
+        var vidH = Math.round(OH * (228/720));
+        drawVid(0, 0, OW, vidH);
+        rctx.fillStyle='rgba(255,255,255,.05)';
+        rctx.fillRect(0, vidH, OW, SCALE);
+
+        /* calculate total block height to center it */
+        var blockH = badgeH+gap1+tsz+gap2+asz+gap3+tagH+gap4+SCALE+gap5+wmH;
+        var zoneTop = vidH + 20*SCALE;
+        var zoneBot = OH - 20*SCALE;
+        var zoneH   = zoneBot - zoneTop;
+        /* start y so block is centered in zone */
+        var y = zoneTop + Math.max(0, (zoneH - blockH) / 2);
+
+        /* badge */
+        drawBadge(pad, y + badgeH, vtype);
+        y += badgeH + gap1;
+        /* title */
+        rctx.fillStyle='#f0ede8'; rctx.font=fw+' '+tsz+'px '+ff; rctx.textAlign='left';
+        rctx.fillText(tit, pad, y + tsz);
+        y += tsz + gap2;
+        /* artist */
+        rctx.fillStyle='rgba(240,237,232,.55)'; rctx.font='400 '+asz+'px DM Sans,sans-serif';
+        rctx.fillText(art, pad, y + asz);
+        y += asz + gap3;
+        /* tags */
+        drawTags(pad, y + tagH, 'left');
+        y += tagH + gap4;
+        /* footer */
+        drawWatermark(y + SCALE + gap5 + wmH, 'left', 'rgba(240,237,232,.35)');
+      }
+
+      /* ═══ LAYOUT B: square video + text as one centered block ═══ */
+      else if(mvLyt === 'b'){
+        var sqSz = Math.round(310*SCALE);
+        var sqGap = 24*SCALE;
+        /* block height = video + gap + badge + gap1 + title + gap2 + artist + gap3 + tags + gap4 + divider + gap5 + wm */
+        var txtH = tsz+gap2+asz+gap3+tagH+gap4+SCALE+gap5+wmH;
+        var totalH = sqSz + sqGap + txtH;
+        var y = (OH - totalH) / 2;
+
+        /* video */
+        drawVid((OW-sqSz)/2, y, sqSz, sqSz);
+        y += sqSz + sqGap;
+
+        /* title */
+        rctx.fillStyle='#f0ede8'; rctx.font=fw+' '+tsz+'px '+ff; rctx.textAlign='center';
+        rctx.fillText(tit, OW/2, y + tsz);
+        y += tsz + gap2;
+        /* artist */
+        rctx.fillStyle='rgba(240,237,232,.55)'; rctx.font='400 '+asz+'px DM Sans,sans-serif';
+        rctx.fillText(art, OW/2, y + asz);
+        y += asz + gap3;
+        /* tags */
+        drawTags(0, y + tagH, 'center');
+        y += tagH + gap4;
+        /* footer */
+        drawWatermark(y + SCALE + gap5 + wmH, 'center', 'rgba(240,237,232,.35)');
+      }
+
+      /* ═══ LAYOUT C: full bleed video, stack from bottom up ═══ */
+      else {
+        drawVid(0, 0, OW, OH);
+        var grad=rctx.createLinearGradient(0, OH*0.5, 0, OH);
+        grad.addColorStop(0,'rgba(0,0,0,0)');
+        grad.addColorStop(1,'rgba(0,0,0,.88)');
+        rctx.fillStyle=grad; rctx.fillRect(0, OH*0.5, OW, OH*0.5);
+
+        rctx.shadowColor='rgba(0,0,0,.95)'; rctx.shadowBlur=12;
+
+        /* build stack bottom-up: footer at bottom, then tags, artist, title, tags */
+        var footerY = OH - 60*SCALE;
+        var tagsY   = footerY - gap5 - SCALE - gap4 - tagH;
+        var artY    = tagsY - gap3 - asz;
+        var titY    = artY - gap2 - tsz;
+
+        rctx.fillStyle='#f0ede8'; rctx.font=fw+' '+tsz+'px '+ff; rctx.textAlign='left';
+        rctx.fillText(tit, pad, titY);
+        rctx.fillStyle='rgba(240,237,232,.8)'; rctx.font='400 '+asz+'px DM Sans,sans-serif';
+        rctx.fillText(art, pad, artY);
+        drawTags(pad, tagsY, 'left');
+        drawWatermark(footerY, 'left', 'rgba(240,237,232,.7)');
+        rctx.shadowBlur=0;
+      }
+
+      /* ── Top accent bar (all layouts) ── */
       rctx.fillStyle = acColor;
       rctx.fillRect(0, 0, OW, 4*SCALE);
 
