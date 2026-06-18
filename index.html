@@ -957,8 +957,8 @@ Puede ser en varios idiomas
         <video id="mv-vid-c" autoplay muted loop playsinline style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
         <div class="mv-vplay" id="mv-play-c" style="display:none"><svg viewBox="0 0 14 14"><polygon points="3,1 13,7 3,13"/></svg></div>
       </div>
-      <!-- Titles + watermark overlay, raised from bottom for reel/tiktok safe zone -->
-      <div style="position:absolute;bottom:160px;left:0;right:0;padding:0 28px;z-index:4;display:flex;flex-direction:column;gap:7px">
+      <!-- Titles + watermark overlay -->
+      <div style="position:absolute;bottom:50px;left:0;right:0;padding:0 28px;z-index:4;display:flex;flex-direction:column;gap:7px">
         <div class="mv-tags" style="margin-bottom:2px"><span class="mv-tag" id="mv-type-c" style="border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.6)">MV</span></div>
         <div id="mv-title-c" style="font-size:30px;font-weight:900;color:#f0ede8;line-height:.9;word-break:break-word;text-shadow:0 2px 16px rgba(0,0,0,.95)">NOMBRE DEL TRACK</div>
         <div id="mv-artist-c" style="font-size:15px;color:rgba(240,237,232,.85);font-family:'DM Sans',sans-serif;text-shadow:0 1px 8px rgba(0,0,0,.95)">Nombre Artista</div>
@@ -1873,6 +1873,12 @@ function setMVDur(s, el) {
   if(el) el.classList.add('on');
 }
 
+/* Persistent audio context reused across exports */
+var _mvAudioCtx = null;
+var _mvSrcNode  = null;
+var _mvAudioDest= null;
+var _mvSrcVidRef= null;
+
 async function doExportMP4() {
   var btn = G('r-mp4-dl'), st = G('r-mp4-st');
   if(!rVideoSrc) { if(st) st.textContent='Cargá un video primero.'; return; }
@@ -1895,11 +1901,22 @@ async function doExportMP4() {
     var FPS = 30;
 
     /* ── Step 1: Snapshot the static HTML flyer (no video) via html2canvas ── */
-    /* Temporarily hide the video element so html2canvas captures the static frame */
+    /* Temporarily hide video + placeholder text for clean html2canvas capture */
     var vidEl = G('mv-vid-' + mvLyt);
+    var cphEl = G('mv-cph-' + mvLyt);  /* "Video" placeholder text */
     var imgEl = G('mv-img-' + mvLyt);
     var prevVidDisplay = vidEl ? vidEl.style.display : '';
+    var prevCphDisplay = cphEl ? cphEl.style.display : '';
     if(vidEl) vidEl.style.display = 'none';
+    if(cphEl) cphEl.style.display = 'none';
+    /* For layout C (full video): temporarily show a dark bg so text is visible */
+    var tempScrim = null;
+    if(mvLyt === 'c'){
+      tempScrim = document.createElement('div');
+      tempScrim.style.cssText = 'position:absolute;inset:0;background:#111318;z-index:1';
+      var wrapC = G('mv-wrap-vid-c');
+      if(wrapC) wrapC.appendChild(tempScrim);
+    }
 
     var staticCanvas = await html2canvas(mvEl, {
       scale: SCALE,
@@ -1912,6 +1929,8 @@ async function doExportMP4() {
     });
 
     if(vidEl) vidEl.style.display = prevVidDisplay;
+    if(cphEl) cphEl.style.display = prevCphDisplay;
+    if(tempScrim && tempScrim.parentNode) tempScrim.parentNode.removeChild(tempScrim);
 
     /* ── Step 2: Create recording canvas ── */
     var recCanvas = document.createElement('canvas');
@@ -1929,14 +1948,21 @@ async function doExportMP4() {
     var vw = wrapRect.width  * SCALE;
     var vh = wrapRect.height * SCALE;
 
-    /* ── Step 4: Audio ── */
-    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    if(audioCtx.state === 'suspended') await audioCtx.resume();
-    var srcNode   = audioCtx.createMediaElementSource(srcVid);
-    var audioDest = audioCtx.createMediaStreamDestination();
-    srcNode.connect(audioDest);
-    srcNode.connect(audioCtx.destination);
-    var audioTrack = audioDest.stream.getAudioTracks()[0];
+    /* ── Step 4: Audio (reuse context to avoid double-connect error) ── */
+    if(!_mvAudioCtx || _mvAudioCtx.state === 'closed'){
+      _mvAudioCtx  = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if(_mvAudioCtx.state === 'suspended') await _mvAudioCtx.resume();
+    /* Only create srcNode if video element changed */
+    if(!_mvSrcNode || _mvSrcVidRef !== srcVid){
+      if(_mvSrcNode){ try{_mvSrcNode.disconnect();}catch(e){} }
+      _mvAudioDest  = _mvAudioCtx.createMediaStreamDestination();
+      _mvSrcNode    = _mvAudioCtx.createMediaElementSource(srcVid);
+      _mvSrcNode.connect(_mvAudioDest);
+      _mvSrcNode.connect(_mvAudioCtx.destination);
+      _mvSrcVidRef  = srcVid;
+    }
+    var audioTrack = _mvAudioDest.stream.getAudioTracks()[0];
 
     /* ── Step 5: Setup MediaRecorder ── */
     var canvasStream   = recCanvas.captureStream(FPS);
@@ -1970,7 +1996,7 @@ async function doExportMP4() {
       btn.disabled=false; btn.textContent='↓ Descargar';
       var msg=isMP4?'✓ Descargado como .MP4':'✓ Descargado como .WEBM (iPhone: convertí en cloudconvert.com)';
       if(st){st.textContent=msg; setTimeout(function(){st.textContent='';},8000);}
-      try{audioCtx.close();}catch(e){}
+      /* Keep _mvAudioCtx alive for next export */
     };
 
     /* ── Step 6: Seek to start and play ── */
