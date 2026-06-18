@@ -282,7 +282,7 @@ input[type=file]{display:none}
 .mr-item-form .cover-thumb span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--t3)}
 
 /* MV FLYER 9:16 */
-#mv-flyer{width:405px;height:720px;position:relative;overflow:hidden;flex-shrink:0;background:#080808;font-family:'Helvetica Neue',Arial,sans-serif;box-shadow:0 24px 64px rgba(0,0,0,.8)}
+#mv-flyer{width:405px;height:720px;position:relative;overflow:hidden;flex-shrink:0;background:#080808;font-family:'Helvetica Neue',Arial,sans-serif;box-shadow:0 24px 64px rgba(0,0,0,.8);transition:height .25s ease}
 /* Layout A: standard — video 16:9 top (228px = 405×9/16), info centered in remaining space */
 .mv-la .mvvf{position:absolute;top:0;left:0;right:0;height:228px;overflow:hidden}
 .mv-la .mvvf video,.mv-la .mvvf img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
@@ -334,6 +334,41 @@ input[type=file]{display:none}
 .fstbtn:hover{color:var(--t1)}.fstbtn.on{background:var(--s2);color:var(--t1);border-color:var(--t2)}
 .fclr{width:16px;height:16px;border-radius:3px;border:1px solid var(--b2);cursor:pointer;flex-shrink:0}
 .fclr.on{outline:2px solid var(--t1);outline-offset:1px}
+
+
+/* ── MV aspect ratio selector ─────────────────────────────────── */
+/* MV section blocks */
+.mv-sect-block{padding:10px 14px 10px;border-bottom:1px solid var(--b1)}
+.mv-sect-block:last-child{border-bottom:none}
+.mv-sect-label{font-size:9px;color:var(--t3);font-family:var(--mono);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+
+/* Aspect ratio cards */
+.mvsz-row{display:flex;gap:8px}
+.mvsz-opt{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 8px 8px;
+  background:var(--s3);border:1px solid var(--b2);border-radius:6px;cursor:pointer;
+  flex:1;transition:background .15s,border-color .15s;user-select:none}
+.mvsz-opt:hover{background:var(--s2)}
+.mvsz-opt.on{background:rgba(123,16,16,.15);border-color:rgba(224,80,80,.5)}
+
+/* Aspect frame preview */
+.mvsz-frame{display:flex;align-items:center;justify-content:center;
+  border:1.5px solid var(--b2);border-radius:2px;position:relative;overflow:hidden}
+.mvsz-opt.on .mvsz-frame{border-color:rgba(224,80,80,.6)}
+.mvsz-inner{position:absolute;inset:3px;background:var(--b1);border-radius:1px}
+.mvsz-opt.on .mvsz-inner{background:rgba(224,80,80,.08)}
+
+/* 9:16 frame: narrow tall */
+.mvsz-916{width:20px;height:34px}
+/* 4:5 frame: slightly wider */
+.mvsz-45{width:24px;height:30px}
+
+.mvsz-ratio{font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:1px;color:var(--t2)}
+.mvsz-name{font-size:8px;color:var(--t3);letter-spacing:.3px;text-align:center;line-height:1.4}
+.mvsz-opt.on .mvsz-ratio{color:#e05050}
+.mvsz-opt.on .mvsz-name{color:var(--t2)}
+
+/* Diseño grid inside block */
+.mv-sect-block .lgrid{margin-top:0}
 
 </style>
 </head>
@@ -499,15 +534,42 @@ input[type=file]{display:none}
       <div class="cg"><div class="cgt">Información</div>
         <div class="f"><label>Artista</label><input class="fi" id="ra" value="Nombre Artista" oninput="ur()"></div>
         <div class="f"><label>Título</label><input class="fi" id="rt" value="NOMBRE DEL TRACK" oninput="ur()"></div>
-      <div class="cg" id="r-mv-layout-cg" style="display:none"><div class="cgt">Diseño MV</div>
-        <div class="lgrid" id="mv-lgrid">
-          <div class="lbtn on" onclick="setMVL('a',this)"><span class="li">⊟</span>Standard</div>
-          <div class="lbtn" onclick="setMVL('b',this)"><span class="li">◼</span>Sq.Center</div>
-          <div class="lbtn" onclick="setMVL('c',this)"><span class="li">▣</span>Full Video</div>
+      <div id="r-mv-layout-cg" style="display:none">
+
+        <!-- ── Relación de aspecto ── -->
+        <div class="mv-sect-block">
+          <div class="mv-sect-label">Relación de aspecto</div>
+          <div class="mvsz-row">
+            <label class="mvsz-opt on" id="mvsize-916" onclick="setMVSize('916',this)">
+              <span class="mvsz-frame mvsz-916">
+                <span class="mvsz-inner"></span>
+              </span>
+              <span class="mvsz-ratio">9:16</span>
+              <span class="mvsz-name">Stories / Reels</span>
+            </label>
+            <label class="mvsz-opt" id="mvsize-45" onclick="setMVSize('45',this)">
+              <span class="mvsz-frame mvsz-45">
+                <span class="mvsz-inner"></span>
+              </span>
+              <span class="mvsz-ratio">4:5</span>
+              <span class="mvsz-name">Feed Instagram</span>
+            </label>
+          </div>
         </div>
+
+        <!-- ── Diseño del MV ── -->
+        <div class="mv-sect-block">
+          <div class="mv-sect-label">Diseño</div>
+          <div class="lgrid" id="mv-lgrid">
+            <div class="lbtn on" onclick="setMVL('a',this)"><span class="li">⊟</span>Standard</div>
+            <div class="lbtn" onclick="setMVL('b',this)"><span class="li">◼</span>Sq.Center</div>
+            <div class="lbtn" onclick="setMVL('c',this)"><span class="li">▣</span>Full Video</div>
+          </div>
+        </div>
+
       </div>
       <div class="f" id="r-vtype-f" style="display:none"><label>Tipo de video</label>
-          <select class="fsel" id="r-vtype" onchange="ur()"><option>MV</option><option>OFFICIAL VIDEO</option><option>LYRIC VIDEO</option><option>PERFORMANCE VIDEO</option><option>VISUALIZER</option></select>
+          <select class="fsel" id="r-vtype" onchange="ur()"><option>MV</option><option>OFFICIAL MUSIC VIDEO</option><option>LYRIC VIDEO</option><option>PERFORMANCE VIDEO</option><option>VISUALIZER</option></select>
         </div>
       </div>
       <div class="cg" id="r-tlcg" style="display:none"><div class="cgt">Tracklist</div>
@@ -836,14 +898,14 @@ Puede ser en varios idiomas
           <div class="vplay" id="r-vplay"><svg viewBox="0 0 14 14"><polygon points="3,1 13,7 3,13"/></svg></div>
           <div class="vbadge" id="r-vbadge">MV</div>
         </div>
-        <div class="vinfo"><div id="r-v-title">NOMBRE DEL TRACK</div><div id="r-v-artist">Nombre Artista</div><div class="vtags"><span class="vtag" id="r-v-type">MV</span><span class="vtag">OUT NOW</span></div></div>
+        <div class="vinfo"><div id="r-v-title">NOMBRE DEL TRACK</div><div id="r-v-artist">Nombre Artista</div><div class="vtags"><span class="vtag" id="r-v-type">MV</span></div></div>
       </div>
       <div class="ffoot"><span class="fwm">@khiphophouse · 힙합하우스</span></div>
     </div>
   </div>
 
   <!-- MV FLYER 9:16 (shown in MV mode) -->
-  <div id="mv-flyer" style="display:none;width:405px;min-width:405px;max-width:405px;height:720px;min-height:720px;max-height:720px;position:relative;overflow:hidden;flex-shrink:0;background:#080808;box-shadow:0 24px 64px rgba(0,0,0,.8)">
+  <div id="mv-flyer" style="display:none;width:405px;height:720px;position:relative;overflow:hidden;flex-shrink:0;background:#080808;box-shadow:0 24px 64px rgba(0,0,0,.8);">
     <div style="position:absolute;top:0;left:0;right:0;height:4px;z-index:8;background:#7b1010" id="mv-ftop"></div>
     <div class="fbg" id="mv-fbg" style="z-index:0"></div>
     <div class="fov" id="mv-fov" style="background:rgba(8,8,8,0);z-index:0"></div>
@@ -851,18 +913,17 @@ Puede ser en varios idiomas
     <!-- Layout A: 16:9 video (fits inside flyer), info centered below -->
     <div id="mv-fin-a" style="display:block;position:absolute;inset:0">
       <!-- 16:9 video = 405×228px, fully contained within the 405×720 flyer -->
-      <div class="dw" id="mv-wrap-vid-a" style="position:absolute;top:0;left:0;width:405px;height:228px;overflow:hidden;background:#111">
+      <div class="dw" id="mv-wrap-vid-a" style="position:absolute;top:80px;left:0;width:405px;height:228px;overflow:hidden;background:#111">
         <div class="cph" id="mv-cph-a">Video / Thumbnail</div>
         <img id="mv-img-a" alt="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
         <video id="mv-vid-a" autoplay muted loop playsinline style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></video>
         <div class="mv-vplay" id="mv-play-a" style="display:none"><svg viewBox="0 0 14 14"><polygon points="3,1 13,7 3,13"/></svg></div>
       </div>
       <!-- info zone: 492px below video, vertically centered -->
-      <div style="position:absolute;top:228px;left:0;width:405px;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:20px 28px;gap:10px">
+      <div style="position:absolute;top:308px;left:0;width:405px;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:20px 28px;gap:10px">
         <div class="mv-badge" id="mv-badge-a" style="background:#7b1010;align-self:flex-start">MV</div>
         <div id="mv-title-a" style="font-size:30px;font-weight:900;color:#f0ede8;line-height:.9;word-break:break-word">NOMBRE DEL TRACK</div>
         <div id="mv-artist-a" style="font-size:15px;color:rgba(240,237,232,.55);font-family:'DM Sans',sans-serif">Nombre Artista</div>
-        <div class="mv-tags"><span class="mv-tag" id="mv-type-a">MV</span><span class="mv-tag">OUT NOW</span></div>
         <div style="border-top:1px solid rgba(255,255,255,.07);padding-top:9px;margin-top:2px"><span class="fwm">@khiphophouse · 힙합하우스</span></div>
       </div>
     </div>
@@ -882,7 +943,7 @@ Puede ser en varios idiomas
         <div style="width:310px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding-top:22px">
           <div id="mv-title-b" style="font-size:28px;font-weight:900;color:#f0ede8;line-height:.9;word-break:break-word;text-align:center">NOMBRE DEL TRACK</div>
           <div id="mv-artist-b" style="font-size:14px;color:rgba(240,237,232,.55);font-family:'DM Sans',sans-serif">Nombre Artista</div>
-          <div class="mv-tags" style="justify-content:center"><span class="mv-tag" id="mv-type-b">MV</span><span class="mv-tag">OUT NOW</span></div>
+          <div class="mv-tags" style="justify-content:center"><span class="mv-tag" id="mv-type-b">MV</span></div>
           <div style="border-top:1px solid rgba(255,255,255,.07);padding-top:8px;width:100%;text-align:center"><span class="fwm">@khiphophouse · 힙합하우스</span></div>
         </div>
       </div>
@@ -1814,131 +1875,130 @@ function setMVDur(s, el) {
 
 async function doExportMP4() {
   var btn = G('r-mp4-dl'), st = G('r-mp4-st');
-  if(!rVideoSrc) {
-    if(st) st.textContent = 'Cargá un video MP4 primero.';
-    return;
-  }
+  if(!rVideoSrc) { if(st) st.textContent='Cargá un video primero.'; return; }
 
-  /* Get the active video element for the current MV layout */
   var srcVid = G('mv-vid-' + mvLyt);
-  if(!srcVid || srcVid.readyState < 1) {
-    if(st) st.textContent = 'El video no está listo aún.';
-    return;
-  }
+  if(!srcVid || srcVid.readyState < 1) { if(st) st.textContent='El video no está listo.'; return; }
 
-  btn.disabled = true;
-  btn.textContent = 'Preparando…';
-  if(st) st.textContent = 'Iniciando…';
+  btn.disabled = true; btn.textContent = 'Preparando…';
+  if(st) st.textContent = 'Capturando diseño…';
 
   try {
     var mvEl = G('mv-flyer');
-    var FW = 405, FH = 720;  /* flyer display size */
-    var SCALE = 2;            /* output 810×1440 */
+    /* Display dimensions of the flyer element */
+    var FW = mvEl.offsetWidth  || 405;
+    var FH = mvEl.offsetHeight || 720;
+
+    /* Output at 2× for quality */
+    var SCALE = 2;
     var OW = FW * SCALE, OH = FH * SCALE;
     var FPS = 30;
 
-    /* ── Canvas that we record ── */
+    /* ── Step 1: Snapshot the static HTML flyer (no video) via html2canvas ── */
+    /* Temporarily hide the video element so html2canvas captures the static frame */
+    var vidEl = G('mv-vid-' + mvLyt);
+    var imgEl = G('mv-img-' + mvLyt);
+    var prevVidDisplay = vidEl ? vidEl.style.display : '';
+    if(vidEl) vidEl.style.display = 'none';
+
+    var staticCanvas = await html2canvas(mvEl, {
+      scale: SCALE,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: null,
+      width: FW,
+      height: FH,
+      logging: false
+    });
+
+    if(vidEl) vidEl.style.display = prevVidDisplay;
+
+    /* ── Step 2: Create recording canvas ── */
     var recCanvas = document.createElement('canvas');
     recCanvas.width  = OW;
     recCanvas.height = OH;
     var rctx = recCanvas.getContext('2d');
 
-    /* ── Audio: tap the source video's audio ── */
-    var audioCtx  = new (window.AudioContext || window.webkitAudioContext)();
-    /* Resume if suspended (browser policy) */
+    /* ── Step 3: Find the video's position within the flyer ── */
+    var wrap = G('mv-wrap-vid-' + mvLyt);
+    var flyerRect = mvEl.getBoundingClientRect();
+    var wrapRect  = wrap ? wrap.getBoundingClientRect() : flyerRect;
+    /* video zone in display coords */
+    var vx = (wrapRect.left - flyerRect.left) * SCALE;
+    var vy = (wrapRect.top  - flyerRect.top)  * SCALE;
+    var vw = wrapRect.width  * SCALE;
+    var vh = wrapRect.height * SCALE;
+
+    /* ── Step 4: Audio ── */
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     if(audioCtx.state === 'suspended') await audioCtx.resume();
     var srcNode   = audioCtx.createMediaElementSource(srcVid);
     var audioDest = audioCtx.createMediaStreamDestination();
     srcNode.connect(audioDest);
-    srcNode.connect(audioCtx.destination); /* keep monitor */
+    srcNode.connect(audioCtx.destination);
     var audioTrack = audioDest.stream.getAudioTracks()[0];
 
-    /* ── Canvas stream ── */
-    var canvasStream  = recCanvas.captureStream(FPS);
+    /* ── Step 5: Setup MediaRecorder ── */
+    var canvasStream   = recCanvas.captureStream(FPS);
     var combinedStream = new MediaStream(
       canvasStream.getVideoTracks().concat(audioTrack ? [audioTrack] : [])
     );
-
-    /* ── Codec selection ── */
     var mimeType = '';
-    /* Try MP4/H264 first (Chrome 108+), then WebM fallback */
     var candidates = [
-      'video/mp4;codecs=avc1.42E01E,mp4a.40.2',
-      'video/mp4;codecs=avc1',
-      'video/mp4',
-      'video/webm;codecs=vp9,opus',
-      'video/webm;codecs=vp8,opus',
-      'video/webm'
+      'video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4;codecs=avc1','video/mp4',
+      'video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'
     ];
-    for(var ci = 0; ci < candidates.length; ci++){
-      if(MediaRecorder.isTypeSupported(candidates[ci])){ mimeType = candidates[ci]; break; }
+    for(var ci=0;ci<candidates.length;ci++){
+      if(MediaRecorder.isTypeSupported(candidates[ci])){ mimeType=candidates[ci]; break; }
     }
-
-    var chunks = [];
-    var recOpts = { videoBitsPerSecond: 12000000 };
+    var chunks=[], recOpts={ videoBitsPerSecond: 12000000 };
     if(mimeType) recOpts.mimeType = mimeType;
     var recorder = new MediaRecorder(combinedStream, recOpts);
-    recorder.ondataavailable = function(e){ if(e.data && e.data.size > 0) chunks.push(e.data); };
+    recorder.ondataavailable = function(e){ if(e.data&&e.data.size>0) chunks.push(e.data); };
 
-    var title  = (V('rt') || 'track').replace(/[^a-z0-9]/gi,'_').toLowerCase();
+    var title  = (V('rt')||'track').replace(/[^a-z0-9]/gi,'_').toLowerCase();
     var isMP4  = mimeType.startsWith('video/mp4');
     var ext    = isMP4 ? 'mp4' : 'webm';
 
     recorder.onstop = function(){
-      var blob   = new Blob(chunks, { type: mimeType || 'video/webm' });
-      var dlUrl  = URL.createObjectURL(blob);
-      var a      = document.createElement('a');
-      a.href     = dlUrl;
-      a.download = 'khiphophouse_mv_' + title + '.' + ext;
-      document.body.appendChild(a); a.click();
-      document.body.removeChild(a);
-      setTimeout(function(){ URL.revokeObjectURL(dlUrl); }, 5000);
-      btn.disabled  = false;
-      btn.textContent = '↓ Exportar MP4 (video+audio)';
-      if(st){ st.textContent = '✓ Exportado como .' + ext.toUpperCase(); setTimeout(function(){ st.textContent=''; }, 5000); }
-      try { audioCtx.close(); } catch(e){}
+      var blob  = new Blob(chunks,{type:mimeType||'video/webm'});
+      var dlUrl = URL.createObjectURL(blob);
+      var a=document.createElement('a'); a.href=dlUrl;
+      a.download='khiphophouse_mv_'+title+'.'+ext;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function(){URL.revokeObjectURL(dlUrl);},5000);
+      btn.disabled=false; btn.textContent='↓ Descargar';
+      var msg=isMP4?'✓ Descargado como .MP4':'✓ Descargado como .WEBM (iPhone: convertí en cloudconvert.com)';
+      if(st){st.textContent=msg; setTimeout(function(){st.textContent='';},8000);}
+      try{audioCtx.close();}catch(e){}
     };
 
-    /* ── Rewind and play ── */
-    srcVid.muted = false;
+    /* ── Step 6: Seek to start and play ── */
     srcVid.currentTime = 0;
     await new Promise(function(res){
-      var onSeeked = function(){ srcVid.removeEventListener('seeked', onSeeked); res(); };
-      srcVid.addEventListener('seeked', onSeeked);
-      setTimeout(res, 500); /* fallback */
+      srcVid.onseeked = res;
+      if(srcVid.readyState >= 2) res();
     });
-    await srcVid.play().catch(function(){});
+    srcVid.muted = false;
+    srcVid.play();
 
-    /* Use actual video duration — falls back to MV_DUR if not available */
-    var duration = ((srcVid.duration && isFinite(srcVid.duration)) ? srcVid.duration : MV_DUR) * 1000;
-    var startTime  = performance.now();
+    var duration  = srcVid.duration * 1000 || 10000;
+    var startTime = performance.now();
 
-    recorder.start(200); /* chunk every 200ms */
+    recorder.start(200);
     if(st) st.textContent = 'Grabando… 0%';
 
-    /* ── Draw loop: render the actual MV flyer each frame ── */
-    function drawFrame() {
+    /* ── Step 7: Draw loop — composite static snapshot + live video ── */
+    function drawFrame(){
       var elapsed = performance.now() - startTime;
-      var pct = Math.min(100, Math.round(elapsed / duration * 100));
-      if(st) st.textContent = 'Grabando… ' + pct + '%';
+      var pct = Math.min(100, Math.round(elapsed/duration*100));
+      if(st) st.textContent = 'Grabando… '+pct+'%';
 
-      /* ── Common values ── */
-      var tit    = V('rt')     || 'NOMBRE DEL TRACK';
-      var art    = V('ra')     || 'Nombre Artista';
-      var vtype  = V('r-vtype')|| 'MV';
-      var acColor= G('mv-ftop') ? (G('mv-ftop').style.background||'#7b1010') : '#7b1010';
-      var ff     = rFonts[rFont2] || "'Helvetica Neue',Arial,sans-serif";
-      var fw     = rFontW[rFont2] || 900;
-      var tsz    = (parseInt(V('r-tsz'))||27) * SCALE;
-      var asz    = (parseInt(V('r-asz'))||14) * SCALE;
-      var pad    = 28 * SCALE;
-      var monoF  = 'Space Mono,monospace';
-      var smF    = Math.round(9*SCALE);
-      var wm     = '@khiphophouse · 힙합하우스';
+      /* 1. Draw the static html2canvas snapshot (bg, text, overlays, badges) */
+      rctx.drawImage(staticCanvas, 0, 0, OW, OH);
 
-      /* Helper: draw video into a clipped zone */
-      function drawVid(vx,vy,vw,vh){
-        if(srcVid.readyState < 2) return;
+      /* 2. Draw live video into its zone (covers the placeholder) */
+      if(srcVid.readyState >= 2){
         var vidAR = srcVid.videoWidth / srcVid.videoHeight;
         var zoneAR = vw/vh;
         var dW,dH,dX,dY;
@@ -1950,207 +2010,21 @@ async function doExportMP4() {
         rctx.restore();
       }
 
-      /* Helper: draw background image if loaded */
-      function drawBgImage(){
-        var fbg = G('mv-fbg');
-        if(!fbg) return;
-        var bgUrl = fbg.style.backgroundImage;
-        if(!bgUrl||bgUrl==='none'||bgUrl==='') return;
-        /* bgImg is cached on the element */
-        if(!fbg._bgImg){
-          var img=new Image(); img.crossOrigin='anonymous';
-          img.src=bgUrl.replace(/^url\(["']?/,'').replace(/["']?\)$/,'');
-          fbg._bgImg=img;
-        }
-        var bi=fbg._bgImg;
-        if(!bi.complete||!bi.naturalWidth) return;
-        /* cover-fit */
-        var ar=bi.naturalWidth/bi.naturalHeight, zar=OW/OH;
-        var dW2,dH2,dX2,dY2;
-        if(ar>zar){dH2=OH;dW2=OH*ar;dX2=-(dW2-OW)/2;dY2=0;}
-        else{dW2=OW;dH2=OW/ar;dX2=0;dY2=-(dH2-OH)/2;}
-        rctx.drawImage(bi,dX2,dY2,dW2,dH2);
-      }
-
-      /* Helper: apply overlay — reads from slider value directly */
-      function drawOverlay(){
-        var ovVal = parseInt(V('r-ov')||'0');
-        if(ovVal <= 0) return;
-        rctx.fillStyle='rgba(8,8,8,'+(ovVal/100)+')';
-        rctx.fillRect(0,0,OW,OH);
-      }
-
-      /* Helper: draw @khiphophouse footer with divider */
-      function drawWatermark(y, align, color){
-        /* divider line */
-        rctx.fillStyle='rgba(255,255,255,.08)';
-        var lineX = (align==='center') ? pad : pad;
-        rctx.fillRect(lineX, y-18*SCALE, OW-pad*2, SCALE);
-        /* watermark text */
-        rctx.fillStyle = color||'rgba(240,237,232,.4)';
-        rctx.font = '400 '+smF+'px '+monoF;
-        rctx.textAlign = align||'left';
-        var x = (align==='center') ? OW/2 : pad;
-        rctx.fillText(wm, x, y);
-      }
-
-      /* Helper: tag pills (vtype + OUT NOW side by side) */
-      function drawTags(x, y, align){
-        var tags=[vtype,'OUT NOW'];
-        var tagFsz=Math.round(7.5*SCALE);
-        var hPad=8*SCALE, vPad=5*SCALE, gap=5*SCALE;
-        rctx.font='700 '+tagFsz+'px '+monoF;
-        /* measure real widths */
-        var widths=tags.map(function(t){return rctx.measureText(t).width+hPad*2;});
-        var th=tagFsz+vPad*2;
-        var totalW=widths.reduce(function(a,b){return a+b;},0)+(tags.length-1)*gap;
-        if(align==='center') x=OW/2-totalW/2;
-        tags.forEach(function(tag,i){
-          var tw=widths[i];
-          rctx.strokeStyle='rgba(255,255,255,.3)'; rctx.lineWidth=SCALE;
-          rctx.strokeRect(x, y-th, tw, th);
-          rctx.fillStyle='rgba(255,255,255,.65)'; rctx.textAlign='left';
-          rctx.fillText(tag, x+hPad, y-vPad+1);
-          x+=tw+gap;
-        });
-      }
-
-      /* Helper: badge pill */
-      function drawBadge(x, y, label){
-        var bw=(label.length*6+16)*SCALE, bh=16*SCALE;
-        rctx.fillStyle=acColor;
-        rctx.fillRect(x,y-bh,bw,bh);
-        rctx.fillStyle='#fff';
-        rctx.font='700 '+Math.round(8*SCALE)+'px '+monoF;
-        rctx.textAlign='left';
-        rctx.fillText(label,x+6*SCALE,y-4*SCALE);
-      }
-
-      /* ── Solid background ── */
-      rctx.fillStyle = '#111318';
-      rctx.fillRect(0, 0, OW, OH);
-
-      /* ── Optional background image + overlay ── */
-      drawBgImage();
-      drawOverlay();
-
-      /* row heights */
-      var badgeH  = 16*SCALE;   /* badge pill height */
-      var tagH    = Math.round(7.5*SCALE) + 10*SCALE; /* tag pill height */
-      var gap1    = 10*SCALE;   /* badge → title */
-      var gap2    = 10*SCALE;   /* title → artist */
-      var gap3    = 12*SCALE;   /* artist → tags */
-      var gap4    = 14*SCALE;   /* tags → divider */
-      var gap5    = 18*SCALE;   /* divider → watermark */
-      var wmH     = smF;
-
-      /* ═══ LAYOUT A: 16:9 video top, info block below ═══ */
-      if(mvLyt === 'a'){
-        var vidH = Math.round(OH * (228/720));
-        drawVid(0, 0, OW, vidH);
-        rctx.fillStyle='rgba(255,255,255,.05)';
-        rctx.fillRect(0, vidH, OW, SCALE);
-
-        /* calculate total block height to center it */
-        var blockH = badgeH+gap1+tsz+gap2+asz+gap3+tagH+gap4+SCALE+gap5+wmH;
-        var zoneTop = vidH + 20*SCALE;
-        var zoneBot = OH - 20*SCALE;
-        var zoneH   = zoneBot - zoneTop;
-        /* start y so block is centered in zone */
-        var y = zoneTop + Math.max(0, (zoneH - blockH) / 2);
-
-        /* badge */
-        drawBadge(pad, y + badgeH, vtype);
-        y += badgeH + gap1;
-        /* title */
-        rctx.fillStyle='#f0ede8'; rctx.font=fw+' '+tsz+'px '+ff; rctx.textAlign='left';
-        rctx.fillText(tit, pad, y + tsz);
-        y += tsz + gap2;
-        /* artist */
-        rctx.fillStyle='rgba(240,237,232,.55)'; rctx.font='400 '+asz+'px DM Sans,sans-serif';
-        rctx.fillText(art, pad, y + asz);
-        y += asz + gap3;
-        /* tags */
-        drawTags(pad, y + tagH, 'left');
-        y += tagH + gap4;
-        /* footer */
-        drawWatermark(y + SCALE + gap5 + wmH, 'left', 'rgba(240,237,232,.35)');
-      }
-
-      /* ═══ LAYOUT B: square video + text as one centered block ═══ */
-      else if(mvLyt === 'b'){
-        var sqSz = Math.round(310*SCALE);
-        var sqGap = 24*SCALE;
-        /* block height = video + gap + badge + gap1 + title + gap2 + artist + gap3 + tags + gap4 + divider + gap5 + wm */
-        var txtH = tsz+gap2+asz+gap3+tagH+gap4+SCALE+gap5+wmH;
-        var totalH = sqSz + sqGap + txtH;
-        var y = (OH - totalH) / 2;
-
-        /* video */
-        drawVid((OW-sqSz)/2, y, sqSz, sqSz);
-        y += sqSz + sqGap;
-
-        /* title */
-        rctx.fillStyle='#f0ede8'; rctx.font=fw+' '+tsz+'px '+ff; rctx.textAlign='center';
-        rctx.fillText(tit, OW/2, y + tsz);
-        y += tsz + gap2;
-        /* artist */
-        rctx.fillStyle='rgba(240,237,232,.55)'; rctx.font='400 '+asz+'px DM Sans,sans-serif';
-        rctx.fillText(art, OW/2, y + asz);
-        y += asz + gap3;
-        /* tags */
-        drawTags(0, y + tagH, 'center');
-        y += tagH + gap4;
-        /* footer */
-        drawWatermark(y + SCALE + gap5 + wmH, 'center', 'rgba(240,237,232,.35)');
-      }
-
-      /* ═══ LAYOUT C: full bleed video, stack from bottom up ═══ */
-      else {
-        drawVid(0, 0, OW, OH);
-        var grad=rctx.createLinearGradient(0, OH*0.5, 0, OH);
-        grad.addColorStop(0,'rgba(0,0,0,0)');
-        grad.addColorStop(1,'rgba(0,0,0,.88)');
-        rctx.fillStyle=grad; rctx.fillRect(0, OH*0.5, OW, OH*0.5);
-
-        rctx.shadowColor='rgba(0,0,0,.95)'; rctx.shadowBlur=12;
-
-        /* build stack bottom-up: footer at bottom, then tags, artist, title, tags */
-        var footerY = OH - 60*SCALE;
-        var tagsY   = footerY - gap5 - SCALE - gap4 - tagH;
-        var artY    = tagsY - gap3 - asz;
-        var titY    = artY - gap2 - tsz;
-
-        rctx.fillStyle='#f0ede8'; rctx.font=fw+' '+tsz+'px '+ff; rctx.textAlign='left';
-        rctx.fillText(tit, pad, titY);
-        rctx.fillStyle='rgba(240,237,232,.8)'; rctx.font='400 '+asz+'px DM Sans,sans-serif';
-        rctx.fillText(art, pad, artY);
-        drawTags(pad, tagsY, 'left');
-        drawWatermark(footerY, 'left', 'rgba(240,237,232,.7)');
-        rctx.shadowBlur=0;
-      }
-
-      /* ── Top accent bar (all layouts) ── */
-      rctx.fillStyle = acColor;
-      rctx.fillRect(0, 0, OW, 4*SCALE);
-
-      if(elapsed < duration) {
+      if(elapsed < duration){
         requestAnimationFrame(drawFrame);
       } else {
-        srcVid.pause();
-        srcVid.muted = true;
+        srcVid.pause(); srcVid.muted=true;
         recorder.stop();
-        canvasStream.getTracks().forEach(function(t){ t.stop(); });
+        canvasStream.getTracks().forEach(function(t){t.stop();});
       }
     }
 
     requestAnimationFrame(drawFrame);
 
-  } catch(err) {
-    console.error('MP4 export error:', err);
-    btn.disabled = false;
-    btn.textContent = '↓ Exportar MP4 (video+audio)';
-    if(st) st.textContent = 'Error: ' + err.message;
+  } catch(err){
+    console.error('Export error:', err);
+    btn.disabled=false; btn.textContent='↓ Descargar';
+    if(st){ st.textContent='Error: '+err.message; setTimeout(function(){st.textContent='';},6000); }
   }
 }
 
@@ -2399,5 +2273,27 @@ function applyAllNFieldStyles(){
 /* Hook applyAllNFieldStyles into un() */
 var _unNFs=un;
 un=function(){_unNFs();applyAllNFieldStyles();};
+
+
+/* ── MV Size selector (9:16 vs 4:3) ─────────────────────────── */
+var mvSize = '916'; /* default 9:16 */
+function setMVSize(sz, btn){
+  mvSize = sz;
+  /* update selector visuals */
+  document.querySelectorAll('.mvsz-opt').forEach(function(b){ b.classList.remove('on'); });
+  if(btn) btn.classList.add('on');
+  var flyer = G('mv-flyer');
+  if(!flyer) return;
+  var h, label;
+  if(sz === '45'){
+    h = 506; label = 'MV — 1080 × 1350 px (4:5)';
+  } else {
+    h = 720; label = 'MV — 1080 × 1920 px (9:16)';
+  }
+  flyer.style.height = h + 'px';
+  var plbl = G('plbl'); if(plbl) plbl.textContent = label;
+  /* rescale preview so it fits on screen */
+  setTimeout(scalePreview, 50);
+}
 
 </script>
