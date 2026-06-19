@@ -158,16 +158,16 @@ input[type=file]{display:none}
 .csq img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;display:none}
 .cdsc{position:relative;width:330px;height:215px;margin-bottom:10px}
 .cdj{position:absolute;left:0;top:0;width:215px;height:215px}
-.cdo{position:absolute;inset:0;background:rgba(22,22,22,.98);border:1px solid rgba(255,255,255,.2);border-radius:2px}
+.cdo{position:absolute;inset:0;background:transparent;border:1px solid rgba(255,255,255,.2);border-radius:2px;pointer-events:none;z-index:0}
 .cdsp{position:absolute;left:0;top:0;bottom:0;width:13px;background:rgba(255,255,255,.03);border-right:1px solid rgba(255,255,255,.1);border-radius:2px 0 0 2px}
-.cdt{position:absolute;top:5px;left:17px;right:5px;bottom:5px;background:#0d0d0d;overflow:hidden}
-.cdt img{width:100%;height:100%;object-fit:cover;display:none}.cdt .cph{font-size:9px}
+.cdt{position:absolute;top:5px;left:17px;right:5px;bottom:5px;background:linear-gradient(135deg,#1a1a1a 0%,#0d0d0d 100%);overflow:hidden;z-index:1}
+.cdt img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}.cdt .cph{font-size:9px}
 .cdsh{position:absolute;top:0;left:13px;width:26px;bottom:0;background:linear-gradient(90deg,rgba(255,255,255,.07),rgba(255,255,255,0));pointer-events:none}
 .cdgl{position:absolute;top:0;right:0;width:44px;height:44px;background:linear-gradient(135deg,rgba(255,255,255,.07),rgba(255,255,255,0));pointer-events:none}
 .cdd{position:absolute;right:0;top:50%;transform:translateY(-50%);width:148px;height:148px}
 .vnsc{position:relative;width:335px;height:215px;margin-bottom:10px}
-.vnsl{position:absolute;left:0;top:0;width:215px;height:215px;background:#111;border:none;overflow:hidden}
-.vnsl img{width:100%;height:100%;object-fit:cover;display:none}.vnsl .cph{font-size:9px}
+.vnsl{position:absolute;left:0;top:0;width:215px;height:215px;background:linear-gradient(135deg,#1a1a1a 0%,#0d0d0d 100%);border:none;overflow:hidden}
+.vnsl img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}.vnsl .cph{font-size:9px}
 .vne{position:absolute;top:0;right:0;bottom:0;width:10px;background:rgba(0,0,0,.6);border-left:1px solid rgba(255,255,255,.06);pointer-events:none}
 .vnd{position:absolute;right:0;top:50%;transform:translateY(-50%);width:157px;height:157px}
 .sinfo{text-align:center;width:100%}
@@ -370,6 +370,32 @@ input[type=file]{display:none}
 /* Diseño grid inside block */
 .mv-sect-block .lgrid{margin-top:0}
 
+
+/* ── Release XL: 13-20 tracks editorial layout ─────────────────── */
+#r-xl{display:none;flex-direction:column;flex:1}
+#r-xl.on{display:flex}
+/* Hide normal footer when XL is active */
+#r-xl.on~.ffoot{display:none}
+.release-flyer #r-xl.on{counter-reset:none}
+/* Hide badge when XL is active */
+#r-xl.on{position:relative}
+
+.xl-header{display:flex;gap:10px;align-items:flex-start;padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,.08)}
+.xl-cover{width:100px;height:100px;flex-shrink:0;position:relative;overflow:hidden;background:#1a1a1a}
+.xl-cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.xl-cover .cph{font-size:8px}
+.xl-meta{display:flex;flex-direction:column;justify-content:center;gap:4px;flex:1;min-width:0}
+.xl-title{font-size:20px;font-weight:900;color:#f0ede8;line-height:.95;word-break:break-word}
+.xl-artist{font-size:11px;color:rgba(240,237,232,.55);font-family:'DM Sans',sans-serif}
+.xl-info{font-size:8px;color:rgba(240,237,232,.3);font-family:var(--mono);letter-spacing:1px;margin-top:2px}
+.xl-tracks{flex:1;display:flex;flex-direction:column;gap:0;overflow:hidden}
+.xl-track{display:flex;align-items:baseline;gap:6px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.04);line-height:1.2}
+.xl-track:last-child{border-bottom:none}
+.xl-num{font-family:var(--mono);font-size:7.5px;color:var(--acc);min-width:14px;flex-shrink:0;font-weight:700}
+.xl-tname{font-size:8.5px;color:#f0ede8;flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.xl-tart{font-size:7.5px;color:rgba(240,237,232,.4);font-family:var(--mono);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:90px}
+.xl-foot{padding-top:7px;margin-top:auto;border-top:1px solid rgba(255,255,255,.06)}
+
 </style>
 </head>
 <body>
@@ -377,10 +403,10 @@ input[type=file]{display:none}
   <div id="sbh">
     <div class="brand">KHIPHOP<span>HOUSE</span></div>
     <div class="tabs">
-      <button class="tab on" onclick="switchTab('news',this)">News</button>
-      <button class="tab" onclick="switchTab('release',this)">Release</button>
-      <button class="tab" onclick="switchTab('multi',this)">Multi</button>
-      <button class="tab" onclick="switchTab('birthday',this)">B-day</button>
+      <button class="tab on" onclick="switchTab('news',this)" data-tab="news">News</button>
+      <button class="tab" onclick="switchTab('release',this)" data-tab="release">Release</button>
+      <button class="tab" onclick="switchTab('multi',this)" data-tab="multi">Multi</button>
+      <button class="tab" onclick="switchTab('birthday',this)" data-tab="birthday">B-day</button>
     </div>
   </div>
   <div id="ctrl">
@@ -532,8 +558,8 @@ input[type=file]{display:none}
         </div>
       </div>
       <div class="cg"><div class="cgt">Información</div>
-        <div class="f"><label>Artista</label><input class="fi" id="ra" value="Nombre Artista" oninput="ur()"></div>
-        <div class="f"><label>Título</label><input class="fi" id="rt" value="NOMBRE DEL TRACK" oninput="ur()"></div>
+        <div class="f"><label>Artista</label><input class="fi" id="ra" value="Nombre Artista" oninput="updateRelease()"></div>
+        <div class="f"><label>Título</label><input class="fi" id="rt" value="NOMBRE DEL TRACK" oninput="updateRelease()"></div>
       <div id="r-mv-layout-cg" style="display:none">
 
         <!-- ── Relación de aspecto ── -->
@@ -569,15 +595,18 @@ input[type=file]{display:none}
 
       </div>
       <div class="f" id="r-vtype-f" style="display:none"><label>Tipo de video</label>
-          <select class="fsel" id="r-vtype" onchange="ur()"><option>MV</option><option>OFFICIAL MUSIC VIDEO</option><option>LYRIC VIDEO</option><option>PERFORMANCE VIDEO</option><option>VISUALIZER</option></select>
+          <select class="fsel" id="r-vtype" onchange="updateRelease()"><option>MV</option><option>OFFICIAL MUSIC VIDEO</option><option>LYRIC VIDEO</option><option>PERFORMANCE VIDEO</option><option>VISUALIZER</option></select>
         </div>
       </div>
       <div class="cg" id="r-tlcg" style="display:none"><div class="cgt">Tracklist</div>
         <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px"><label style="font-size:10px;color:var(--t3);font-family:var(--mono);white-space:nowrap">Cantidad</label>
           <select class="fsel" id="tc-count" onchange="buildTracks()" style="flex:1">
             <option>1</option><option>2</option><option>3</option><option>4</option><option value="5" selected>5</option>
-            <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option>
+            <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option><option>19</option><option>20</option>
           </select>
+        </div>
+        <div class="f" id="r-xl-badge-f" style="display:none;margin-bottom:8px"><label style="font-size:10px;color:var(--t3);font-family:var(--mono);white-space:nowrap;display:block;margin-bottom:4px">Texto info (13+ tracks)</label>
+          <input class="fi" id="r-xl-badge-i" placeholder="ALBUM · 13 TRACKS" oninput="setXlInfoFromSidebar(this.value)">
         </div>
         <div class="tfields" id="tfields"></div>
       </div>
@@ -589,9 +618,9 @@ input[type=file]{display:none}
         </div>
       </div>
       <div class="cg"><div class="cgt">Tamaño de texto</div>
-        <div class="slrow"><label>Título</label><input type="range" id="r-tsz" min="12" max="54" value="27" oninput="ur()"><span id="r-tsz-v">27</span></div>
-        <div class="slrow"><label>Artista</label><input type="range" id="r-asz" min="9" max="26" value="14" oninput="ur()"><span id="r-asz-v">14</span></div>
-        <div class="slrow" id="r-tksz-row" style="display:none"><label>Tracks</label><input type="range" id="r-tksz" min="8" max="16" value="10" oninput="ur()"><span id="r-tksz-v">10</span></div>
+        <div class="slrow"><label>Título</label><input type="range" id="r-tsz" min="12" max="54" value="27" oninput="updateRelease()"><span id="r-tsz-v">27</span></div>
+        <div class="slrow"><label>Artista</label><input type="range" id="r-asz" min="9" max="26" value="14" oninput="updateRelease()"><span id="r-asz-v">14</span></div>
+        <div class="slrow" id="r-tksz-row" style="display:none"><label>Tracks</label><input type="range" id="r-tksz" min="8" max="16" value="10" oninput="updateRelease()"><span id="r-tksz-v">10</span></div>
       </div>
       <div class="cg"><div class="cgt">Fuente — título</div>
         <div class="fgrid" id="rfg">
@@ -779,7 +808,7 @@ input[type=file]{display:none}
   <div id="prev-inner">
 
   <!-- NEWS FLYER -->
-  <div class="flyer" id="news-flyer">
+  <div class="flyer" id="news-flyer" style="display:none">
     <div class="fbg" id="n-fbg"></div>
     <div class="fov" id="n-fov" style="background:rgba(8,8,8,0)"></div>
     <div class="ftop" id="n-ftop"></div>
@@ -875,20 +904,22 @@ Puede ser en varios idiomas
         </div>
         <div id="rz-cd" style="display:none;justify-content:center">
           <div class="cdsc">
-            <div class="cdj"><div class="cdo"></div><div class="cdsp"></div><div class="cdt dw" id="wrap-ri-cd"><div class="cph" id="rp-cd">Cover<br>Art</div><img id="ri-cd" alt=""><div class="dh">drag</div></div><div class="cdsh"></div><div class="cdgl"></div></div>
-            <div class="cdd"><svg viewBox="0 0 148 148" width="148" height="148" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="cg1" cx="45%" cy="40%" r="55%"><stop offset="0%" stop-color="#3a3a3a"/><stop offset="100%" stop-color="#0d0d0d"/></radialGradient><radialGradient id="cs1" cx="35%" cy="30%" r="55%"><stop offset="0%" stop-color="rgba(255,255,255,.12)"/><stop offset="60%" stop-color="rgba(255,255,255,0)"/></radialGradient><clipPath id="cc1"><circle cx="74" cy="74" r="70"/></clipPath></defs><circle cx="74" cy="74" r="70" fill="url(#cg1)" stroke="rgba(255,255,255,.12)" stroke-width="0.5"/><image id="rid-sq-cd" x="4" y="4" width="140" height="140" clip-path="url(#cc1)" preserveAspectRatio="xMidYMid slice" opacity="0.35"/><circle cx="74" cy="74" r="70" fill="url(#cs1)"/><circle cx="74" cy="74" r="59" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="0.5"/><circle cx="74" cy="74" r="47" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="0.5"/><circle cx="74" cy="74" r="35" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="0.5"/><circle cx="74" cy="74" r="23" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="0.5"/><circle cx="74" cy="74" r="17" fill="#111" stroke="rgba(255,255,255,.1)" stroke-width="0.5"/><circle cx="74" cy="74" r="6" fill="#0a0a0a" stroke="rgba(255,255,255,.15)" stroke-width="0.5"/></svg></div>
+            <div class="cdj"><div class="cdo"></div><div class="cdsp"></div><div class="cdt dw" id="wrap-ri-cd"><div class="cph" id="rp-cd">Cover<br>Art</div><img id="ri-cd" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none"><div class="dh">drag</div></div><div class="cdsh"></div><div class="cdgl"></div></div>
+            <div class="cdd"><svg viewBox="0 0 148 148" width="148" height="148" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="cg1" cx="45%" cy="40%" r="55%"><stop offset="0%" stop-color="#3a3a3a"/><stop offset="100%" stop-color="#0d0d0d"/></radialGradient><radialGradient id="cs1" cx="35%" cy="30%" r="55%"><stop offset="0%" stop-color="rgba(255,255,255,.12)"/><stop offset="60%" stop-color="rgba(255,255,255,0)"/></radialGradient><clipPath id="cc1"><circle cx="74" cy="74" r="70"/></clipPath></defs><circle cx="74" cy="74" r="70" fill="url(#cg1)" stroke="rgba(255,255,255,.12)" stroke-width="0.5"/><image id="rid-sq-cd" x="4" y="4" width="140" height="140" clip-path="url(#cc1)" preserveAspectRatio="xMidYMid slice" opacity="0.65"/><circle cx="74" cy="74" r="70" fill="url(#cs1)"/><circle cx="74" cy="74" r="59" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="0.5"/><circle cx="74" cy="74" r="47" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="0.5"/><circle cx="74" cy="74" r="35" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="0.5"/><circle cx="74" cy="74" r="23" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="0.5"/><circle cx="74" cy="74" r="17" fill="#111" stroke="rgba(255,255,255,.1)" stroke-width="0.5"/><circle cx="74" cy="74" r="6" fill="#0a0a0a" stroke="rgba(255,255,255,.15)" stroke-width="0.5"/></svg></div>
           </div>
         </div>
         <div id="rz-vn" style="display:none;justify-content:center">
-          <div class="vnsc"><div class="vnsl dw" id="wrap-ri-vn"><div class="cph" id="rp-vn">Cover<br>Art</div><img id="ri-vn" alt=""><div class="vne"></div><div class="dh">drag</div></div><div class="vnd"><svg viewBox="0 0 157 157" width="157" height="157" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="vg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#2a2a2a"/><stop offset="100%" stop-color="#0d0d0d"/></radialGradient><radialGradient id="vs1" cx="35%" cy="28%" r="55%"><stop offset="0%" stop-color="rgba(255,255,255,.1)"/><stop offset="70%" stop-color="rgba(255,255,255,0)"/></radialGradient><clipPath id="vc1"><circle cx="78.5" cy="78.5" r="74.5"/></clipPath></defs><circle cx="78.5" cy="78.5" r="74.5" fill="url(#vg1)" stroke="rgba(255,255,255,.1)" stroke-width="0.5"/><image id="rid-sq-vn" x="4" y="4" width="149" height="149" clip-path="url(#vc1)" preserveAspectRatio="xMidYMid slice" opacity="0.2"/><circle cx="78.5" cy="78.5" r="74.5" fill="url(#vs1)"/><circle cx="78.5" cy="78.5" r="66" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="0.8"/><circle cx="78.5" cy="78.5" r="57" fill="none" stroke="rgba(255,255,255,.03)" stroke-width="0.8"/><circle cx="78.5" cy="78.5" r="47" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="0.8"/><circle cx="78.5" cy="78.5" r="37" fill="none" stroke="rgba(255,255,255,.03)" stroke-width="0.8"/><circle cx="78.5" cy="78.5" r="27" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="0.8"/><circle cx="78.5" cy="78.5" r="21" fill="#181818" stroke="rgba(255,255,255,.07)" stroke-width="0.5"/><circle cx="78.5" cy="78.5" r="14" fill="#111" stroke="rgba(255,255,255,.05)" stroke-width="0.5"/><circle cx="78.5" cy="78.5" r="5.5" fill="#0a0a0a" stroke="rgba(255,255,255,.15)" stroke-width="0.5"/></svg></div></div>
+          <div class="vnsc"><div class="vnsl dw" id="wrap-ri-vn"><div class="cph" id="rp-vn">Cover<br>Art</div><img id="ri-vn" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none"><div class="vne"></div><div class="dh">drag</div></div><div class="vnd"><svg viewBox="0 0 157 157" width="157" height="157" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="vg1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#2a2a2a"/><stop offset="100%" stop-color="#0d0d0d"/></radialGradient><radialGradient id="vs1" cx="35%" cy="28%" r="55%"><stop offset="0%" stop-color="rgba(255,255,255,.1)"/><stop offset="70%" stop-color="rgba(255,255,255,0)"/></radialGradient><clipPath id="vc1"><circle cx="78.5" cy="78.5" r="74.5"/></clipPath></defs><circle cx="78.5" cy="78.5" r="74.5" fill="url(#vg1)" stroke="rgba(255,255,255,.1)" stroke-width="0.5"/><image id="rid-sq-vn" x="4" y="4" width="149" height="149" clip-path="url(#vc1)" preserveAspectRatio="xMidYMid slice" opacity="0.45"/><circle cx="78.5" cy="78.5" r="74.5" fill="url(#vs1)"/><circle cx="78.5" cy="78.5" r="66" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="0.8"/><circle cx="78.5" cy="78.5" r="57" fill="none" stroke="rgba(255,255,255,.03)" stroke-width="0.8"/><circle cx="78.5" cy="78.5" r="47" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="0.8"/><circle cx="78.5" cy="78.5" r="37" fill="none" stroke="rgba(255,255,255,.03)" stroke-width="0.8"/><circle cx="78.5" cy="78.5" r="27" fill="none" stroke="rgba(255,255,255,.04)" stroke-width="0.8"/><circle cx="78.5" cy="78.5" r="21" fill="#181818" stroke="rgba(255,255,255,.07)" stroke-width="0.5"/><circle cx="78.5" cy="78.5" r="14" fill="#111" stroke="rgba(255,255,255,.05)" stroke-width="0.5"/><circle cx="78.5" cy="78.5" r="5.5" fill="#0a0a0a" stroke="rgba(255,255,255,.15)" stroke-width="0.5"/></svg></div></div>
         </div>
         <div class="sinfo"><div id="r-s-title" style="font-size:27px;font-weight:900">NOMBRE DEL TRACK</div><div id="r-s-artist" style="font-size:14px">Nombre Artista</div></div>
+        <div class="ffoot" style="margin-top:auto"><span class="fwm">@khiphophouse · 힙합하우스</span></div>
       </div>
       <div class="ml" id="r-ml">
         <div id="rz-m-sq" style="margin-bottom:9px"><div class="mcsq dw" id="wrap-rm-sq"><div class="cph" id="rp-m-sq">Cover Art</div><img id="ri-m-sq" alt=""><div class="dh">drag</div></div></div>
         <div id="rz-m-cd" style="display:none;margin-bottom:9px"><div class="mcdsc" id="rm-cd-sc"><div class="mcdst dw" id="wrap-rm-cd"><div class="mcdsp"></div><div class="mcdsh"></div><div class="cph" id="rp-m-cd">Cover Art</div><img id="ri-m-cd" alt=""><div class="dh">drag</div></div><div class="mcdd" id="rm-cd-d"></div></div></div>
         <div id="rz-m-vn" style="display:none;margin-bottom:9px"><div class="mvnsc" id="rm-vn-sc"><div class="mvnsl dw" id="wrap-rm-vn"><div class="mvne"></div><div class="cph" id="rp-m-vn">Cover Art</div><img id="ri-m-vn" alt=""><div class="dh">drag</div></div><div class="mvnd" id="rm-vn-d"></div></div></div>
         <div class="minfo"><div id="r-m-title" style="font-size:27px;font-weight:900">NOMBRE DEL TRACK</div><div id="r-m-artist" style="font-size:14px">Nombre Artista</div><div class="ftl" id="r-ftl"></div></div>
+        <div class="ffoot"><span class="fwm">@khiphophouse · 힙합하우스</span></div>
       </div>
       <div class="vl" id="r-vl">
         <div class="vframe" id="r-vf" style="height:190px">
@@ -900,7 +931,20 @@ Puede ser en varios idiomas
         </div>
         <div class="vinfo"><div id="r-v-title">NOMBRE DEL TRACK</div><div id="r-v-artist">Nombre Artista</div><div class="vtags"><span class="vtag" id="r-v-type">MV</span></div></div>
       </div>
-      <div class="ffoot"><span class="fwm">@khiphophouse · 힙합하우스</span></div>
+
+      <!-- XL: 13-20 tracks editorial layout -->
+      <div class="xl" id="r-xl">
+        <div class="xl-header">
+          <div class="xl-cover dw" id="wrap-ri-xl"><div class="cph" id="rp-xl">Cover</div><img id="ri-xl" alt=""><div class="dh">drag</div></div>
+          <div class="xl-meta">
+            <div class="xl-title" id="r-xl-title">NOMBRE DEL ÁLBUM</div>
+            <div class="xl-artist" id="r-xl-artist">Nombre Artista</div>
+            <div class="xl-info" id="r-xl-info" contenteditable="true" spellcheck="false" style="cursor:text;outline:none;min-width:40px" oninput="onXlInfoEdit(this)">ALBUM</div>
+          </div>
+        </div>
+        <div class="xl-tracks" id="r-xl-tracks"></div>
+        <div class="xl-foot"><span class="fwm">@khiphophouse · 힙합하우스</span></div>
+      </div>
     </div>
   </div>
 
@@ -1454,7 +1498,9 @@ function placeCover(wid,iid,src){
     img.style.cssText='position:absolute;display:block;pointer-events:none;left:'+DS[iid].x+'px;top:'+DS[iid].y+'px;width:'+rw+'px;height:'+rh+'px';
     var ph2=w.querySelector('.cph');if(ph2)ph2.style.display='none';
     w.classList.add('loaded');
-  };img.src=src;
+  };
+  img.src=src;
+  if(img.complete&&img.naturalWidth)img.onload();
   initDrag(wid,iid);
 }
 
@@ -1464,10 +1510,12 @@ function setAc(p,el){
   document.querySelectorAll('#'+p+'-acd .acd').forEach(function(d){d.classList.remove('on')});el.classList.add('on');
   var c=el.dataset.c;
   if(p==='n'){G('n-ftop').style.background=c;G('n-accent').style.background=c;['n-tag','n-tag-b'].forEach(function(id){var e=G(id);if(e)e.style.color=c});['n-tline','n-tline-b'].forEach(function(id){var e=G(id);if(e)e.style.background=c});var lct=G('n-lc-tag');if(lct){lct.style.color=c;lct.style.borderColor=c;lct.style.background='rgba('+hexToRGB(c)+',.1)';}var lcd=G('n-lc-div');if(lcd)lcd.style.background=c;var nlb=G('n-lb-bar');if(nlb)nlb.style.background=c;var dpill=G('n-ld-pill');if(dpill)dpill.style.background=c;var ddiv=G('n-ld-divline');if(ddiv)ddiv.style.background=c;var etb=G('n-e-topbar');if(etb)etb.style.background=c;}
-  else if(p==='r'){G('r-ftop').style.background=c;G('r-bdg').style.background=c;var mvft=G('mv-ftop');if(mvft)mvft.style.background=c;['mv-badge-a','mv-badge-b','mv-badge-c'].forEach(function(id){var e=G(id);if(e)e.style.background=c;});}
+  else if(p==='r'){G('r-ftop').style.background=c;G('r-bdg').style.background=c;var mvft=G('mv-ftop');if(mvft)mvft.style.background=c;['mv-badge-a','mv-badge-b','mv-badge-c'].forEach(function(id){var e=G(id);if(e)e.style.background=c;});rAccCur=c;document.querySelectorAll('#r-xl-tracks .xl-num').forEach(function(e){e.style.color=c;});}
   else if(p==='bd'){G('bd-stripe').style.background=c;drawBdDots(c);}
 }
 function hexToRGB(hex){if(!hex||hex[0]!=='#')return'192,57,43';var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return r+','+g+','+b}
+function onXlInfoEdit(el){rXlInfoText=el.textContent;var xib=G('r-xl-badge-i');if(xib)xib.value=rXlInfoText;}
+function setXlInfoFromSidebar(v){rXlInfoText=(v==null||v.trim()==='')?null:v;updateRelease();}
 function loadBg(p,inp,lblId){
   if(!inp.files||!inp.files[0])return;
   var r=new FileReader();r.onload=function(e){
@@ -1565,12 +1613,13 @@ function loadNImg(inp){
 
 /* ══ RELEASE ══ */
 var rMode='s',rCS='sq',rCover=null,rFont2='hv';
+var rBadge='ALBUM',rXlInfoText=null,rAccCur='#7b1010';
 var rFonts={hv:"'Helvetica Neue',Arial,sans-serif",syne:"'Syne',sans-serif",bebas:"'Bebas Neue',sans-serif",archivo:"'Archivo Black',sans-serif",playfair:"'Playfair Display',serif",cinzel:"'Cinzel Decorative',serif",quicksand:"'Quicksand',sans-serif",imfell:"'IM Fell English',serif"};
 var rFontW={hv:900,syne:800,bebas:400,archivo:400,playfair:900,cinzel:700,quicksand:700,imfell:400};
 var rFontLS={hv:'-.5px',syne:'-.5px',bebas:'1px',archivo:'-.5px',playfair:'-.5px'};
-var RSIZES={1:{ch:168,g:4},2:{ch:156,g:4},3:{ch:142,g:3},4:{ch:130,g:3},5:{ch:118,g:3},6:{ch:106,g:2},7:{ch:96,g:2},8:{ch:88,g:2},9:{ch:80,g:1},10:{ch:73,g:1},11:{ch:66,g:1},12:{ch:60,g:1}};
+var RSIZES={1:{ch:168,g:4},2:{ch:156,g:4},3:{ch:142,g:3},4:{ch:130,g:3},5:{ch:118,g:3},6:{ch:106,g:2},7:{ch:96,g:2},8:{ch:88,g:2},9:{ch:80,g:1},10:{ch:73,g:1},11:{ch:66,g:1},12:{ch:60,g:1},13:{ch:68,ts:9,as:8},14:{ch:64,ts:9,as:8},15:{ch:60,ts:9,as:7},16:{ch:56,ts:8,as:7},17:{ch:52,ts:8,as:7},18:{ch:50,ts:8,as:6},19:{ch:48,ts:7,as:6},20:{ch:46,ts:7,as:6}};
 
-function setRF(f,el){rFont2=f;document.querySelectorAll('#rfg .fopt').forEach(function(b){b.classList.remove('on')});el.classList.add('on');ur();}
+function setRF(f,el){rFont2=f;document.querySelectorAll('#rfg .fopt').forEach(function(b){b.classList.remove('on')});el.classList.add('on');updateRelease();}
 var mvLyt='a';
 function setMVL(l,el){
   mvLyt=l;
@@ -1597,21 +1646,26 @@ function syncMVVideo(){
 }
 
 function setRM(m,lbl,btn){
-  rMode=m;document.querySelectorAll('#r-ttog .tbtn').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');
+  rMode=m;rBadge=lbl;document.querySelectorAll('#r-ttog .tbtn').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');
   G('r-bdg').textContent=lbl;
-  G('r-sl').className='sl'+(m==='s'?' on':'');G('r-ml').className='ml'+(m==='m'?' on':'');G('r-vl').className='vl'+(m==='v'?' on':'');
+  G('r-sl').className='sl'+(m==='s'?' on':'');G('r-ml').className='ml'+(m==='m'?' on':'');G('r-vl').className='vl'+(m==='v'?' on':'');var rxl2=G('r-xl');if(rxl2)rxl2.classList.remove('on');
+  var fhdr2=document.querySelector('#release-flyer .fhdr');
+  if(fhdr2)fhdr2.style.display='';
   G('r-tlcg').style.display=m==='m'?'block':'none';G('r-vtype-f').style.display=m==='v'?'block':'none';
   G('r-cscg').style.display=m==='v'?'none':'block';G('r-tksz-row').style.display=m==='m'?'flex':'none';
   G('r-vid-up-cg').style.display=m==='v'?'block':'none';
   G('r-mv-export').style.display=m==='v'?'block':'none';
   G('r-mv-layout-cg').style.display=m==='v'?'block':'none';
-  /* swap flyer: MV mode shows mv-flyer (9:16), others show release-flyer */
-  G('release-flyer').style.display=m==='v'?'none':'block';
-  G('mv-flyer').style.display=m==='v'?'block':'none';
-  G('plbl').textContent=m==='v'?'MV — 1080×1920 (9:16)':'RELEASE — 1080×1350';
+  /* swap flyer only if on release tab */
+  var _onRel=document.querySelector('.tab.on[data-tab="release"]');
+  if(_onRel){
+    G('release-flyer').style.display=m==='v'?'none':'block';
+    G('mv-flyer').style.display=m==='v'?'block':'none';
+    G('plbl').textContent=m==='v'?'MV — 1080×1920 (9:16)':'RELEASE — 1080×1350';
+  }
   var rdl=G('r-dl');if(rdl){rdl.style.display=m==='v'?'none':'block';}
   var rst=G('r-st');if(rst)rst.style.display=m==='v'?'none':'block';
-  if(m==='m')buildTracks();ur();
+  if(m==='m')buildTracks();updateRelease();
   if(m==='v')syncMVVideo();
 }
 function setCS(s,el){
@@ -1623,8 +1677,39 @@ function buildTracks(){
   var n=parseInt(V('tc-count'))||5,c=G('tfields'),ex=[];
   c.querySelectorAll('.tfi').forEach(function(el,i){ex[i]={t:el.querySelector('.tfs')?el.querySelector('.tfs').value:'',a:el.querySelector('.tfa')?el.querySelector('.tfa').value:''};});
   c.innerHTML='';
-  for(var i=0;i<n;i++){var p=ex[i]||{t:'',a:''},d=document.createElement('div');d.className='tfi';d.innerHTML='<div class="tfn">TRACK '+(i<9?'0':'')+(i+1)+'</div><input class="tfs" placeholder="Nombre de la canción" value="'+p.t+'" oninput="ur()"><input class="tfa interp" placeholder="Intérprete(s)" value="'+p.a+'" oninput="ur()">';c.appendChild(d);}
-  applyMultiSizes(n);ur();
+  /* Switch between normal (≤12) and editorial XL (13+) */
+  var rml=G('r-ml'),rxl=G('r-xl');
+  var fhdr=document.querySelector('#release-flyer .fhdr');
+  if(rml&&rxl){
+    if(n>12){
+      rml.classList.remove('on');rxl.classList.add('on');
+      if(fhdr)fhdr.style.display='none';
+    }else{
+      rml.classList.add('on');rxl.classList.remove('on');
+      if(fhdr)fhdr.style.display='';
+    }
+  }
+  var xbf=G('r-xl-badge-f');if(xbf)xbf.style.display=n>12?'block':'none';
+  for(var i=0;i<n;i++){var p=ex[i]||{t:'',a:''},d=document.createElement('div');d.className='tfi';d.innerHTML='<div class="tfn">TRACK '+(i<9?'0':'')+(i+1)+'</div><input class="tfs" placeholder="Nombre de la canción" value="'+p.t+'" oninput="updateRelease()"><input class="tfa interp" placeholder="Intérprete(s)" value="'+p.a+'" oninput="updateRelease()">';c.appendChild(d);}
+  applyMultiSizes(n);
+  /* For XL: populate directly from saved values before updateRelease() clears them */
+  var rxl2=G('r-xl');
+  if(rxl2&&rxl2.classList.contains('on')){
+    var xlt2=G('r-xl-tracks');
+    if(xlt2){
+      xlt2.innerHTML='';
+      var xtksz=parseInt(V('r-tksz'))||10;
+      for(var xi=0;xi<ex.length;xi++){
+        var xe=ex[xi];if(!xe||(!xe.t&&!xe.a))continue;
+        var xd=document.createElement('div');xd.className='xl-track';
+        xd.innerHTML='<span class="xl-num" style="color:'+rAccCur+';font-size:'+Math.max(7,xtksz-2)+'px">'+(xi<9?'0':'')+(xi+1)+'</span>'
+          +'<span class="xl-tname" style="font-size:'+xtksz+'px">'+(xe.t||'—')+'</span>'
+          +'<span class="xl-tart" style="font-size:'+Math.max(7,xtksz-2)+'px">'+(xe.a||'')+'</span>';
+        xlt2.appendChild(xd);
+      }
+    }
+  }
+  updateRelease();
 }
 function applyMultiSizes(n){
   var s=RSIZES[n]||RSIZES[12];
@@ -1646,7 +1731,7 @@ function loadRC(inp){
   if(!inp.files||!inp.files[0])return;
   var rd=new FileReader();rd.onload=function(e){
     rCover=e.target.result;
-    [['wrap-ri-sq','ri-sq'],['wrap-ri-cd','ri-cd'],['wrap-ri-vn','ri-vn'],['wrap-rm-sq','ri-m-sq'],['wrap-rm-cd','ri-m-cd'],['wrap-rm-vn','ri-m-vn']].forEach(function(p){placeCover(p[0],p[1],rCover);});
+    [['wrap-ri-sq','ri-sq'],['wrap-ri-cd','ri-cd'],['wrap-ri-vn','ri-vn'],['wrap-rm-sq','ri-m-sq'],['wrap-rm-cd','ri-m-cd'],['wrap-rm-vn','ri-m-vn'],['wrap-ri-xl','ri-xl']].forEach(function(p){placeCover(p[0],p[1],rCover);});
     var vi=G('ri-vid');if(vi){vi.src=rCover;vi.style.display='block';var vp=G('rp-vid');if(vp)vp.style.display='none';}
     setSvgH('rid-sq-cd',rCover);setSvgH('rid-sq-vn',rCover);setSvgH('rid-m-cd',rCover);setSvgH('rid-m-vn',rCover);
     G('r-cu-lbl').textContent='Cover cargado — arrastrá para encuadrar';
@@ -1694,7 +1779,7 @@ function loadRVideo(inp){
     });
   }
 }
-function ur(){
+function updateRelease(){
   var art=V('ra'),tit=V('rt'),tsz=parseInt(V('r-tsz'))||27,asz=parseInt(V('r-asz'))||14,tksz=parseInt(V('r-tksz'))||10;
   G('r-tsz-v').textContent=tsz;G('r-asz-v').textContent=asz;G('r-tksz-v').textContent=tksz;
   var ff=rFonts[rFont2],fw=rFontW[rFont2],fls=rFontLS[rFont2],fi=rFont2==='playfair'?'italic':'normal';
@@ -1716,6 +1801,47 @@ function ur(){
       html+='<div class="ftr" style="padding:'+s.g+'px 0"><span class="ftrn" style="font-size:'+(tksz-2)+'px">'+(i<9?'0':'')+(i+1)+'</span><div class="ftri2"><span class="ftrk" style="font-size:'+tksz+'px;max-width:340px" title="'+(song||'')+'">'+( song||'—')+'</span>'+(artist?'<span class="ftria" style="font-size:'+(tksz-2)+'px;max-width:340px" title="'+artist+'">'+artist+'</span>':'')+' </div></div>';
     });
     G('r-ftl').innerHTML=html;
+  }
+  /* Populate XL layout (13+ tracks) */
+  var rxl=G('r-xl');
+  if(rxl&&(rxl.classList.contains('on')||rMode==='m')){
+    var xt=G('r-xl-title');if(xt){xt.textContent=tit;xt.style.fontFamily=ff;xt.style.fontWeight=fw;xt.style.letterSpacing=fls;xt.style.fontStyle=fi;xt.style.fontSize=Math.min(tsz,22)+'px';}
+    var xa=G('r-xl-artist');if(xa){xa.textContent=art;xa.style.fontSize=Math.min(asz,12)+'px';}
+    var n2=parseInt(V('tc-count'))||0;
+    var xi=G('r-xl-info');
+    if(xi&&document.activeElement!==xi){xi.textContent=(rXlInfoText!==null)?rXlInfoText:((rBadge||'ALBUM')+' · '+n2+' TRACKS');}
+    var xib=G('r-xl-badge-i');
+    if(xib&&xi&&document.activeElement!==xib){xib.value=xi.textContent;}
+    var xlt=G('r-xl-tracks');
+    if(xlt){
+      var xlNumSz=Math.max(7,tksz-2),xlArtSz=Math.max(7,tksz-2);
+      var tfis=document.querySelectorAll('#tfields .tfi');
+      /* Update in place if count matches, else rebuild */
+      var existing=xlt.querySelectorAll('.xl-track');
+      if(existing.length===tfis.length&&existing.length>0){
+        /* In-place update — no DOM rebuild, preserves focus */
+        tfis.forEach(function(fi,i){
+          var tn=fi.querySelector('.tfs'),ta=fi.querySelector('.tfa');
+          var row=existing[i];
+          if(!row)return;
+          var nm=row.querySelector('.xl-tname');if(nm){nm.textContent=(tn&&tn.value)?tn.value:'—';nm.style.fontSize=tksz+'px';}
+          var ar=row.querySelector('.xl-tart');if(ar){ar.textContent=(ta&&ta.value)?ta.value:'';ar.style.fontSize=xlArtSz+'px';}
+          var nu=row.querySelector('.xl-num');if(nu)nu.style.fontSize=xlNumSz+'px';
+        });
+      } else {
+        /* Rebuild (count changed) */
+        xlt.innerHTML='';
+        tfis.forEach(function(fi,i){
+          var tn=fi.querySelector('.tfs'),ta=fi.querySelector('.tfa');
+          var div=document.createElement('div');div.className='xl-track';
+          div.innerHTML='<span class="xl-num" style="color:'+rAccCur+';font-size:'+xlNumSz+'px">'+(i<9?'0':'')+(i+1)+'</span>'
+            +'<span class="xl-tname" style="font-size:'+tksz+'px">'+(tn&&tn.value?tn.value:'—')+'</span>'
+            +'<span class="xl-tart" style="font-size:'+xlArtSz+'px">'+(ta&&ta.value?ta.value:'')+'</span>';
+          xlt.appendChild(div);
+        });
+      }
+    }
+    if(rCover&&G('ri-xl')){if(!G('ri-xl').complete||!G('ri-xl').naturalWidth)placeCover('wrap-ri-xl','ri-xl',rCover);}
   }
 }
 
@@ -1799,14 +1925,23 @@ async function doDownload(flyerId, dlBtnId, stId, filename) {
   var btn = G(dlBtnId), st = G(stId);
   var outW = Math.round(1080 * DL_SCALE);
   var outH = Math.round(1350 * DL_SCALE);
-  var scale = outW / 405;
 
   btn.disabled = true;
   btn.textContent = 'Generando…';
   if (st) st.textContent = 'Procesando ' + outW + '×' + outH + 'px…';
 
+  /* Track temporary swaps so we can always restore, even on error */
+  var fbgSwaps = [];
+
   try {
     var el = G(flyerId);
+
+    /* Use the REAL on-screen size of the flyer (not a hardcoded 405x506),
+       so the export always matches what the preview is currently showing. */
+    var rect = el.getBoundingClientRect();
+    var realW = rect.width || 405;
+    var realH = rect.height || 506;
+    var scale = outW / realW;
 
     /* Pause any playing videos and capture current frame as img */
     el.querySelectorAll('video').forEach(function(v) {
@@ -1825,14 +1960,44 @@ async function doDownload(flyerId, dlBtnId, stId, filename) {
       } catch(e) {}
     });
 
+    /* html2canvas can lose quality on background-image: url(dataURL) because
+       it re-scales the source to the element's on-screen CSS size before
+       drawing it, instead of using the original full-resolution image data.
+       Fix: temporarily swap any .fbg / .mr-bg background-image for a real
+       <img> element at full quality, positioned to cover the same area,
+       then restore the original background-image after capture. */
+    el.querySelectorAll('.fbg, .mr-bg').forEach(function(bgEl) {
+      var bgImage = bgEl.style.backgroundImage;
+      var match = bgImage && bgImage.match(/^url\((['"]?)(.*)\1\)$/);
+      if (!match) return;
+      var src = match[2];
+
+      var img = document.createElement('img');
+      img.src = src;
+      img.style.position = 'absolute';
+      img.style.inset = '0';
+      img.style.width = '100%';
+      img.style.height = '100%';
+      img.style.objectFit = bgEl.style.backgroundSize === 'contain' ? 'contain' : 'cover';
+      img.style.objectPosition = bgEl.style.backgroundPosition || 'center';
+      img.style.display = 'block';
+      img.crossOrigin = 'anonymous';
+
+      bgEl.appendChild(img);
+      fbgSwaps.push({ bgEl: bgEl, img: img, prevBgImage: bgImage });
+      /* Hide the CSS background while the <img> stands in for it, so we
+         don't risk double-drawing it */
+      bgEl.style.backgroundImage = 'none';
+    });
+
     var canvas = await html2canvas(el, {
       scale: scale,
       useCORS: true,
       allowTaint: true,
       backgroundColor: '#080808',
       logging: false,
-      width: 405,
-      height: 506,
+      width: realW,
+      height: realH,
       imageTimeout: 0,
       removeContainer: true
     });
@@ -1841,6 +2006,13 @@ async function doDownload(flyerId, dlBtnId, stId, filename) {
     el.querySelectorAll('video').forEach(function(v) {
       if(v._captureImg) { v._captureImg.remove(); delete v._captureImg; v.style.display = 'block'; }
     });
+
+    /* Restore the original background-image swaps */
+    fbgSwaps.forEach(function(s) {
+      s.img.remove();
+      s.bgEl.style.backgroundImage = s.prevBgImage;
+    });
+    fbgSwaps = [];
 
     canvas.toBlob(function(blob) {
       var url = URL.createObjectURL(blob);
@@ -1851,14 +2023,18 @@ async function doDownload(flyerId, dlBtnId, stId, filename) {
       btn.disabled = false;
       btn.textContent = '↓ Descargar';
       if(st){
-        var msg = isMP4 ? '✓ Descargado como .MP4' : '✓ Descargado como .WEBM — en iPhone: importá en Fotos o convertí en cloudconvert.com';
-        st.textContent = msg;
-        setTimeout(function(){ st.textContent=''; }, isMP4 ? 3000 : 8000);
+        st.textContent = '✓ Descargado';
+        setTimeout(function(){ st.textContent=''; }, 3000);
       }
     }, 'image/png');
 
   } catch(err) {
     console.error('Download error:', err);
+    /* Make sure we never leave the DOM in the swapped state on error */
+    fbgSwaps.forEach(function(s) {
+      s.img.remove();
+      s.bgEl.style.backgroundImage = s.prevBgImage;
+    });
     btn.disabled = false;
     btn.textContent = '↓ Descargar';
     if(st) st.textContent = 'Error: ' + err.message;
@@ -1896,7 +2072,7 @@ async function doExportMP4() {
     var FH = mvEl.offsetHeight || 720;
 
     /* Output at 2× for quality */
-    var SCALE = 2;
+    var SCALE = 3;  /* 3× = ~1215×2160px for 9:16, crisp quality */
     var OW = FW * SCALE, OH = FH * SCALE;
     var FPS = 30;
 
@@ -1977,7 +2153,7 @@ async function doExportMP4() {
     for(var ci=0;ci<candidates.length;ci++){
       if(MediaRecorder.isTypeSupported(candidates[ci])){ mimeType=candidates[ci]; break; }
     }
-    var chunks=[], recOpts={ videoBitsPerSecond: 12000000 };
+    var chunks=[], recOpts={ videoBitsPerSecond: 25000000 }; /* 25Mbps */
     if(mimeType) recOpts.mimeType = mimeType;
     var recorder = new MediaRecorder(combinedStream, recOpts);
     recorder.ondataavailable = function(e){ if(e.data&&e.data.size>0) chunks.push(e.data); };
@@ -2058,7 +2234,7 @@ async function doExportMP4() {
 drawBdDots('#c0392b');
 buildTracks();
 buildMR();
-un();ur();ubd();
+un();updateRelease();ubd();
 /* set initial download button labels to 2x */
 setTimeout(function(){
   var btn2x = document.querySelectorAll('.dlscale-btn')[1];
@@ -2132,23 +2308,11 @@ function updateAllHashtags(){
 
 /* ── Hook into existing update functions ────────────────────────── */
 /* Wrap un() to also trigger caption + hashtags */
-var _origUn = un;
-un = function(){
-  _origUn();
-  updateAllHashtags();
-};
+/* un wrapper consolidated below */
 
-/* Also wrap ur(), ubd() for hashtags on other sections */
-var _origUr = ur;
-ur = function(){
-  _origUr();
-  updateAllHashtags();
-};
-var _origUbd = ubd;
-ubd = function(){
-  _origUbd();
-  updateAllHashtags();
-};
+/* Also wrap updateRelease(), ubd() for hashtags on other sections */
+/* ur wrapper consolidated below */
+/* ubd wrapper consolidated below */
 
 /* Init on load */
 setTimeout(function(){
@@ -2202,9 +2366,9 @@ function updateAllHashtags(){
   var bh=G('bd-hashtags');if(bh)bh.textContent=buildHashtags('bd');
 }
 /* Hook into un/ur/ubd */
-var _un0=un,_ur0=ur,_ubd0=ubd;
+var _un0=un,_ur0=updateRelease,_ubd0=ubd;
 un=function(){_un0();updateAllHashtags();};
-ur=function(){_ur0();updateAllHashtags();};
+updateRelease=function(){_ur0();updateAllHashtags();};
 ubd=function(){_ubd0();updateAllHashtags();};
 /* ── Rich text editor ──────────────────────────────────── */
 function rtCmd(cmd){
@@ -2251,9 +2415,16 @@ un=function(){
 /* ── Apply default accent color on load ─────────────────── */
 setTimeout(function(){
   updateAllHashtags();
+  /* Apply default accent colors */
   var dn=document.querySelector('#n-acd .acd.on');if(dn)setAc('n',dn);
   var dr=document.querySelector('#r-acd .acd.on');if(dr)setAc('r',dr);
   var dbd=document.querySelector('#bd-acd .acd.on');if(dbd)setAc('bd',dbd);
+  /* Init active tab — shows correct flyer, hides others */
+  var activeTab=document.querySelector('.tab.on');
+  if(activeTab)switchTab(activeTab.dataset.tab||'news',activeTab);
+  /* Init release mode */
+  var rBtn=document.querySelector('#r-ttog .tbtn.on');
+  if(rBtn){var rm=rBtn.getAttribute('onclick').match(/setRM\('(\w+)'/);if(rm)setRM(rm[1],rBtn.textContent.trim(),rBtn);}
 },300);
 
 
