@@ -97,7 +97,7 @@ input[type=file]{display:none}
 
 /* ══ FLYER BASE ══ */
 .flyer{width:405px;height:506px;position:relative;overflow:hidden;flex-shrink:0;background:#080808;font-family:'Helvetica Neue',Arial,sans-serif;box-shadow:0 24px 64px rgba(0,0,0,.8)}
-.fbg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:1}
+.fbg{position:absolute;inset:0;z-index:1;overflow:hidden;cursor:grab;user-select:none}.fbg:active{cursor:grabbing}
 .fov{position:absolute;inset:0;z-index:2;background:rgba(8,8,8,.72)}
 .ftop{position:absolute;top:0;left:0;right:0;height:4px;z-index:8;background:var(--acc)}
 .fin{position:relative;z-index:4;padding:22px 26px;height:100%;display:flex;flex-direction:column}
@@ -110,7 +110,7 @@ input[type=file]{display:none}
 /* drag wrapper */
 .dw{position:relative;overflow:hidden;cursor:grab;user-select:none}
 .dw:active{cursor:grabbing}
-.dw img{position:absolute;display:none;pointer-events:none;transform-origin:top left}
+.dw img,.fbg img,.mr-bg img{position:absolute;display:none;pointer-events:none}
 .dw .cph{pointer-events:none}
 .dh{display:none!important}
 
@@ -243,7 +243,7 @@ input[type=file]{display:none}
 
 /* ══ MULTI-RELEASE FLYER ══ */
 #mr-flyer{width:405px;height:506px;position:relative;overflow:hidden;flex-shrink:0;background:#080808;font-family:'Helvetica Neue',Arial,sans-serif;box-shadow:0 24px 64px rgba(0,0,0,.8)}
-.mr-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:1}
+.mr-bg{position:absolute;inset:0;z-index:1;overflow:hidden;cursor:grab;user-select:none}.mr-bg:active{cursor:grabbing}
 .mr-ov{position:absolute;inset:0;z-index:2;background:rgba(8,8,8,.82)}
 .mr-top{position:absolute;top:0;left:0;right:0;height:4px;z-index:8;background:var(--acc)}
 .mr-inner{position:relative;z-index:4;padding:16px 18px 14px;height:100%;display:flex;flex-direction:column}
@@ -396,6 +396,22 @@ input[type=file]{display:none}
 .xl-tart{font-size:7.5px;color:rgba(240,237,232,.4);font-family:var(--mono);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;max-width:90px}
 .xl-foot{padding-top:7px;margin-top:auto;border-top:1px solid rgba(255,255,255,.06)}
 
+
+/* ── NEWS Layout F (info bottom) ──────────────────────────────── */
+#n-fin-f .n-lf-info{position:absolute;left:0;right:0;bottom:0;padding:24px 28px;
+  background:linear-gradient(to top,rgba(8,8,8,.95) 0%,rgba(8,8,8,.6) 60%,rgba(8,8,8,0) 100%);
+  display:flex;flex-direction:column;gap:8px;z-index:4}
+
+
+/* Edit background mode */
+.flyer.edit-bg .fbg,.flyer.edit-bg .mr-bg{z-index:20;cursor:grab}
+.flyer.edit-bg .fbg:active,.flyer.edit-bg .mr-bg:active{cursor:grabbing}
+.edit-bg-btn{position:absolute;top:8px;right:8px;z-index:30;background:rgba(123,16,16,.85);
+  color:#fff;border:none;border-radius:4px;font-family:var(--mono);font-size:9px;
+  letter-spacing:1px;padding:5px 10px;cursor:pointer;text-transform:uppercase;
+  backdrop-filter:blur(4px)}
+.edit-bg-btn.active{background:rgba(123,16,16,1);outline:2px solid #fff}
+
 </style>
 </head>
 <body>
@@ -420,6 +436,7 @@ input[type=file]{display:none}
           <div class="lbtn" onclick="setNL('c',this)"><span class="li">◎</span>Centrado</div>
           <div class="lbtn" onclick="setNL('d',this)"><span class="li">▤</span>Ticker</div>
           <div class="lbtn" onclick="setNL('e',this)"><span class="li">☰</span>Info</div>
+          <div class="lbtn" onclick="setNL('f',this)"><span class="li">▼</span>Inf.Abajo</div>
         </div>
       </div>
 
@@ -505,8 +522,9 @@ input[type=file]{display:none}
       </div>
 
       <div class="cg"><div class="cgt">Imagen</div>
-        <label class="upl" for="n-bg-up" id="n-bg-lbl">+ Subir imagen de fondo</label>
-        <input type="file" id="n-bg-up" accept="image/*" onchange="loadNBg(this)">
+        <label class="upl" for="n-bg-up" id="n-bg-lbl">+ Subir imagen / video / GIF de fondo</label>
+        <input type="file" id="n-bg-up" accept="image/*,video/mp4,video/webm,.gif" onchange="loadNBg(this)">
+        <button class="dlscale-btn" id="n-editbg-btn" onclick="toggleEditBg('news-flyer',this)" style="margin-top:6px;width:100%">✎ Editar posición del fondo</button>
         <div class="ovrow"><label>Overlay</label><input type="range" id="n-ov" min="0" max="100" value="0" oninput="setOv('n',this.value)"><span id="n-ov-v">0%</span></div>
         <div id="n-img-slot" style="display:none;margin-top:6px">
           <label class="upl" for="n-img-up" id="n-img-lbl">+ Subir foto del artista (diseño Split)</label>
@@ -645,6 +663,7 @@ input[type=file]{display:none}
       <div class="cg"><div class="cgt">Fondo (opcional)</div>
         <label class="upl" for="r-bu" id="r-bu-lbl">+ Subir imagen de fondo</label>
         <input type="file" id="r-bu" accept="image/*" onchange="loadBg('r',this,'r-bu-lbl')">
+        <button class="dlscale-btn" id="r-editbg-btn" onclick="toggleEditBg('release-flyer',this)" style="margin-top:6px;width:100%">✎ Editar posición del fondo</button>
         <div class="ovrow"><label>Overlay</label><input type="range" id="r-ov" min="0" max="100" value="0" oninput="setOv('r',this.value)"><span id="r-ov-v">0%</span></div>
       </div>
       <div class="cg"><div class="cgt">Color acento</div>
@@ -809,7 +828,8 @@ input[type=file]{display:none}
 
   <!-- NEWS FLYER -->
   <div class="flyer" id="news-flyer" style="display:none">
-    <div class="fbg" id="n-fbg"></div>
+    <div class="fbg" id="n-fbg"><img id="n-fbg-img" alt=""></div>
+    <video id="n-fbg-vid" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;z-index:1" autoplay muted loop playsinline></video>
     <div class="fov" id="n-fov" style="background:rgba(8,8,8,0)"></div>
     <div class="ftop" id="n-ftop"></div>
     <div id="n-accent" style="background:#c0392b"></div>
@@ -872,6 +892,16 @@ input[type=file]{display:none}
         </div>
       </div>
     </div>
+    <!-- Layout F: info bottom -->
+    <div class="fin" id="n-fin-f" style="display:none;padding:0;position:relative">
+      <div class="n-lf-info">
+        <div class="ntag" id="n-tag-f" style="color:#7b1010"><span class="ntag-line" id="n-tline-f" style="background:#7b1010"></span><span id="n-cat-f">NEWS</span></div>
+        <div id="n-artist-f" style="font-family:'Syne',sans-serif;font-weight:800;font-size:44px;color:#f0ede8;line-height:.9;word-break:break-word">INFO</div>
+        <div id="n-head-f" style="font-size:14px;color:#f0ede8;line-height:1.3">Titular de la noticia</div>
+        <div id="n-en-f" style="font-size:12px;color:rgba(240,237,232,.6);font-style:italic">Description.</div>
+        <div style="border-top:1px solid rgba(255,255,255,.07);padding-top:8px"><span class="fwm">@khiphophouse · 힙합하우스</span></div>
+      </div>
+    </div>
   </div>
 
   <!-- NEWS layout E — Info/Free text (standalone flyer) -->
@@ -893,7 +923,7 @@ Puede ser en varios idiomas
 
   <!-- RELEASE FLYER -->
   <div class="flyer" id="release-flyer" style="display:none">
-    <div class="fbg" id="r-fbg"></div>
+    <div class="fbg" id="r-fbg"><img id="r-fbg-img" alt=""></div>
     <div class="fov" id="r-fov"></div>
     <div class="ftop" id="r-ftop"></div>
     <div class="fin">
@@ -951,7 +981,7 @@ Puede ser en varios idiomas
   <!-- MV FLYER 9:16 (shown in MV mode) -->
   <div id="mv-flyer" style="display:none;width:405px;height:720px;position:relative;overflow:hidden;flex-shrink:0;background:#080808;box-shadow:0 24px 64px rgba(0,0,0,.8);">
     <div style="position:absolute;top:0;left:0;right:0;height:4px;z-index:8;background:#7b1010" id="mv-ftop"></div>
-    <div class="fbg" id="mv-fbg" style="z-index:0"></div>
+    <div class="fbg" id="mv-fbg" style="z-index:0"><img id="mv-fbg-img" alt=""></div>
     <div class="fov" id="mv-fov" style="background:rgba(8,8,8,0);z-index:0"></div>
 
     <!-- Layout A: 16:9 video (fits inside flyer), info centered below -->
@@ -1015,7 +1045,7 @@ Puede ser en varios idiomas
 
   <!-- MULTI-RELEASE FLYER -->
   <div id="mr-flyer" style="display:none">
-    <div class="mr-bg" id="mr-fbg"></div>
+    <div class="mr-bg" id="mr-fbg"><img id="mr-fbg-img" alt=""></div>
     <div class="mr-ov" id="mr-fov"></div>
     <div class="mr-top" id="mr-top"></div>
     <div class="mr-inner">
@@ -1470,22 +1500,81 @@ function initMRWheel(wid,iid){
 var DS={};
 function initDrag(wid,iid){
   var w=G(wid);if(!w||w._dragInit)return;w._dragInit=true;
+  /* Apply position+scale to img */
+  function applyPos(){
+    var s=DS[iid];if(!s)return;
+    var img=G(iid);if(!img)return;
+    var sc=s.sc||1;
+    img.style.width=(img.naturalWidth*sc)+'px';
+    img.style.height=(img.naturalHeight*sc)+'px';
+    img.style.left=s.x+'px';
+    img.style.top=s.y+'px';
+  }
+  /* Clamp position so image always covers container */
+  function clamp(){
+    var s=DS[iid];if(!s)return;
+    var img=G(iid);if(!img)return;
+    var pw=w.clientWidth,ph=w.clientHeight;
+    var sc=s.sc||1,rw=img.naturalWidth*sc,rh=img.naturalHeight*sc;
+    s.x=Math.min(Math.max(0,pw-rw),Math.min(0,s.x));
+    s.y=Math.min(Math.max(0,ph-rh),Math.min(0,s.y));
+  }
   function mv(cx,cy){
     var s=DS[iid];if(!s||!s.on)return;
     var img=G(iid);if(!img||img.style.display==='none')return;
-    var pw=w.clientWidth,ph=w.clientHeight,iw=img.naturalWidth,ih=img.naturalHeight;
-    var sc=Math.max(pw/iw,ph/ih),rw=iw*sc,rh=ih*sc;
-    var nx=Math.min(0,Math.max(pw-rw,s.sx+(cx-s.mx)));
-    var ny=Math.min(0,Math.max(ph-rh,s.sy+(cy-s.my)));
-    DS[iid].x=nx;DS[iid].y=ny;
-    img.style.left=nx+'px';img.style.top=ny+'px';
+    s.x=s.sx+(cx-s.mx);s.y=s.sy+(cy-s.my);
+    clamp();applyPos();
   }
+  /* Scroll wheel zoom */
+  w.addEventListener('wheel',function(e){
+    e.preventDefault();
+    var s=DS[iid];if(!s)return;
+    var img=G(iid);if(!img||img.style.display==='none')return;
+    var pw=w.clientWidth,ph=w.clientHeight;
+    var iw=img.naturalWidth,ih=img.naturalHeight;
+    var minSc=Math.max(pw/iw,ph/ih); /* never smaller than fill */
+    var maxSc=minSc*5;
+    var oldSc=s.sc||minSc;
+    var factor=e.deltaY>0?0.9:1.11;
+    var newSc=Math.min(maxSc,Math.max(minSc,oldSc*factor));
+    /* Zoom toward cursor */
+    var rect=w.getBoundingClientRect();
+    var mx=e.clientX-rect.left,my=e.clientY-rect.top;
+    s.x=mx-(mx-s.x)*(newSc/oldSc);
+    s.y=my-(my-s.y)*(newSc/oldSc);
+    s.sc=newSc;clamp();applyPos();
+  },{passive:false});
+  /* Pinch zoom */
+  var _pd=0,_pc=null;
+  w.addEventListener('touchstart',function(e){
+    var s=DS[iid];if(!s)return;
+    if(e.touches.length===1){
+      s.on=true;s.mx=e.touches[0].clientX;s.my=e.touches[0].clientY;s.sx=s.x||0;s.sy=s.y||0;
+    } else if(e.touches.length===2){
+      s.on=false;
+      _pd=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+      _pc={x:(e.touches[0].clientX+e.touches[1].clientX)/2,y:(e.touches[0].clientY+e.touches[1].clientY)/2};
+    }
+  },{passive:true});
+  document.addEventListener('touchmove',function(e){
+    var s=DS[iid];if(!s)return;
+    if(e.touches.length===1&&s.on){mv(e.touches[0].clientX,e.touches[0].clientY);}
+    else if(e.touches.length===2&&_pc){
+      var img=G(iid);if(!img)return;
+      var pw=w.clientWidth,ph=w.clientHeight,iw=img.naturalWidth,ih=img.naturalHeight;
+      var minSc=Math.max(pw/iw,ph/ih),maxSc=minSc*5;
+      var nd=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+      var oldSc=s.sc||minSc,newSc=Math.min(maxSc,Math.max(minSc,oldSc*(nd/_pd)));
+      var rect=w.getBoundingClientRect();
+      var cx=_pc.x-rect.left,cy=_pc.y-rect.top;
+      s.x=cx-(cx-s.x)*(newSc/oldSc);s.y=cy-(cy-s.y)*(newSc/oldSc);
+      s.sc=newSc;_pd=nd;clamp();applyPos();
+    }
+  },{passive:true});
+  document.addEventListener('touchend',function(){var s=DS[iid];if(s)s.on=false;_pc=null;});
   w.addEventListener('mousedown',function(e){var s=DS[iid];if(!s)return;s.on=true;s.mx=e.clientX;s.my=e.clientY;s.sx=s.x||0;s.sy=s.y||0;e.preventDefault()});
   document.addEventListener('mousemove',function(e){mv(e.clientX,e.clientY)});
   document.addEventListener('mouseup',function(){var s=DS[iid];if(s)s.on=false});
-  w.addEventListener('touchstart',function(e){var s=DS[iid];if(!s)return;s.on=true;s.mx=e.touches[0].clientX;s.my=e.touches[0].clientY;s.sx=s.x||0;s.sy=s.y||0},{passive:true});
-  document.addEventListener('touchmove',function(e){if(DS[iid]&&DS[iid].on)mv(e.touches[0].clientX,e.touches[0].clientY)},{passive:true});
-  document.addEventListener('touchend',function(){var s=DS[iid];if(s)s.on=false});
 }
 function placeCover(wid,iid,src){
   var w=G(wid),img=G(iid);if(!w||!img)return;
@@ -1519,9 +1608,11 @@ function setXlInfoFromSidebar(v){rXlInfoText=(v==null||v.trim()==='')?null:v;upd
 function loadBg(p,inp,lblId){
   if(!inp.files||!inp.files[0])return;
   var r=new FileReader();r.onload=function(e){
-    G(p+'-fbg').style.backgroundImage='url('+e.target.result+')';
-    if(p==='r'){var mvbg=G('mv-fbg');if(mvbg)mvbg.style.backgroundImage='url('+e.target.result+')';}
-    if(lblId)G(lblId).textContent='Fondo cargado — cambiar';
+    var src=e.target.result;
+    /* Use placeCover for drag support */
+    placeCover(p+'-fbg',p+'-fbg-img',src);
+    if(p==='r'){placeCover('mv-fbg','mv-fbg-img',src);}
+    if(lblId)G(lblId).textContent='Fondo cargado — arrastrá para encuadrar';
   };r.readAsDataURL(inp.files[0]);
 }
 function setOv(p,v){G(p+'-ov-v').textContent=v+'%';G(p+'-fov').style.background='rgba(8,8,8,'+(Math.round(v)/100)+')';if(p==='r'){var mvo=G('mv-fov');if(mvo)mvo.style.background='rgba(8,8,8,'+(Math.round(v)/100)+')';}}
@@ -1553,6 +1644,7 @@ function setNL(l,el){
   G('n-fin-b').style.display=l==='b'?'flex':'none';
   G('n-fin-c').style.display=l==='c'?'flex':'none';
   G('n-fin-d').style.display=l==='d'?'flex':'none';
+  var nff=G('n-fin-f');if(nff)nff.style.display=l==='f'?'flex':'none';
   G('n-img-slot').style.display=l==='b'?'block':'none';
   G('n-accent').style.display=l==='a'?'block':'none';
   /* show/hide free text controls */
@@ -1597,6 +1689,13 @@ function un(){
   var dda=G('n-ld-artist');if(dda){dda.textContent=art;dda.style.fontSize=asz+'px';applyNArtist('n-ld-artist');}
   var ddh=G('n-ld-head');if(ddh){ddh.textContent=head;ddh.style.fontSize=hsz+'px';}
   var dde=G('n-ld-en');if(dde){dde.textContent=en;dde.style.fontSize=esz+'px';}
+  /* layout F */
+  var fcf=G('n-cat-f');if(fcf)fcf.textContent=cat;
+  var faf=G('n-artist-f');if(faf){faf.textContent=art;faf.style.fontSize=asz+'px';applyNArtist('n-artist-f');}
+  var fhf=G('n-head-f');if(fhf){fhf.textContent=head;fhf.style.fontSize=hsz+'px';}
+  var fef=G('n-en-f');if(fef){fef.textContent=en;fef.style.fontSize=esz+'px';}
+  var ftf=G('n-tline-f');if(ftf){ftf.style.background=G('n-tline').style.background;}
+  var ftagf=G('n-tag-f');if(ftagf)ftagf.style.color=G('n-tag').style.color;
   /* layout E — free text */
   var et=G('n-e-text');
   if(et){
@@ -1605,7 +1704,25 @@ function un(){
     et.style.fontSize=esz+'px';
   }
 }
-function loadNBg(inp){loadBg('n',inp,'n-bg-lbl');}
+function loadNBg(inp){
+  if(!inp.files||!inp.files[0])return;
+  var file=inp.files[0];
+  var isVid=file.type.startsWith('video/');
+  var r=new FileReader();
+  r.onload=function(e){
+    var src=e.target.result;
+    var vid=G('n-fbg-vid'),img=G('n-fbg-img');
+    if(isVid){
+      if(vid){vid.src=src;vid.style.display='block';}
+      if(img){img.style.display='none';}
+      G('n-bg-lbl').textContent='Video cargado — cambiar';
+    }else{
+      if(vid){vid.style.display='none';vid.src='';}
+      placeCover('n-fbg','n-fbg-img',src);
+      G('n-bg-lbl').textContent='Imagen cargada — arrastrá para encuadrar';
+    }
+  };r.readAsDataURL(file);
+}
 function loadNImg(inp){
   if(!inp.files||!inp.files[0])return;
   var r=new FileReader();r.onload=function(e){placeCover('wrap-n-img','n-img-el',e.target.result);G('n-img-lbl').textContent='Imagen cargada — arrastrá para encuadrar';};r.readAsDataURL(inp.files[0]);
@@ -1922,6 +2039,12 @@ function setDLScale(v, el) {
 }
 
 async function doDownload(flyerId, dlBtnId, stId, filename) {
+  if(flyerId==='news-flyer'||flyerId==='n-info-flyer'){
+    var nbv=G('n-fbg-vid');
+    if(nbv&&nbv.style.display!=='none'&&nbv.src){
+      doExportNewsVideo(dlBtnId,stId,filename,flyerId);return;
+    }
+  }
   var btn = G(dlBtnId), st = G(stId);
   var outW = Math.round(1080 * DL_SCALE);
   var outH = Math.round(1350 * DL_SCALE);
@@ -2054,6 +2177,162 @@ var _mvAudioCtx = null;
 var _mvSrcNode  = null;
 var _mvAudioDest= null;
 var _mvSrcVidRef= null;
+
+/* ── NEWS video export ─────────────────────────────────────────── */
+var _mvAudioCtx=null,_mvSrcNode=null,_mvAudioDest=null,_mvSrcVidRef=null;
+async function doExportNewsVideo(dlBtnId,stId,filename,flyerId){
+  var btn=G(dlBtnId),st=G(stId);
+  var srcVid=G('n-fbg-vid');
+  if(!srcVid||!srcVid.src){if(st)st.textContent='Sin video cargado';return;}
+  btn.disabled=true;btn.textContent='Preparando…';if(st)st.textContent='Capturando…';
+  try{
+    var flyerEl=G(flyerId)||G('news-flyer');
+    var FW=flyerEl.offsetWidth||405,FH=flyerEl.offsetHeight||506;
+    var SCALE=3,OW=FW*SCALE,OH=FH*SCALE,FPS=30;
+
+    /* ── Step 1: Capture ONLY text/design elements (no fbg, no fov, no video)
+       with transparent background — so we can composite freely ── */
+    var prevVidD=srcVid.style.display;
+    srcVid.style.display='none';
+    var fbgEl=G('n-fbg');
+    var fovEl=G('n-fov');
+    var prevFbgV=fbgEl?fbgEl.style.visibility:'';
+    var prevFovV=fovEl?fovEl.style.visibility:'';
+    /* Also hide the video bg element */
+    if(fbgEl)fbgEl.style.visibility='hidden';
+    if(fovEl)fovEl.style.visibility='hidden';
+
+    /* Temporarily remove flyer background so html2canvas is truly transparent */
+    var prevFlyerBg=flyerEl.style.background;
+    flyerEl.style.background='transparent';
+    var textCanvas=await html2canvas(flyerEl,{
+      scale:SCALE,useCORS:true,allowTaint:true,
+      backgroundColor:null,
+      width:FW,height:FH,logging:false
+    });
+    flyerEl.style.background=prevFlyerBg;
+
+    srcVid.style.display=prevVidD;
+    if(fbgEl)fbgEl.style.visibility=prevFbgV;
+    if(fovEl)fovEl.style.visibility=prevFovV;
+
+    /* Read fov opacity from the actual element */
+    var fovBg=fovEl?fovEl.style.background:'';
+    var fovMatch=fovBg.match(/rgba\([^)]+,([0-9.]+)\)/);
+    var fovAlpha=fovMatch?parseFloat(fovMatch[1]):0.72;
+
+    /* ── Step 2: Video zone = full flyer ── */
+    var vx=0,vy=0,vw=OW,vh=OH;
+
+    /* ── Step 3: Separate muted video clone for canvas drawing
+       (avoids canvas taint from WebAudio createMediaElementSource) ── */
+    var drawVid=document.createElement('video');
+    drawVid.src=srcVid.src;
+    drawVid.muted=true;drawVid.loop=true;drawVid.playsInline=true;
+    drawVid.style.cssText='position:fixed;left:-9999px;top:0;width:1px;height:1px;opacity:0';
+    document.body.appendChild(drawVid);
+    await new Promise(function(res){
+      drawVid.oncanplay=res;drawVid.load();setTimeout(res,2000);
+    });
+
+    /* ── Step 4: Audio from original srcVid ── */
+    if(!_mvAudioCtx||_mvAudioCtx.state==='closed')
+      _mvAudioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    if(_mvAudioCtx.state==='suspended')await _mvAudioCtx.resume();
+    if(!_mvSrcNode||_mvSrcVidRef!==srcVid){
+      if(_mvSrcNode){try{_mvSrcNode.disconnect();}catch(e){}}
+      _mvAudioDest=_mvAudioCtx.createMediaStreamDestination();
+      _mvSrcNode=_mvAudioCtx.createMediaElementSource(srcVid);
+      _mvSrcNode.connect(_mvAudioDest);
+      _mvSrcNode.connect(_mvAudioCtx.destination);
+      _mvSrcVidRef=srcVid;
+    }
+    var aTrack=_mvAudioDest.stream.getAudioTracks()[0];
+
+    /* ── Step 5: Recording canvas ── */
+    var rc=document.createElement('canvas');rc.width=OW;rc.height=OH;
+    var rctx=rc.getContext('2d');
+    var cs=rc.captureStream(FPS);
+    var ms=new MediaStream(cs.getVideoTracks().concat(aTrack?[aTrack]:[]));
+    var mt='',cands=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4;codecs=avc1','video/mp4','video/webm;codecs=vp9,opus','video/webm'];
+    for(var i=0;i<cands.length;i++){if(MediaRecorder.isTypeSupported(cands[i])){mt=cands[i];break;}}
+    var chunks=[],ro={videoBitsPerSecond:25000000};if(mt)ro.mimeType=mt;
+    var rec=new MediaRecorder(ms,ro);
+    rec.ondataavailable=function(e){if(e.data&&e.data.size>0)chunks.push(e.data);};
+    var ext=mt.startsWith('video/mp4')?'mp4':'webm';
+    rec.onstop=function(){
+      try{document.body.removeChild(drawVid);}catch(e){}
+      var blob=new Blob(chunks,{type:mt||'video/webm'});
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement('a');a.href=url;
+      a.download='khiphophouse_'+filename+'.'+ext;
+      document.body.appendChild(a);a.click();document.body.removeChild(a);
+      setTimeout(function(){URL.revokeObjectURL(url);},5000);
+      btn.disabled=false;btn.textContent='↓ Descargar';
+      if(st){st.textContent='✓ Video exportado';setTimeout(function(){st.textContent='';},4000);}
+    };
+
+    /* ── Step 6: Play both videos in sync ── */
+    srcVid.currentTime=0;drawVid.currentTime=0;
+    srcVid.muted=false;
+    drawVid.play();
+    await srcVid.play();
+    /* Wait for drawVid to have a rendered frame */
+    await new Promise(function(res){
+      if(drawVid.readyState>=3){res();return;}
+      drawVid.addEventListener('canplay',res,{once:true});
+      setTimeout(res,600);
+    });
+    await new Promise(function(res){
+      requestAnimationFrame(function(){requestAnimationFrame(function(){requestAnimationFrame(res);});});
+    });
+
+    var dur=srcVid.duration*1000||10000,t0=performance.now();
+    rec.start(200);if(st)st.textContent='Grabando… 0%';
+
+    /* ── Step 7: Draw loop — SAME LOGIC AS MV ──
+       staticCanvas (has design) + video in fbg zone on top ── */
+    function df(){
+      var el=performance.now()-t0;
+      if(st)st.textContent='Grabando… '+Math.min(100,Math.round(el/dur*100))+'%';
+
+      /* Composite: video → fov overlay → text/design */
+      rctx.clearRect(0,0,OW,OH);
+
+      /* 1. Video frame (full bleed) */
+      rctx.globalCompositeOperation='source-over';
+      if(drawVid.readyState>=2){
+        var ar=drawVid.videoWidth/drawVid.videoHeight;
+        var zar=OW/OH,dW,dH,dX,dY;
+        if(ar>zar){dH=OH;dW=OH*ar;dX=-(dW-OW)/2;dY=0;}
+        else{dW=OW;dH=OW/ar;dX=0;dY=-(dH-OH)/2;}
+        rctx.drawImage(drawVid,dX,dY,dW,dH);
+      }
+
+      /* 2. fov overlay */
+      rctx.fillStyle='rgba(8,8,8,'+fovAlpha+')';
+      rctx.fillRect(0,0,OW,OH);
+
+      /* 3. Text and design elements */
+      rctx.drawImage(textCanvas,0,0,OW,OH);
+
+      if(el<dur){
+        requestAnimationFrame(df);
+      } else {
+        srcVid.pause();srcVid.muted=true;
+        drawVid.pause();
+        rec.stop();cs.getTracks().forEach(function(t){t.stop();});
+      }
+    }
+    requestAnimationFrame(df);
+
+  }catch(err){
+    btn.disabled=false;btn.textContent='↓ Descargar';
+    if(st){st.textContent='Error: '+err.message;setTimeout(function(){st.textContent='';},6000);}
+    var dv=document.querySelector('video[style*="-9999px"]');
+    if(dv&&dv.parentNode)dv.parentNode.removeChild(dv);
+  }
+}
 
 async function doExportMP4() {
   var btn = G('r-mp4-dl'), st = G('r-mp4-st');
@@ -2493,4 +2772,31 @@ function setMVSize(sz, btn){
   setTimeout(scalePreview, 50);
 }
 
-</script>
+
+/* ── Edit background mode ────────────────────────────────────── */
+var _editBgActive = {};
+function toggleEditBg(flyerId, btn){
+  var flyer = G(flyerId);
+  if(!flyer) return;
+  var active = _editBgActive[flyerId];
+  if(active){
+    flyer.classList.remove('edit-bg');
+    btn.classList.remove('active');
+    btn.textContent = '✎ Editar posición del fondo';
+    _editBgActive[flyerId] = false;
+  } else {
+    /* Deactivate any other active flyer */
+    Object.keys(_editBgActive).forEach(function(id){
+      if(_editBgActive[id]){
+        var f=G(id);if(f)f.classList.remove('edit-bg');
+        _editBgActive[id]=false;
+      }
+    });
+    flyer.classList.add('edit-bg');
+    btn.classList.add('active');
+    btn.textContent = '✓ Listo (salir de edición)';
+    _editBgActive[flyerId] = true;
+  }
+}
+
+</script> 
