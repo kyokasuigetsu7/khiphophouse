@@ -412,6 +412,69 @@ input[type=file]{display:none}
   backdrop-filter:blur(4px)}
 .edit-bg-btn.active{background:rgba(123,16,16,1);outline:2px solid #fff}
 
+
+/* ── Debate layout (NEWS) ──────────────────────────────────────── */
+#n-fin-debate{display:none;flex-direction:column;position:absolute;inset:0;padding:0}
+#n-fin-debate.on{display:flex}
+.dbt-wrap{display:flex;flex-direction:column;height:100%;padding:22px 22px 0}
+.dbt-header{flex-shrink:0;margin-bottom:10px}
+.dbt-cat{font-family:var(--mono,monospace);font-size:7px;letter-spacing:2px;color:#7b1010;margin-bottom:8px;text-transform:uppercase}
+.dbt-title{font-size:20px;font-weight:800;color:#f0ede8;line-height:1.05;letter-spacing:-0.3px;word-break:break-word}
+.dbt-sub{font-size:9px;color:rgba(240,237,232,.42);line-height:1.45;margin-top:6px;word-break:break-word}
+.dbt-divider{height:1px;background:rgba(240,237,232,.08);margin:10px 0 8px}
+.dbt-grid{flex:1;overflow:hidden;display:grid;gap:6px;align-content:start;min-height:0}
+.dbt-grid.col1{grid-template-columns:1fr}
+.dbt-grid.col2{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.dbt-quote{background:rgba(255,255,255,.04);border-radius:3px;padding:7px 9px;min-width:0}
+.dbt-qtext{font-size:var(--dbt-qsz,8px);color:rgba(240,237,232,.9);line-height:1.45;word-break:break-word}
+.dbt-qname{font-family:var(--mono,monospace);font-size:6px;color:rgba(240,237,232,.3);margin-top:4px}
+.dbt-footer{flex-shrink:0;margin-top:auto;padding:8px 0 10px}
+.dbt-footer-line{height:1px;background:rgba(240,237,232,.07);margin-bottom:8px}
+.dbt-footer-row{display:flex;align-items:center;justify-content:space-between}
+.dbt-wm{font-family:var(--mono,monospace);font-size:6.5px;color:rgba(240,237,232,.28)}
+.dbt-lang{width:22px;height:22px;border-radius:50%;background:rgba(240,237,232,.05);border:0.5px solid rgba(240,237,232,.15);display:flex;align-items:center;justify-content:center;font-family:var(--mono,monospace);font-size:7px;color:rgba(240,237,232,.42);flex-shrink:0}
+/* Sidebar debate controls */
+.dbt-quote-row{background:var(--s3,#201e2e);border:1px solid rgba(180,160,255,.1);border-radius:4px;padding:8px;margin-bottom:5px}
+.dbt-qnum{font-family:var(--mono,monospace);font-size:8px;color:rgba(237,232,245,.3);letter-spacing:1px;margin-bottom:5px;text-transform:uppercase}
+.dbt-lang-row{display:flex;gap:4px;margin-top:4px}
+.dbt-lang-btn{flex:1;padding:4px;background:var(--s3,#201e2e);border:1px solid rgba(180,160,255,.14);border-radius:3px;color:rgba(237,232,245,.45);font-family:var(--mono,monospace);font-size:9px;cursor:pointer;text-align:center;letter-spacing:1px}
+.dbt-lang-btn.on{background:rgba(123,16,16,.3);border-color:#7b1010;color:#f0ede8}
+
+
+/* ── Debate layout ────────────────────────────────────────────── */
+.dbt-lang-btn{flex:1;padding:5px 2px;background:var(--s3);border:1px solid var(--b2);
+  border-radius:3px;color:var(--t3);font-family:var(--mono);font-size:9px;cursor:pointer;
+  text-align:center;letter-spacing:1px;user-select:none}
+.dbt-lang-btn.on{background:rgba(123,16,16,.3);border-color:#7b1010;color:#f0ede8}
+.dbt-quote-row{background:var(--s3);border:1px solid var(--b1);border-radius:4px;
+  padding:8px;margin-bottom:5px}
+.dbt-qnum{font-family:var(--mono);font-size:7px;color:var(--t3);letter-spacing:1px;
+  text-transform:uppercase;margin-bottom:5px}
+/* Flyer elements */
+.dbt-cat{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;
+  color:#7b1010;text-transform:uppercase;margin-bottom:8px}
+.dbt-title{color:#f0ede8;font-weight:800;line-height:1.05;letter-spacing:-0.3px;
+  word-break:break-word}
+.dbt-sub{font-size:9px;color:rgba(240,237,232,.42);line-height:1.45;
+  margin-top:5px;word-break:break-word}
+.dbt-divider{height:1px;background:rgba(240,237,232,.08);margin:9px 0 7px;flex-shrink:0}
+.dbt-grid{display:grid;gap:5px;align-content:start;overflow:hidden;flex:1;min-height:0}
+.dbt-grid.col1{grid-template-columns:1fr}
+.dbt-grid.col2{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.dbt-quote{background:rgba(255,255,255,.042);border-radius:3px;padding:7px 8px;
+  overflow:hidden;min-width:0}
+.dbt-qtext{font-size:var(--dbt-qsz,8.5px);color:rgba(240,237,232,.9);line-height:1.45;word-break:break-word}
+.dbt-qname{font-family:'Space Mono',monospace;font-size:6.5px;color:rgba(240,237,232,.3);
+  margin-top:4px}
+.dbt-footer{flex-shrink:0;padding:7px 0 10px;margin-top:6px}
+.dbt-footer-divider{height:1px;background:rgba(240,237,232,.07);margin-bottom:7px}
+.dbt-footer-row{display:flex;align-items:center;justify-content:space-between}
+.dbt-wm{font-family:'Space Mono',monospace;font-size:7px;color:rgba(240,237,232,.28)}
+.dbt-lang-badge{width:22px;height:22px;border-radius:50%;
+  background:rgba(240,237,232,.05);border:0.5px solid rgba(240,237,232,.14);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;font-size:7px;color:rgba(240,237,232,.42)}
+
 </style>
 </head>
 <body>
@@ -437,6 +500,7 @@ input[type=file]{display:none}
           <div class="lbtn" onclick="setNL('d',this)"><span class="li">▤</span>Ticker</div>
           <div class="lbtn" onclick="setNL('e',this)"><span class="li">☰</span>Info</div>
           <div class="lbtn" onclick="setNL('f',this)"><span class="li">▼</span>Inf.Abajo</div>
+          <div class="lbtn" onclick="setNL('debate',this)"><span class="li">❝</span>Debate</div>
         </div>
       </div>
 
@@ -521,7 +585,7 @@ input[type=file]{display:none}
         </div>
       </div>
 
-      <div class="cg"><div class="cgt">Imagen</div>
+      <div class="cg" id="n-img-cg"><div class="cgt">Imagen</div>
         <label class="upl" for="n-bg-up" id="n-bg-lbl">+ Subir imagen / video / GIF de fondo</label>
         <input type="file" id="n-bg-up" accept="image/*,video/mp4,video/webm,.gif" onchange="loadNBg(this)">
         <button class="dlscale-btn" id="n-editbg-btn" onclick="toggleEditBg('news-flyer',this)" style="margin-top:6px;width:100%">✎ Editar posición del fondo</button>
@@ -554,13 +618,54 @@ input[type=file]{display:none}
         <div class="dlscale-btn on" onclick="setDLScale(2,this)">2160<br><span style="font-size:8px;opacity:.6">alta</span></div>
         <div class="dlscale-btn" onclick="setDLScale(4,this)">4320<br><span style="font-size:8px;opacity:.6">máxima</span></div>
       </div>
-      <button class="dlbtn" id="n-dl" onclick="doDownload('news-flyer','n-dl','n-st','khiphophouse_news')">↓ Descargar</button>
+      <span id="n-dl-wrap"><button class="dlbtn" id="n-dl" onclick="doDownload('news-flyer','n-dl','n-st','khiphophouse_news')">↓ Descargar</button>
       <div class="dlst" id="n-st"></div>
       <!-- Hashtags sugeridos -->
-      <div class="hash-box" style="margin-top:6px">
+      <div class="hash-box" id="n-hashtags-box" style="margin-top:6px">
         <div class="cgt">Hashtags sugeridos</div>
         <div class="cap-text" id="n-hashtags">—</div>
         <button class="cap-copy-btn" onclick="copyCaption('n-hashtags',this)">Copiar</button>
+      </div>
+      <!-- Debate sidebar controls -->
+      <div id="n-debate-cg" style="display:none">
+        <div class="cg">
+          <div class="cgt">Debate</div>
+          <div class="f"><label>Categoría / Label</label>
+            <input class="fi" id="dbt-cat-input" value="DEBATE · KHIPHOPHOUSE" oninput="updateDebate()" style="text-transform:uppercase">
+          </div>
+          <div class="f"><label>Tema del debate</label>
+            <input class="fi" id="dbt-title" value="Tema del debate" oninput="updateDebate()">
+          </div>
+          <div class="f"><label>Contexto del debate <span style="opacity:.4;font-size:9px">(opcional)</span></label>
+            <textarea class="fi" id="dbt-sub" rows="2" placeholder="Contexto o descripción breve..." oninput="updateDebate()" style="font-size:11px;line-height:1.4"></textarea>
+          </div>
+          <div class="cgt" style="margin-top:2px">Tamaño de texto</div>
+          <div class="ovrow"><label>Tema</label><input type="range" id="dbt-title-sz" min="12" max="28" value="20" oninput="updateDebate()"><span id="dbt-title-sz-v">20</span></div>
+          <div class="ovrow"><label>Contexto</label><input type="range" id="dbt-sub-sz" min="7" max="14" value="9" oninput="updateDebate()"><span id="dbt-sub-sz-v">9</span></div>
+          <div class="ovrow"><label>Cita</label><input type="range" id="dbt-quote-sz" min="6" max="13" value="8.5" step="0.5" oninput="updateDebate()"><span id="dbt-quote-sz-v">8.5</span></div>
+          <div class="f" style="align-items:center;gap:8px">
+            <label style="flex-shrink:0">Citas</label>
+            <select class="fi" id="dbt-count" onchange="buildDebateQuotes()" style="flex:1">
+              <option value="6">6</option><option value="7">7</option>
+              <option value="8" selected>8</option><option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+          <div class="cgt" style="margin-top:4px">Idioma</div>
+          <div style="display:flex;gap:4px;margin-bottom:8px">
+            <div class="dbt-lang-btn on" id="dbt-lang-ES" onclick="setDebateLang('ES',this)">ES</div>
+            <div class="dbt-lang-btn" id="dbt-lang-EN" onclick="setDebateLang('EN',this)">EN</div>
+            <div class="dbt-lang-btn" id="dbt-lang-KR" onclick="setDebateLang('KR',this)">KR</div>
+          </div>
+          <div id="dbt-quotes-wrap"></div>
+        </div>
+        <button class="dlbtn" onclick="doDownload('n-debate-flyer','n-debate-dl','n-debate-st','khiphophouse_debate')">↓ Descargar</button>
+        <div class="dlst" id="n-debate-st"></div>
+        <div class="hash-box" style="margin-top:6px">
+          <div class="cgt">Hashtags sugeridos</div>
+          <div class="cap-text" id="dbt-hashtags">—</div>
+          <button class="cap-copy-btn" onclick="copyCaption('dbt-hashtags',this)">Copiar</button>
+        </div>
       </div>
     </div>
 
@@ -921,6 +1026,27 @@ Puede ser en varios idiomas
     </div>
   </div>
 
+
+  <!-- DEBATE FLYER (4:5 News) -->
+  <div class="flyer" id="n-debate-flyer" style="display:none;width:405px;height:506px;background:#111318;position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#7b1010;z-index:2"></div>
+    <div class="dbt-wrap" id="dbt-flyer-wrap">
+      <div class="dbt-header" id="dbt-flyer-header">
+        <div class="dbt-cat" id="dbt-flyer-cat">DEBATE · KHIPHOPHOUSE</div>
+        <div class="dbt-title" id="dbt-flyer-title">Tema del debate</div>
+        <div class="dbt-sub" id="dbt-flyer-sub" style="display:none"></div>
+      </div>
+      <div class="dbt-divider"></div>
+      <div class="dbt-grid col2" id="dbt-flyer-grid" style="padding-bottom:46px"></div>
+      <div class="dbt-footer" style="position:absolute;left:22px;right:22px;bottom:10px;margin-top:0">
+        <div class="dbt-footer-line"></div>
+        <div class="dbt-footer-row">
+          <span class="dbt-wm">@khiphophouse · 힙합하우스</span>
+          <div class="dbt-lang" id="dbt-flyer-lang">ES</div>
+        </div>
+      </div>
+    </div>
+  </div>
   <!-- RELEASE FLYER -->
   <div class="flyer" id="release-flyer" style="display:none">
     <div class="fbg" id="r-fbg"><img id="r-fbg-img" alt=""></div>
@@ -1163,11 +1289,14 @@ function switchTab(n,btn){
   /* news: show either news-flyer or n-info-flyer depending on layout */
   if(n==='news'){
     var isInfo=(typeof nLyt!=='undefined'&&nLyt==='e');
-    G('news-flyer').style.display=isInfo?'none':'block';
+    var isDebate=(typeof nLayout!=='undefined'&&nLayout==='debate');
+    G('news-flyer').style.display=(!isInfo&&!isDebate)?'block':'none';
     G('n-info-flyer').style.display=isInfo?'block':'none';
+    var _ndf=G('n-debate-flyer');if(_ndf)_ndf.style.display=isDebate?'flex':'none';
   } else {
     G('news-flyer').style.display='none';
     G('n-info-flyer').style.display='none';
+    var ndf=G('n-debate-flyer');if(ndf)ndf.style.display='none';
   }
   /* release tab */
   if(n==='release'){G('release-flyer').style.display=rMode==='v'?'none':'block';G('mv-flyer').style.display=rMode==='v'?'block':'none';}
@@ -1637,7 +1766,8 @@ function setNL(l,el){
   document.querySelectorAll('#n-lgrid .lbtn').forEach(function(b){b.classList.remove('on')});el.classList.add('on');
   /* swap which flyer is visible */
   var isInfo=(l==='e');
-  G('news-flyer').style.display=isInfo?'none':'block';
+  var isDebate=(l==='debate');
+  G('news-flyer').style.display=(!isInfo&&!isDebate)?'block':'none';
   G('n-info-flyer').style.display=isInfo?'block':'none';
   /* within news-flyer, show correct .fin panel */
   G('n-fin-a').style.display=l==='a'?'flex':'none';
@@ -1645,6 +1775,7 @@ function setNL(l,el){
   G('n-fin-c').style.display=l==='c'?'flex':'none';
   G('n-fin-d').style.display=l==='d'?'flex':'none';
   var nff=G('n-fin-f');if(nff)nff.style.display=l==='f'?'flex':'none';
+  var nfd=G('n-debate-flyer');if(nfd)nfd.style.display=l==='debate'?'flex':'none';
   G('n-img-slot').style.display=l==='b'?'block':'none';
   G('n-accent').style.display=l==='a'?'block':'none';
   /* show/hide free text controls */
@@ -1652,7 +1783,20 @@ function setNL(l,el){
   var encg=G('n-en-cg');if(encg)encg.style.display=l==='e'?'none':'block';
   var ntcg=G('n-text-cg');if(ntcg)ntcg.style.display=l==='e'?'none':'block';
   var nscg=G('n-style-cg');if(nscg)nscg.style.display=l==='e'?'none':'block';
-  var nacg=G('n-accent-cg');if(nacg)nacg.style.display='block'; /* always show accent color */
+  /* In debate mode: hide all standard news controls, show only debate controls */
+  var _ids=['n-text-cg','n-info-cg','n-en-cg','n-style-cg','n-img-cg','n-hashtags-box'];
+  _ids.forEach(function(id){var e=G(id);if(e)e.style.display=isDebate?'none':'';});
+  /* also hide image/overlay/acento rows (they have no wrapper id) */
+  var _nacg=G('n-accent-cg');if(_nacg)_nacg.style.display=isDebate?'none':'block';
+  var _imgcg=G('n-img-cg');if(_imgcg)_imgcg.style.display=isDebate?'none':'';
+  var _ndl=G('n-dl');if(_ndl)_ndl.style.display=isDebate?'none':'';
+  var _nst=G('n-st');if(_nst)_nst.style.display=isDebate?'none':'';
+  /* Also hide image/overlay row which is part of the news sidebar but has no wrapper id */
+  var _imgRow=G('n-img-cg');if(_imgRow)_imgRow.style.display=isDebate?'none':'';
+  var _nhb=G('n-hashtags-box');if(_nhb)_nhb.style.display=isDebate?'none':'';
+  var ntcg=G('n-text-cg');if(ntcg)ntcg.style.display=isDebate?'none':(l==='e'?'none':'block');
+  var ndcg=G('n-debate-cg');if(ndcg)ndcg.style.display=isDebate?'block':'none';
+  if(l==='debate'){if(!G('dbt-quotes-wrap').children.length)initDebate();}
   /* update download button target */
   var ndl=G('n-dl');if(ndl)ndl.onclick=isInfo?function(){doDownload('n-info-flyer','n-dl','n-st','khiphophouse_info');}:function(){doDownload('news-flyer','n-dl','n-st','khiphophouse_news');};
   un();
@@ -2799,4 +2943,112 @@ function toggleEditBg(flyerId, btn){
   }
 }
 
-</script> 
+
+/* ══ DEBATE LAYOUT JS ════════════════════════════════════════════ */
+var dbtLang = 'ES';
+var dbtQuoteData = [];
+
+function setDebateLang(lang, btn){
+  dbtLang = lang;
+  document.querySelectorAll('.dbt-lang-btn').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  var badge = G('dbt-flyer-lang');
+  if(badge) badge.textContent = lang;
+  updateDebate();
+}
+
+function buildDebateQuotes(){
+  var n = parseInt(G('dbt-count').value)||8;
+  var wrap = G('dbt-quotes-wrap');
+  if(!wrap) return;
+  /* save existing values */
+  var old = dbtQuoteData.slice();
+  dbtQuoteData = [];
+  wrap.innerHTML = '';
+  for(var i=0;i<n;i++){
+    var prev = old[i]||{text:'',name:''};
+    dbtQuoteData.push({text:prev.text, name:prev.name});
+    var row = document.createElement('div');
+    row.className = 'dbt-quote-row';
+    row.innerHTML =
+      '<div class="dbt-qnum">Cita '+(i<9?'0':'')+(i+1)+'</div>' +
+      '<textarea class="fi" data-idx="'+i+'" data-type="text" placeholder="Texto de la cita..." '+
+        'oninput="dbtInput(this)" style="font-size:10px;line-height:1.4;resize:vertical;min-height:42px">'+
+        escHtml(prev.text)+'</textarea>' +
+      '<input class="fi" data-idx="'+i+'" data-type="name" placeholder="— @nombre o usuario" '+
+        'oninput="dbtInput(this)" value="'+escHtml(prev.name)+'" style="margin-top:4px;font-size:10px">';
+    wrap.appendChild(row);
+  }
+  updateDebate();
+}
+
+function escHtml(s){
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function dbtInput(el){
+  var idx = parseInt(el.dataset.idx);
+  var type = el.dataset.type;
+  if(!dbtQuoteData[idx]) dbtQuoteData[idx]={text:'',name:''};
+  dbtQuoteData[idx][type] = el.value;
+  updateDebate();
+}
+
+function updateDebate(){
+  var title    = (G('dbt-title')?G('dbt-title').value:'') || 'Tema del debate';
+  var sub      = G('dbt-sub')  ? G('dbt-sub').value.trim() : '';
+  var catLabel = (G('dbt-cat-input')?G('dbt-cat-input').value:'') || 'DEBATE · KHIPHOPHOUSE';
+  var titleSz  = parseInt(G('dbt-title-sz')?G('dbt-title-sz').value:20)||20;
+  var subSz    = parseInt(G('dbt-sub-sz')?G('dbt-sub-sz').value:9)||9;
+  var quoteSz  = parseFloat(G('dbt-quote-sz')?G('dbt-quote-sz').value:8.5)||8.5;
+  var n        = parseInt(G('dbt-count')?G('dbt-count').value:8)||8;
+  var cols     = n <= 7 ? 1 : 2;
+  /* slider readouts */
+  var tsv=G('dbt-title-sz-v');if(tsv)tsv.textContent=titleSz;
+  var ssv=G('dbt-sub-sz-v');if(ssv)ssv.textContent=subSz;
+  var qsv=G('dbt-quote-sz-v');if(qsv)qsv.textContent=quoteSz;
+  /* category */
+  var fCat=G('dbt-flyer-cat');if(fCat)fCat.textContent=catLabel.toUpperCase();
+  /* title */
+  var fTitle=G('dbt-flyer-title');
+  if(fTitle){fTitle.textContent=title;fTitle.style.fontSize=titleSz+'px';}
+  /* subtitle */
+  var fSub=G('dbt-flyer-sub');
+  if(fSub){
+    if(sub){fSub.style.display='block';fSub.textContent=sub;fSub.style.fontSize=subSz+'px';}
+    else{fSub.style.display='none';}
+  }
+  /* quotes grid */
+  var grid=G('dbt-flyer-grid');
+  if(grid){
+    grid.className='dbt-grid '+(cols===1?'col1':'col2');
+    grid.style.setProperty('--dbt-qsz', quoteSz+'px');
+    var existing=grid.querySelectorAll('.dbt-quote');
+    if(existing.length!==n){
+      grid.innerHTML='';
+      for(var i=0;i<n;i++){
+        var d=dbtQuoteData[i]||{text:'',name:''};
+        var qDiv=document.createElement('div');qDiv.className='dbt-quote';
+        qDiv.innerHTML='<div class="dbt-qtext">“'+(d.text||' ')+'”</div>'+(d.name?'<div class="dbt-qname">'+d.name+'</div>':'');
+        grid.appendChild(qDiv);
+      }
+    } else {
+      existing.forEach(function(row,i){
+        var d=dbtQuoteData[i]||{text:'',name:''};
+        var qt=row.querySelector('.dbt-qtext');var qn=row.querySelector('.dbt-qname');
+        if(qt)qt.textContent='“'+(d.text||' ')+'”';
+        if(d.name){if(qn)qn.textContent=d.name;else{var s=document.createElement('div');s.className='dbt-qname';s.textContent=d.name;row.appendChild(s);}}
+        else if(qn)qn.remove();
+      });
+    }
+  }
+  var badge=G('dbt-flyer-lang');if(badge)badge.textContent=dbtLang;
+  var hEl=G('dbt-hashtags');if(hEl)hEl.textContent='#Debate #힙합 #khiphophouse';
+}
+
+/* Init debate quotes on page load */
+function initDebate(){
+  buildDebateQuotes();
+}
+
+</script>
