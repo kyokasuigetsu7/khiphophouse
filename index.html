@@ -422,10 +422,10 @@ input[type=file]{display:none}
 .dbt-title{font-size:20px;font-weight:800;color:#f0ede8;line-height:1.05;letter-spacing:-0.3px;word-break:break-word}
 .dbt-sub{font-size:9px;color:rgba(240,237,232,.42);line-height:1.45;margin-top:6px;word-break:break-word}
 .dbt-divider{height:1px;background:rgba(240,237,232,.08);margin:10px 0 8px}
-.dbt-grid{flex:1;overflow:hidden;display:grid;gap:6px;align-content:start;min-height:0}
+.dbt-grid{flex:1;overflow:hidden;display:grid;gap:6px;align-content:start;align-items:start;min-height:0}
 .dbt-grid.col1{grid-template-columns:1fr}
 .dbt-grid.col2{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-.dbt-quote{background:rgba(255,255,255,.04);border-radius:3px;padding:7px 9px;min-width:0}
+.dbt-quote{background:rgba(255,255,255,.04);border-radius:3px;padding:7px 9px;min-width:0;align-self:start}
 .dbt-qtext{font-size:var(--dbt-qsz,8px);color:rgba(240,237,232,.9);line-height:1.45;word-break:break-word}
 .dbt-qname{font-family:var(--mono,monospace);font-size:6px;color:rgba(240,237,232,.3);margin-top:4px}
 .dbt-footer{flex-shrink:0;margin-top:auto;padding:8px 0 10px}
@@ -433,7 +433,11 @@ input[type=file]{display:none}
 .dbt-footer-row{display:flex;align-items:center;justify-content:space-between}
 .dbt-wm{font-family:var(--mono,monospace);font-size:6.5px;color:rgba(240,237,232,.28)}
 .dbt-lang{width:22px;height:22px;border-radius:50%;background:rgba(240,237,232,.05);border:0.5px solid rgba(240,237,232,.15);display:flex;align-items:center;justify-content:center;font-family:var(--mono,monospace);font-size:7px;color:rgba(240,237,232,.42);flex-shrink:0}
-/* Sidebar debate controls */
+/* two independent masonry-style columns */
+.dbt-cols{display:flex;gap:5px;flex:1;min-height:0;overflow:hidden;align-items:flex-start}
+.dbt-col{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0}
+
+
 .dbt-quote-row{background:var(--s3,#201e2e);border:1px solid rgba(180,160,255,.1);border-radius:4px;padding:8px;margin-bottom:5px}
 .dbt-qnum{font-family:var(--mono,monospace);font-size:8px;color:rgba(237,232,245,.3);letter-spacing:1px;margin-bottom:5px;text-transform:uppercase}
 .dbt-lang-row{display:flex;gap:4px;margin-top:4px}
@@ -458,11 +462,11 @@ input[type=file]{display:none}
 .dbt-sub{font-size:9px;color:rgba(240,237,232,.42);line-height:1.45;
   margin-top:5px;word-break:break-word}
 .dbt-divider{height:1px;background:rgba(240,237,232,.08);margin:9px 0 7px;flex-shrink:0}
-.dbt-grid{display:grid;gap:5px;align-content:start;overflow:hidden;flex:1;min-height:0}
+.dbt-grid{display:grid;gap:5px;align-content:start;align-items:start;overflow:hidden;flex:1;min-height:0}
 .dbt-grid.col1{grid-template-columns:1fr}
 .dbt-grid.col2{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 .dbt-quote{background:rgba(255,255,255,.042);border-radius:3px;padding:7px 8px;
-  overflow:hidden;min-width:0}
+  min-width:0;align-self:start}
 .dbt-qtext{font-size:var(--dbt-qsz,8.5px);color:rgba(240,237,232,.9);line-height:1.45;word-break:break-word}
 .dbt-qname{font-family:'Space Mono',monospace;font-size:6.5px;color:rgba(240,237,232,.3);
   margin-top:4px}
@@ -643,8 +647,9 @@ input[type=file]{display:none}
           <div class="ovrow"><label>Tema</label><input type="range" id="dbt-title-sz" min="12" max="28" value="20" oninput="updateDebate()"><span id="dbt-title-sz-v">20</span></div>
           <div class="ovrow"><label>Contexto</label><input type="range" id="dbt-sub-sz" min="7" max="14" value="9" oninput="updateDebate()"><span id="dbt-sub-sz-v">9</span></div>
           <div class="ovrow"><label>Cita</label><input type="range" id="dbt-quote-sz" min="6" max="13" value="8.5" step="0.5" oninput="updateDebate()"><span id="dbt-quote-sz-v">8.5</span></div>
+          <div class="cgt" style="margin-top:14px;margin-bottom:6px">Citas</div>
           <div class="f" style="align-items:center;gap:8px">
-            <label style="flex-shrink:0">Citas</label>
+            <label style="flex-shrink:0">Cantidad</label>
             <select class="fi" id="dbt-count" onchange="buildDebateQuotes()" style="flex:1">
               <option value="6">6</option><option value="7">7</option>
               <option value="8" selected>8</option><option value="9">9</option>
@@ -657,9 +662,26 @@ input[type=file]{display:none}
             <div class="dbt-lang-btn" id="dbt-lang-EN" onclick="setDebateLang('EN',this)">EN</div>
             <div class="dbt-lang-btn" id="dbt-lang-KR" onclick="setDebateLang('KR',this)">KR</div>
           </div>
+          <div class="cgt" style="margin-top:2px">Color acento</div>
+          <div class="acdots" id="dbt-acd" style="margin-bottom:10px">
+            <div class="acd" style="background:#c0392b" data-c="#c0392b" onclick="setAcDebate(this)"></div>
+            <div class="acd" style="background:#7b3fa0" data-c="#7b3fa0" onclick="setAcDebate(this)"></div>
+            <div class="acd" style="background:#2d6647" data-c="#2d6647" onclick="setAcDebate(this)"></div>
+            <div class="acd" style="background:#1a5276" data-c="#1a5276" onclick="setAcDebate(this)"></div>
+            <div class="acd" style="background:#c8a84b" data-c="#c8a84b" onclick="setAcDebate(this)"></div>
+            <div class="acd" style="background:#888" data-c="#888" onclick="setAcDebate(this)"></div>
+            <div class="acd on" style="background:#7b1010" data-c="#7b1010" onclick="setAcDebate(this)" title="Rojo sangre"></div>
+            <div class="acd" style="background:#e8a0b0" data-c="#e8a0b0" onclick="setAcDebate(this)" title="Rosa pastel"></div>
+          </div>
           <div id="dbt-quotes-wrap"></div>
         </div>
-        <button class="dlbtn" onclick="doDownload('n-debate-flyer','n-debate-dl','n-debate-st','khiphophouse_debate')">↓ Descargar</button>
+        <div class="dlscale-lbl">Calidad de exportación</div>
+        <div class="dlscale-row" style="margin-bottom:6px">
+          <div class="dlscale-btn" onclick="setDLScale(1,this)">1080<br><span style="font-size:8px;opacity:.6">estándar</span></div>
+          <div class="dlscale-btn on" onclick="setDLScale(2,this)">2160<br><span style="font-size:8px;opacity:.6">alta</span></div>
+          <div class="dlscale-btn" onclick="setDLScale(4,this)">4320<br><span style="font-size:8px;opacity:.6">máxima</span></div>
+        </div>
+        <button class="dlbtn" id="n-debate-dl" onclick="doDownload('n-debate-flyer','n-debate-dl','n-debate-st','khiphophouse_debate')">↓ Descargar</button>
         <div class="dlst" id="n-debate-st"></div>
         <div class="hash-box" style="margin-top:6px">
           <div class="cgt">Hashtags sugeridos</div>
@@ -1029,7 +1051,7 @@ Puede ser en varios idiomas
 
   <!-- DEBATE FLYER (4:5 News) -->
   <div class="flyer" id="n-debate-flyer" style="display:none;width:405px;height:506px;background:#111318;position:relative;overflow:hidden">
-    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:#7b1010;z-index:2"></div>
+    <div id="dbt-flyer-topbar" style="position:absolute;top:0;left:0;right:0;height:3px;background:#7b1010;z-index:2"></div>
     <div class="dbt-wrap" id="dbt-flyer-wrap">
       <div class="dbt-header" id="dbt-flyer-header">
         <div class="dbt-cat" id="dbt-flyer-cat">DEBATE · KHIPHOPHOUSE</div>
@@ -1037,7 +1059,10 @@ Puede ser en varios idiomas
         <div class="dbt-sub" id="dbt-flyer-sub" style="display:none"></div>
       </div>
       <div class="dbt-divider"></div>
-      <div class="dbt-grid col2" id="dbt-flyer-grid" style="padding-bottom:46px"></div>
+      <div class="dbt-cols" id="dbt-flyer-grid" style="padding-bottom:46px">
+        <div class="dbt-col" id="dbt-col-left"></div>
+        <div class="dbt-col" id="dbt-col-right"></div>
+      </div>
       <div class="dbt-footer" style="position:absolute;left:22px;right:22px;bottom:10px;margin-top:0">
         <div class="dbt-footer-line"></div>
         <div class="dbt-footer-row">
@@ -1727,7 +1752,7 @@ function setSvgH(id,src){var e=G(id);if(!e)return;e.setAttribute('href',src);try
 function setAc(p,el){
   document.querySelectorAll('#'+p+'-acd .acd').forEach(function(d){d.classList.remove('on')});el.classList.add('on');
   var c=el.dataset.c;
-  if(p==='n'){G('n-ftop').style.background=c;G('n-accent').style.background=c;['n-tag','n-tag-b'].forEach(function(id){var e=G(id);if(e)e.style.color=c});['n-tline','n-tline-b'].forEach(function(id){var e=G(id);if(e)e.style.background=c});var lct=G('n-lc-tag');if(lct){lct.style.color=c;lct.style.borderColor=c;lct.style.background='rgba('+hexToRGB(c)+',.1)';}var lcd=G('n-lc-div');if(lcd)lcd.style.background=c;var nlb=G('n-lb-bar');if(nlb)nlb.style.background=c;var dpill=G('n-ld-pill');if(dpill)dpill.style.background=c;var ddiv=G('n-ld-divline');if(ddiv)ddiv.style.background=c;var etb=G('n-e-topbar');if(etb)etb.style.background=c;}
+  if(p==='n'){G('n-ftop').style.background=c;G('n-accent').style.background=c;['n-tag','n-tag-b'].forEach(function(id){var e=G(id);if(e)e.style.color=c});['n-tline','n-tline-b'].forEach(function(id){var e=G(id);if(e)e.style.background=c});var lct=G('n-lc-tag');if(lct){lct.style.color=c;lct.style.borderColor=c;lct.style.background='rgba('+hexToRGB(c)+',.1)';}var lcd=G('n-lc-div');if(lcd)lcd.style.background=c;var nlb=G('n-lb-bar');if(nlb)nlb.style.background=c;var dpill=G('n-ld-pill');if(dpill)dpill.style.background=c;var ddiv=G('n-ld-divline');if(ddiv)ddiv.style.background=c;var etb=G('n-e-topbar');if(etb)etb.style.background=c;/* debate */var dbtTop=G('dbt-flyer-topbar');if(dbtTop)dbtTop.style.background=c;var dbtCat=G('dbt-flyer-cat');if(dbtCat)dbtCat.style.color=c;}
   else if(p==='r'){G('r-ftop').style.background=c;G('r-bdg').style.background=c;var mvft=G('mv-ftop');if(mvft)mvft.style.background=c;['mv-badge-a','mv-badge-b','mv-badge-c'].forEach(function(id){var e=G(id);if(e)e.style.background=c;});rAccCur=c;document.querySelectorAll('#r-xl-tracks .xl-num').forEach(function(e){e.style.color=c;});}
   else if(p==='bd'){G('bd-stripe').style.background=c;drawBdDots(c);}
 }
@@ -3002,7 +3027,6 @@ function updateDebate(){
   var subSz    = parseInt(G('dbt-sub-sz')?G('dbt-sub-sz').value:9)||9;
   var quoteSz  = parseFloat(G('dbt-quote-sz')?G('dbt-quote-sz').value:8.5)||8.5;
   var n        = parseInt(G('dbt-count')?G('dbt-count').value:8)||8;
-  var cols     = n <= 7 ? 1 : 2;
   /* slider readouts */
   var tsv=G('dbt-title-sz-v');if(tsv)tsv.textContent=titleSz;
   var ssv=G('dbt-sub-sz-v');if(ssv)ssv.textContent=subSz;
@@ -3018,32 +3042,67 @@ function updateDebate(){
     if(sub){fSub.style.display='block';fSub.textContent=sub;fSub.style.fontSize=subSz+'px';}
     else{fSub.style.display='none';}
   }
-  /* quotes grid */
-  var grid=G('dbt-flyer-grid');
-  if(grid){
-    grid.className='dbt-grid '+(cols===1?'col1':'col2');
-    grid.style.setProperty('--dbt-qsz', quoteSz+'px');
-    var existing=grid.querySelectorAll('.dbt-quote');
-    if(existing.length!==n){
-      grid.innerHTML='';
-      for(var i=0;i<n;i++){
-        var d=dbtQuoteData[i]||{text:'',name:''};
-        var qDiv=document.createElement('div');qDiv.className='dbt-quote';
-        qDiv.innerHTML='<div class="dbt-qtext">“'+(d.text||' ')+'”</div>'+(d.name?'<div class="dbt-qname">'+d.name+'</div>':'');
-        grid.appendChild(qDiv);
-      }
-    } else {
-      existing.forEach(function(row,i){
-        var d=dbtQuoteData[i]||{text:'',name:''};
-        var qt=row.querySelector('.dbt-qtext');var qn=row.querySelector('.dbt-qname');
-        if(qt)qt.textContent='“'+(d.text||' ')+'”';
-        if(d.name){if(qn)qn.textContent=d.name;else{var s=document.createElement('div');s.className='dbt-qname';s.textContent=d.name;row.appendChild(s);}}
-        else if(qn)qn.remove();
-      });
-    }
+
+  var wrap=G('dbt-flyer-grid');
+  var colL=G('dbt-col-left');
+  var colR=G('dbt-col-right');
+  if(!wrap||!colL||!colR) return;
+
+  wrap.style.setProperty('--dbt-qsz', quoteSz+'px');
+
+  /* Build quote element helper */
+  function makeQuote(d){
+    var qDiv=document.createElement('div'); qDiv.className='dbt-quote';
+    qDiv.innerHTML='<div class="dbt-qtext">"'+(d.text||' ')+'"</div>'+(d.name?'<div class="dbt-qname">'+d.name+'</div>':'');
+    return qDiv;
   }
+
+  /* --- Auto-layout: probe if all quotes fit in 1 column ---
+     Available height = flyer inner area minus header, divider and footer. */
+  var flyerEl = G('n-debate-flyer');
+  var flyerH  = flyerEl ? (flyerEl.offsetHeight||506) : 506;
+  var headerEl= G('dbt-flyer-header');
+  var headerH = headerEl ? headerEl.offsetHeight : 70;
+  var footerH = 46; /* footer absolute block height */
+  var dividerH= 1+9+8; /* dbt-divider margin top+bottom+height */
+  var available = flyerH - headerH - footerH - dividerH - 22; /* 22 = wrap padding top */
+
+  /* Probe single column: render into a hidden off-screen div at the same width */
+  var probe = document.createElement('div');
+  probe.style.cssText = 'position:fixed;visibility:hidden;top:-9999px;left:0;' +
+    'width:' + (wrap.offsetWidth||361) + 'px;' +
+    'display:flex;flex-direction:column;gap:5px;' +
+    'font-size:' + quoteSz + 'px;';
+  /* Copy the CSS custom property so dbt-qtext font-size resolves correctly */
+  probe.style.setProperty('--dbt-qsz', quoteSz+'px');
+  document.body.appendChild(probe);
+  for(var pi=0;pi<n;pi++){
+    probe.appendChild(makeQuote(dbtQuoteData[pi]||{text:'',name:''}));
+  }
+  var probeH = probe.scrollHeight;
+  document.body.removeChild(probe);
+
+  var useCols = (probeH > available);
+
+  /* Render into the two columns */
+  colL.innerHTML=''; colR.innerHTML='';
+  colR.style.display = useCols ? '' : 'none';
+  for(var i=0;i<n;i++){
+    var d=dbtQuoteData[i]||{text:'',name:''};
+    if(!useCols || i%2===0) colL.appendChild(makeQuote(d));
+    else                     colR.appendChild(makeQuote(d));
+  }
+
   var badge=G('dbt-flyer-lang');if(badge)badge.textContent=dbtLang;
   var hEl=G('dbt-hashtags');if(hEl)hEl.textContent='#Debate #힙합 #khiphophouse';
+}
+
+function setAcDebate(el){
+  document.querySelectorAll('#dbt-acd .acd').forEach(function(d){d.classList.remove('on')});
+  el.classList.add('on');
+  var c=el.dataset.c;
+  var dbtTop=G('dbt-flyer-topbar');if(dbtTop)dbtTop.style.background=c;
+  var dbtCat=G('dbt-flyer-cat');if(dbtCat)dbtCat.style.color=c;
 }
 
 /* Init debate quotes on page load */
