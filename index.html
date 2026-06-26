@@ -243,7 +243,9 @@ input[type=file]{display:none}
 
 /* ══ MULTI-RELEASE FLYER ══ */
 #mr-flyer{width:405px;height:506px;position:relative;overflow:hidden;flex-shrink:0;background:#080808;font-family:'Helvetica Neue',Arial,sans-serif;box-shadow:0 24px 64px rgba(0,0,0,.8)}
-.mr-bg{position:absolute;inset:0;z-index:1;overflow:hidden;cursor:grab;user-select:none}.mr-bg:active{cursor:grabbing}
+.mr-bg{position:absolute;inset:0;z-index:1;overflow:hidden;cursor:grab;user-select:none}
+.mr-bg:active{cursor:grabbing}
+.mr-bg img{position:absolute;display:none;pointer-events:none}.mr-bg:active{cursor:grabbing}
 .mr-ov{position:absolute;inset:0;z-index:2;background:rgba(8,8,8,.82)}
 .mr-top{position:absolute;top:0;left:0;right:0;height:4px;z-index:8;background:var(--acc)}
 .mr-inner{position:relative;z-index:4;padding:16px 18px 14px;height:100%;display:flex;flex-direction:column}
@@ -413,73 +415,177 @@ input[type=file]{display:none}
 .edit-bg-btn.active{background:rgba(123,16,16,1);outline:2px solid #fff}
 
 
-/* ── Debate layout (NEWS) ──────────────────────────────────────── */
-#n-fin-debate{display:none;flex-direction:column;position:absolute;inset:0;padding:0}
 #n-fin-debate.on{display:flex}
+.dbt-grid.col1{grid-template-columns:1fr}
+.dbt-grid.col2{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+/* two independent masonry-style columns */
+
+
+.dbt-lang-btn.on{background:rgba(123,16,16,.3);border-color:#7b1010;color:#f0ede8}
+
+
+
+
+/* ── Versus sector ───────────────────────────────────────────── */
+:root{--vs-acc:#7b1010}
+.vs-subtabs{display:flex;gap:4px;margin-bottom:10px}
+.vs-stab{flex:1;padding:5px 4px;background:var(--s3);border:1px solid var(--b2);
+  border-radius:3px;color:var(--t3);font-family:var(--mono);font-size:8px;
+  cursor:pointer;text-align:center;letter-spacing:.5px;user-select:none;
+  -webkit-user-select:none;text-transform:uppercase}
+.vs-stab:hover{border-color:var(--b2);color:var(--t2)}
+.vs-stab.on{background:rgba(123,16,16,.2);border-color:#7b1010;color:#f0ede8}
+.vs-subpanel{display:none}.vs-subpanel.on{display:block}
+.vs-cover{position:relative;overflow:hidden;cursor:grab;user-select:none;background:#1a1a22;flex-shrink:0}
+.vs-cover:active{cursor:grabbing}
+.vs-cover img{position:absolute;display:none;pointer-events:none}
+.vs-cover .cph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:8px;color:rgba(240,237,232,.2);letter-spacing:1px;text-align:center}
+.vs-title{font-weight:800;color:#f0ede8;line-height:1.05;letter-spacing:-0.3px;word-break:break-word}
+.vs-artist{color:rgba(240,237,232,.55);font-family:'DM Sans',sans-serif}
+.vs-meta{font-family:'Space Mono',monospace;color:rgba(240,237,232,.28)}
+.vs-badge{display:inline-block;padding:2px 7px;border-radius:2px;
+  background:rgba(123,16,16,.3);font-family:var(--mono);font-size:7px;color:#e05050}
+.vs-divider{height:1px;background:rgba(240,237,232,.08);margin:8px 0}
+.vs-section-label{font-family:'Space Mono',monospace;font-size:7px;letter-spacing:1.5px;
+  color:var(--vs-acc,#7b1010);text-transform:uppercase;margin-bottom:6px}
+.vs-tracklist{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px}
+.vs-track{font-size:8px;color:rgba(240,237,232,.82);display:flex;gap:5px;align-items:baseline;
+  padding:2px 0;border-bottom:1px solid rgba(240,237,232,.04);overflow:hidden}
+.vs-tnum{font-family:'Space Mono',monospace;font-size:7px;color:var(--vs-acc,#7b1010);flex-shrink:0}
+.vs-tname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vs-highlights{font-size:8px;color:rgba(240,237,232,.5);line-height:1.6}
+.vs-footer{position:absolute;bottom:0;left:0;right:0;padding:0 22px 12px}
+.vs-footer-line{height:1px;background:rgba(240,237,232,.07);margin-bottom:7px}
+.vs-wm{font-family:'Space Mono',monospace;font-size:7px;color:rgba(240,237,232,.28)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#n-fin-debate.on{display:flex}
+.dbt-grid.col1{grid-template-columns:1fr}
+.dbt-grid.col2{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.dbt-lang-btn.on{background:rgba(123,16,16,.3);border-color:#7b1010;color:#f0ede8}
+
+#n-fin-debate{display:none;flex-direction:column;position:absolute;inset:0;padding:0}
 .dbt-wrap{display:flex;flex-direction:column;height:100%;padding:22px 22px 0}
 .dbt-header{flex-shrink:0;margin-bottom:10px}
-.dbt-cat{font-family:var(--mono,monospace);font-size:7px;letter-spacing:2px;color:#7b1010;margin-bottom:8px;text-transform:uppercase}
+.dbt-cat{font-family:var(--mono,monospace);font-size:9px;letter-spacing:2px;color:#7b1010;margin-bottom:8px;text-transform:uppercase}
 .dbt-title{font-size:20px;font-weight:800;color:#f0ede8;line-height:1.05;letter-spacing:-0.3px;word-break:break-word}
 .dbt-sub{font-size:9px;color:rgba(240,237,232,.42);line-height:1.45;margin-top:6px;word-break:break-word}
 .dbt-divider{height:1px;background:rgba(240,237,232,.08);margin:10px 0 8px}
 .dbt-grid{flex:1;overflow:hidden;display:grid;gap:6px;align-content:start;align-items:start;min-height:0}
-.dbt-grid.col1{grid-template-columns:1fr}
-.dbt-grid.col2{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 .dbt-quote{background:rgba(255,255,255,.04);border-radius:3px;padding:7px 9px;min-width:0;align-self:start}
-.dbt-qtext{font-size:var(--dbt-qsz,8px);color:rgba(240,237,232,.9);line-height:1.45;word-break:break-word}
-.dbt-qname{font-family:var(--mono,monospace);font-size:6px;color:rgba(240,237,232,.3);margin-top:4px}
+.dbt-qtext{font-size:var(--dbt-qsz,9px);color:rgba(240,237,232,.9);line-height:1.45;word-break:break-word}
+.dbt-qname{font-family:var(--mono,monospace);font-size:9px;color:rgba(240,237,232,.3);margin-top:4px}
 .dbt-footer{flex-shrink:0;margin-top:auto;padding:8px 0 10px}
 .dbt-footer-line{height:1px;background:rgba(240,237,232,.07);margin-bottom:8px}
 .dbt-footer-row{display:flex;align-items:center;justify-content:space-between}
-.dbt-wm{font-family:var(--mono,monospace);font-size:6.5px;color:rgba(240,237,232,.28)}
-.dbt-lang{width:22px;height:22px;border-radius:50%;background:rgba(240,237,232,.05);border:0.5px solid rgba(240,237,232,.15);display:flex;align-items:center;justify-content:center;font-family:var(--mono,monospace);font-size:7px;color:rgba(240,237,232,.42);flex-shrink:0}
-/* two independent masonry-style columns */
+.dbt-wm{font-family:var(--mono,monospace);font-size:8.5px;color:rgba(240,237,232,.28)}
+.dbt-lang{width:26px;height:26px;border-radius:50%;background:rgba(240,237,232,.05);border:0.5px solid rgba(240,237,232,.15);display:flex;align-items:center;justify-content:center;font-family:var(--mono,monospace);font-size:8.5px;color:rgba(240,237,232,.42);flex-shrink:0}
 .dbt-cols{display:flex;gap:5px;flex:1;min-height:0;overflow:hidden;align-items:flex-start}
 .dbt-col{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0}
-
-
 .dbt-quote-row{background:var(--s3,#201e2e);border:1px solid rgba(180,160,255,.1);border-radius:4px;padding:8px;margin-bottom:5px}
 .dbt-qnum{font-family:var(--mono,monospace);font-size:8px;color:rgba(237,232,245,.3);letter-spacing:1px;margin-bottom:5px;text-transform:uppercase}
 .dbt-lang-row{display:flex;gap:4px;margin-top:4px}
 .dbt-lang-btn{flex:1;padding:4px;background:var(--s3,#201e2e);border:1px solid rgba(180,160,255,.14);border-radius:3px;color:rgba(237,232,245,.45);font-family:var(--mono,monospace);font-size:9px;cursor:pointer;text-align:center;letter-spacing:1px}
-.dbt-lang-btn.on{background:rgba(123,16,16,.3);border-color:#7b1010;color:#f0ede8}
-
-
-/* ── Debate layout ────────────────────────────────────────────── */
-.dbt-lang-btn{flex:1;padding:5px 2px;background:var(--s3);border:1px solid var(--b2);
-  border-radius:3px;color:var(--t3);font-family:var(--mono);font-size:9px;cursor:pointer;
-  text-align:center;letter-spacing:1px;user-select:none}
-.dbt-lang-btn.on{background:rgba(123,16,16,.3);border-color:#7b1010;color:#f0ede8}
-.dbt-quote-row{background:var(--s3);border:1px solid var(--b1);border-radius:4px;
-  padding:8px;margin-bottom:5px}
-.dbt-qnum{font-family:var(--mono);font-size:7px;color:var(--t3);letter-spacing:1px;
-  text-transform:uppercase;margin-bottom:5px}
-/* Flyer elements */
-.dbt-cat{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;
-  color:#7b1010;text-transform:uppercase;margin-bottom:8px}
-.dbt-title{color:#f0ede8;font-weight:800;line-height:1.05;letter-spacing:-0.3px;
-  word-break:break-word}
-.dbt-sub{font-size:9px;color:rgba(240,237,232,.42);line-height:1.45;
-  margin-top:5px;word-break:break-word}
-.dbt-divider{height:1px;background:rgba(240,237,232,.08);margin:9px 0 7px;flex-shrink:0}
-.dbt-grid{display:grid;gap:5px;align-content:start;align-items:start;overflow:hidden;flex:1;min-height:0}
-.dbt-grid.col1{grid-template-columns:1fr}
-.dbt-grid.col2{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-.dbt-quote{background:rgba(255,255,255,.042);border-radius:3px;padding:7px 8px;
-  min-width:0;align-self:start}
-.dbt-qtext{font-size:var(--dbt-qsz,8.5px);color:rgba(240,237,232,.9);line-height:1.45;word-break:break-word}
-.dbt-qname{font-family:'Space Mono',monospace;font-size:6.5px;color:rgba(240,237,232,.3);
-  margin-top:4px}
-.dbt-footer{flex-shrink:0;padding:7px 0 10px;margin-top:6px}
 .dbt-footer-divider{height:1px;background:rgba(240,237,232,.07);margin-bottom:7px}
-.dbt-footer-row{display:flex;align-items:center;justify-content:space-between}
-.dbt-wm{font-family:'Space Mono',monospace;font-size:7px;color:rgba(240,237,232,.28)}
 .dbt-lang-badge{width:22px;height:22px;border-radius:50%;
   background:rgba(240,237,232,.05);border:0.5px solid rgba(240,237,232,.14);
   display:flex;align-items:center;justify-content:center;
-  font-family:'Space Mono',monospace;font-size:7px;color:rgba(240,237,232,.42)}
-
-</style>
+  font-family:'Space Mono',monospace;font-size:7px;color:rgba(240,237,232,.42)}</style>
 </head>
 <body>
 <div id="sb">
@@ -490,6 +596,7 @@ input[type=file]{display:none}
       <button class="tab" onclick="switchTab('release',this)" data-tab="release">Release</button>
       <button class="tab" onclick="switchTab('multi',this)" data-tab="multi">Multi</button>
       <button class="tab" onclick="switchTab('birthday',this)" data-tab="birthday">B-day</button>
+      <button class="tab" onclick="switchTab('versus',this)" data-tab="versus">Various</button>
     </div>
   </div>
   <div id="ctrl">
@@ -881,6 +988,137 @@ input[type=file]{display:none}
       </div>
     </div>
 
+    <!-- ══ VERSUS ══ -->
+    <div id="cvs" style="display:none">
+      <div class="vs-subtabs">
+        <div class="vs-stab on" id="vst-vs" onclick="switchVSTab('vs',this)">Versus</div>
+        <div class="vs-stab" id="vst-a" onclick="switchVSTab('a',this)">Contenido 1</div>
+        <div class="vs-stab" id="vst-b" onclick="switchVSTab('b',this)">Contenido 2</div>
+      </div>
+      <!-- VERSUS panel -->
+      <div class="vs-subpanel on" id="vsp-vs">
+        <div class="cg"><div class="cgt">Categoría</div>
+          <input class="fi" id="vs-cat" value="VERSUS" oninput="updateVS()" style="text-transform:uppercase">
+          <div class="f" style="margin-top:4px"><label style="font-size:9px;color:var(--t3)">Subtítulo cat.</label><input class="fi" id="vs-cat-sub" value="KHIPHOPHOUSE" oninput="updateVS()" style="text-transform:uppercase;font-size:10px"></div>
+        </div>
+        <div class="cg"><div class="cgt">Álbum A</div>
+          <div class="f"><label>Título</label><input class="fi" id="vsa-title" value="Nombre Álbum A" oninput="updateVS()"></div>
+          <div class="f"><label>Artista</label><input class="fi" id="vsa-artist" value="Artista A" oninput="updateVS()"></div>
+          <div style="display:flex;gap:6px">
+            <div class="f" style="flex:1"><label>Año</label><input class="fi" id="vsa-year" value="2021" oninput="updateVS()"></div>
+            <div class="f" style="flex:1"><label>Sello</label><input class="fi" id="vsa-label" value="Sello" oninput="updateVS()"></div>
+          </div>
+          <label class="upl" for="vsa-cover-up" id="vsa-cover-lbl">+ Cover Álbum A</label>
+          <input type="file" id="vsa-cover-up" accept="image/*" onchange="loadVSCover('a',this)">
+        </div>
+        <div class="cg"><div class="cgt">Álbum B</div>
+          <div class="f"><label>Título</label><input class="fi" id="vsb-title" value="Nombre Álbum B" oninput="updateVS()"></div>
+          <div class="f"><label>Artista</label><input class="fi" id="vsb-artist" value="Artista B" oninput="updateVS()"></div>
+          <div style="display:flex;gap:6px">
+            <div class="f" style="flex:1"><label>Año</label><input class="fi" id="vsb-year" value="2021" oninput="updateVS()"></div>
+            <div class="f" style="flex:1"><label>Sello</label><input class="fi" id="vsb-label" value="Sello" oninput="updateVS()"></div>
+          </div>
+          <label class="upl" for="vsb-cover-up" id="vsb-cover-lbl">+ Cover Álbum B</label>
+          <input type="file" id="vsb-cover-up" accept="image/*" onchange="loadVSCover('b',this)">
+        </div>
+        <div class="cg"><div class="cgt">Color acento</div>
+          <div class="acdots" id="vs-acd">
+            <div class="acd" style="background:#c0392b" data-c="#c0392b" onclick="setVSAc(this)"></div>
+            <div class="acd" style="background:#7b3fa0" data-c="#7b3fa0" onclick="setVSAc(this)"></div>
+            <div class="acd" style="background:#2d6647" data-c="#2d6647" onclick="setVSAc(this)"></div>
+            <div class="acd" style="background:#1a5276" data-c="#1a5276" onclick="setVSAc(this)"></div>
+            <div class="acd" style="background:#c8a84b" data-c="#c8a84b" onclick="setVSAc(this)"></div>
+            <div class="acd" style="background:#888" data-c="#888" onclick="setVSAc(this)"></div>
+            <div class="acd on" style="background:#7b1010" data-c="#7b1010" onclick="setVSAc(this)"></div>
+          </div>
+        </div>
+        <div class="dlscale-lbl">Calidad de exportación</div>
+        <div class="dlscale-row">
+          <div class="dlscale-btn" onclick="setDLScale(1,this)">1080<br><span style="font-size:8px;opacity:.6">estándar</span></div>
+          <div class="dlscale-btn on" onclick="setDLScale(2,this)">2160<br><span style="font-size:8px;opacity:.6">alta</span></div>
+          <div class="dlscale-btn" onclick="setDLScale(4,this)">4320<br><span style="font-size:8px;opacity:.6">máxima</span></div>
+        </div>
+        <button class="dlbtn" id="vs-dl" onclick="doDownload('vs-flyer','vs-dl','vs-st','khiphophouse_versus')">↓ Descargar Versus</button>
+        <div class="dlst" id="vs-st"></div>
+      </div>
+      <!-- ÁLBUM A panel -->
+      <div class="vs-subpanel" id="vsp-a">
+        <div class="cg"><div class="cgt">Datos Álbum A</div>
+          <div class="f"><label>Título</label><input class="fi" id="vsa-title2" value="Nombre Álbum A" oninput="syncVSData('a');updateVSA()"></div>
+          <div class="f"><label>Artista</label><input class="fi" id="vsa-artist2" value="Artista A" oninput="syncVSData('a');updateVSA()"></div>
+          <div style="display:flex;gap:6px">
+            <div class="f" style="flex:1"><label>Año</label><input class="fi" id="vsa-year2" value="2021" oninput="syncVSData('a');updateVSA()"></div>
+            <div class="f" style="flex:1"><label>Sello</label><input class="fi" id="vsa-label2" value="Sello" oninput="syncVSData('a');updateVSA()"></div>
+          </div>
+          <div class="f" style="margin-top:4px"><label>Tipo</label>
+            <div class="ttog" id="vsa-badge-sel">
+              <button class="tbtn on" onclick="setVSBadge('a','ALBUM',this)">Album</button>
+              <button class="tbtn" onclick="setVSBadge('a','LP',this)">LP</button>
+              <button class="tbtn" onclick="setVSBadge('a','EP',this)">EP</button>
+            </div>
+          </div>
+        </div>
+        <div class="cg"><div class="cgt">About</div>
+          <div class="f"><label>Label EN</label><input class="fi" id="vsa-about-lbl-en-inp" value="ABOUT — EN" oninput="updateVSA()"></div>
+          <textarea class="fi" id="vsa-ctx" rows="3" placeholder="About (EN)..." oninput="updateVSA()" style="font-size:11px;line-height:1.4;margin-bottom:6px"></textarea>
+          <div class="f"><label>Label ES <span style="opacity:.4;font-size:9px">(opcional)</span></label><input class="fi" id="vsa-about-lbl-es-inp" value="ABOUT — ES" oninput="updateVSA()"></div>
+          <textarea class="fi" id="vsa-ctx2" rows="3" placeholder="About (ES) — opcional..." oninput="updateVSA()" style="font-size:11px;line-height:1.4"></textarea>
+        </div>
+        <div class="cg"><div class="cgt">Tracklist <span style="opacity:.4;font-size:9px">(una por línea)</span></div>
+          <textarea class="fi" id="vsa-tracks" rows="6" placeholder="Track 1&#10;Track 2&#10;Track 3..." oninput="updateVSA()" style="font-size:11px;line-height:1.55"></textarea>
+        </div>
+        <div class="cg"><div class="cgt">Destacados <span style="opacity:.4;font-size:9px">(opcional)</span></div>
+          <input class="fi" id="vsa-highlights" placeholder="Track 1 · Track 2 · Track 3" oninput="updateVSA()">
+        </div>
+        <div class="dlscale-lbl">Calidad de exportación</div>
+        <div class="dlscale-row">
+          <div class="dlscale-btn" onclick="setDLScale(1,this)">1080<br><span style="font-size:8px;opacity:.6">estándar</span></div>
+          <div class="dlscale-btn on" onclick="setDLScale(2,this)">2160<br><span style="font-size:8px;opacity:.6">alta</span></div>
+          <div class="dlscale-btn" onclick="setDLScale(4,this)">4320<br><span style="font-size:8px;opacity:.6">máxima</span></div>
+        </div>
+        <button class="dlbtn" id="vsa-dl" onclick="doDownload('vsa-flyer','vsa-dl','vsa-st','khiphophouse_albumA')">↓ Descargar Contenido 1</button>
+        <div class="dlst" id="vsa-st"></div>
+      </div>
+      <!-- ÁLBUM B panel -->
+      <div class="vs-subpanel" id="vsp-b">
+        <div class="cg"><div class="cgt">Datos Álbum B</div>
+          <div class="f"><label>Título</label><input class="fi" id="vsb-title2" value="Nombre Álbum B" oninput="syncVSData('b');updateVSB()"></div>
+          <div class="f"><label>Artista</label><input class="fi" id="vsb-artist2" value="Artista B" oninput="syncVSData('b');updateVSB()"></div>
+          <div style="display:flex;gap:6px">
+            <div class="f" style="flex:1"><label>Año</label><input class="fi" id="vsb-year2" value="2021" oninput="syncVSData('b');updateVSB()"></div>
+            <div class="f" style="flex:1"><label>Sello</label><input class="fi" id="vsb-label2" value="Sello" oninput="syncVSData('b');updateVSB()"></div>
+          </div>
+          <div class="f" style="margin-top:4px"><label>Tipo</label>
+            <div class="ttog" id="vsb-badge-sel">
+              <button class="tbtn on" onclick="setVSBadge('b','ALBUM',this)">Album</button>
+              <button class="tbtn" onclick="setVSBadge('b','LP',this)">LP</button>
+              <button class="tbtn" onclick="setVSBadge('b','EP',this)">EP</button>
+            </div>
+          </div>
+        </div>
+        <div class="cg"><div class="cgt">About</div>
+          <div class="f"><label>Label EN</label><input class="fi" id="vsb-about-lbl-en-inp" value="ABOUT — EN" oninput="updateVSB()"></div>
+          <textarea class="fi" id="vsb-ctx" rows="3" placeholder="About (EN)..." oninput="updateVSB()" style="font-size:11px;line-height:1.4;margin-bottom:6px"></textarea>
+          <div class="f"><label>Label ES <span style="opacity:.4;font-size:9px">(opcional)</span></label><input class="fi" id="vsb-about-lbl-es-inp" value="ABOUT — ES" oninput="updateVSB()"></div>
+          <textarea class="fi" id="vsb-ctx2" rows="3" placeholder="About (ES) — opcional..." oninput="updateVSB()" style="font-size:11px;line-height:1.4"></textarea>
+        </div>
+        <div class="cg"><div class="cgt">Tracklist <span style="opacity:.4;font-size:9px">(una por línea)</span></div>
+          <textarea class="fi" id="vsb-tracks" rows="6" placeholder="Track 1&#10;Track 2&#10;Track 3..." oninput="updateVSB()" style="font-size:11px;line-height:1.55"></textarea>
+        </div>
+        <div class="cg"><div class="cgt">Destacados <span style="opacity:.4;font-size:9px">(opcional)</span></div>
+          <input class="fi" id="vsb-highlights" placeholder="Track 1 · Track 2 · Track 3" oninput="updateVSB()">
+        </div>
+        <div class="dlscale-lbl">Calidad de exportación</div>
+        <div class="dlscale-row">
+          <div class="dlscale-btn" onclick="setDLScale(1,this)">1080<br><span style="font-size:8px;opacity:.6">estándar</span></div>
+          <div class="dlscale-btn on" onclick="setDLScale(2,this)">2160<br><span style="font-size:8px;opacity:.6">alta</span></div>
+          <div class="dlscale-btn" onclick="setDLScale(4,this)">4320<br><span style="font-size:8px;opacity:.6">máxima</span></div>
+        </div>
+        <button class="dlbtn" id="vsb-dl" onclick="doDownload('vsb-flyer','vsb-dl','vsb-st','khiphophouse_albumB')">↓ Descargar Contenido 2</button>
+        <div class="dlst" id="vsb-st"></div>
+      </div>
+    </div><!-- /cvs -->
+
     <!-- ══ BIRTHDAY ══ -->
     <div id="cbd" style="display:none">
       <div class="cg"><div class="cgt">Diseño</div>
@@ -1194,6 +1432,138 @@ Puede ser en varios idiomas
     </div>
   </div>
 
+  <!-- ══ VERSUS FLYER — Split vertical ══ -->
+  <div class="flyer" id="vs-flyer" style="display:none;width:405px;height:506px;background:#111318;position:relative;overflow:hidden">
+    <!-- accent bar -->
+    <div id="vs-acc-bar" style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--vs-acc,#7b1010);z-index:2"></div>
+    <!-- footer fijo -->
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:0 18px 12px;z-index:3">
+      <div style="height:1px;background:rgba(240,237,232,.07);margin-bottom:8px"></div>
+      <div style="font-family:'Space Mono',monospace;font-size:9px;color:rgba(240,237,232,.35)">@khiphophouse · 힙합하우스</div>
+    </div>
+    <!-- contenido central -->
+    <div style="position:absolute;top:3px;left:0;right:0;bottom:36px;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:3;padding:0 12px;box-sizing:border-box">
+      <!-- categoría (badge) -->
+      <div id="vs-flyer-cat" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--vs-acc,#7b1010);text-align:center;margin-bottom:12px">VERSUS · KHIPHOPHOUSE</div>
+      <!-- covers + VS divider -->
+      <div style="display:flex;align-items:stretch;width:100%">
+        <div class="vs-cover" id="vs-cover-a" style="flex:1;height:185px;min-width:0">
+          <div class="cph" id="vs-cph-a">COVER A</div>
+          <img id="vs-img-a" alt="">
+        </div>
+        <div style="width:30px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+          <div style="flex:1;width:1px;background:rgba(240,237,232,.1)"></div>
+          <div id="vs-label" style="font-size:13px;font-weight:900;color:var(--vs-acc,#7b1010);letter-spacing:2px;padding:6px 0;line-height:1">VS</div>
+          <div style="flex:1;width:1px;background:rgba(240,237,232,.1)"></div>
+        </div>
+        <div class="vs-cover" id="vs-cover-b" style="flex:1;height:185px;min-width:0">
+          <div class="cph" id="vs-cph-b">COVER B</div>
+          <img id="vs-img-b" alt="">
+        </div>
+      </div>
+      <!-- info row -->
+      <div style="display:flex;width:100%;margin-top:14px">
+        <div style="flex:1;min-width:0">
+          <div id="vs-title-a" style="font-size:14px;font-weight:800;color:#f0ede8;line-height:1.05;word-break:break-word">Nombre Álbum A</div>
+          <div id="vs-artist-a" style="font-size:10px;color:rgba(240,237,232,.55);margin-top:4px">Artista A</div>
+          <div id="vs-meta-a" style="font-family:'Space Mono',monospace;font-size:7.5px;color:rgba(240,237,232,.28);margin-top:3px">2021 · SELLO</div>
+        </div>
+        <div style="width:30px;flex-shrink:0"></div>
+        <div style="flex:1;min-width:0;text-align:right">
+          <div id="vs-title-b" style="font-size:14px;font-weight:800;color:#f0ede8;line-height:1.05;word-break:break-word">Nombre Álbum B</div>
+          <div id="vs-artist-b" style="font-size:10px;color:rgba(240,237,232,.55);margin-top:4px">Artista B</div>
+          <div id="vs-meta-b" style="font-family:'Space Mono',monospace;font-size:7.5px;color:rgba(240,237,232,.28);margin-top:3px">2021 · SELLO</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CONTENIDO 1 BREAKDOWN FLYER ══ -->
+  <div class="flyer" id="vsa-flyer" style="display:none;width:405px;height:506px;background:#111318;position:relative;overflow:hidden;flex-direction:column">
+    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--vs-acc,#7b1010);z-index:2"></div>
+    <div style="display:flex;flex-direction:column;height:100%;padding:18px 22px 0;box-sizing:border-box;position:relative">
+      <div style="display:flex;gap:14px;align-items:flex-start;flex-shrink:0;margin-bottom:10px">
+        <div class="vs-cover" id="vsa-cover-bd" style="width:86px;height:86px;flex-shrink:0">
+          <div class="cph" id="vsa-cph-bd" style="font-size:7px">COVER</div>
+          <img id="vsa-img-bd" alt="">
+        </div>
+        <div style="flex:1;min-width:0;padding-top:2px">
+          <div class="vs-title" id="vsa-flyer-title" style="font-size:17px">Nombre Álbum A</div>
+          <div class="vs-artist" id="vsa-flyer-artist" style="font-size:12px;margin-top:3px">Artista A</div>
+          <div class="vs-meta" id="vsa-flyer-meta" style="font-size:9px;margin-top:3px">2021 · SELLO</div>
+          <div class="vs-badge" id="vsa-flyer-badge" style="display:inline-block;padding:3px 9px;border-radius:2px;background:var(--vs-acc,#7b1010);color:#fff;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;margin-top:6px">ALBUM</div>
+        </div>
+      </div>
+      <div id="vsa-ctx-wrap" style="flex-shrink:0;margin-bottom:6px">
+        <div class="vs-divider"></div>
+        <div class="vs-section-label" id="vsa-about-lbl-en">ABOUT — EN</div>
+        <div id="vsa-flyer-ctx" style="font-size:8px;color:rgba(240,237,232,.6);line-height:1.5;word-break:break-word;white-space:pre-wrap"></div>
+      </div>
+      <div id="vsa-ctx2-wrap" style="display:none;flex-shrink:0;margin-bottom:6px">
+        <div class="vs-divider"></div>
+        <div class="vs-section-label" id="vsa-about-lbl-es">ABOUT — ES</div>
+        <div id="vsa-flyer-ctx2" style="font-size:8px;color:rgba(240,237,232,.6);line-height:1.5;word-break:break-word;white-space:pre-wrap"></div>
+      </div>
+      <div style="flex-shrink:0;margin-bottom:6px">
+        <div class="vs-divider"></div>
+        <div class="vs-section-label">Tracklist</div>
+        <div class="vs-tracklist" id="vsa-flyer-tracks"></div>
+      </div>
+      <div id="vsa-hl-wrap" style="display:none;flex-shrink:0;margin-bottom:6px">
+        <div class="vs-divider"></div>
+        <div class="vs-section-label">Destacados</div>
+        <div id="vsa-flyer-hl" class="vs-highlights"></div>
+      </div>
+    </div>
+    <div class="vs-footer">
+      <div class="vs-footer-line"></div>
+      <div style="font-family:'Space Mono',monospace;font-size:9px;color:rgba(240,237,232,.35)">@khiphophouse · 힙합하우스</div>
+    </div>
+  </div>
+
+  <!-- ══ CONTENIDO 2 BREAKDOWN FLYER ══ -->
+  <div class="flyer" id="vsb-flyer" style="display:none;width:405px;height:506px;background:#111318;position:relative;overflow:hidden;flex-direction:column">
+    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:var(--vs-acc,#7b1010);z-index:2"></div>
+    <div style="display:flex;flex-direction:column;height:100%;padding:18px 22px 0;box-sizing:border-box;position:relative">
+      <div style="display:flex;gap:14px;align-items:flex-start;flex-shrink:0;margin-bottom:10px">
+        <div class="vs-cover" id="vsb-cover-bd" style="width:86px;height:86px;flex-shrink:0">
+          <div class="cph" id="vsb-cph-bd" style="font-size:7px">COVER</div>
+          <img id="vsb-img-bd" alt="">
+        </div>
+        <div style="flex:1;min-width:0;padding-top:2px">
+          <div class="vs-title" id="vsb-flyer-title" style="font-size:17px">Nombre Álbum B</div>
+          <div class="vs-artist" id="vsb-flyer-artist" style="font-size:12px;margin-top:3px">Artista B</div>
+          <div class="vs-meta" id="vsb-flyer-meta" style="font-size:9px;margin-top:3px">2021 · SELLO</div>
+          <div class="vs-badge" id="vsb-flyer-badge" style="display:inline-block;padding:3px 9px;border-radius:2px;background:var(--vs-acc,#7b1010);color:#fff;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;margin-top:6px">ALBUM</div>
+        </div>
+      </div>
+      <div id="vsb-ctx-wrap" style="flex-shrink:0;margin-bottom:6px">
+        <div class="vs-divider"></div>
+        <div class="vs-section-label" id="vsb-about-lbl-en">ABOUT — EN</div>
+        <div id="vsb-flyer-ctx" style="font-size:8px;color:rgba(240,237,232,.6);line-height:1.5;word-break:break-word;white-space:pre-wrap"></div>
+      </div>
+      <div id="vsb-ctx2-wrap" style="display:none;flex-shrink:0;margin-bottom:6px">
+        <div class="vs-divider"></div>
+        <div class="vs-section-label" id="vsb-about-lbl-es">ABOUT — ES</div>
+        <div id="vsb-flyer-ctx2" style="font-size:8px;color:rgba(240,237,232,.6);line-height:1.5;word-break:break-word;white-space:pre-wrap"></div>
+      </div>
+      <div style="flex-shrink:0;margin-bottom:6px">
+        <div class="vs-divider"></div>
+        <div class="vs-section-label">Tracklist</div>
+        <div class="vs-tracklist" id="vsb-flyer-tracks"></div>
+      </div>
+      <div id="vsb-hl-wrap" style="display:none;flex-shrink:0;margin-bottom:6px">
+        <div class="vs-divider"></div>
+        <div class="vs-section-label">Destacados</div>
+        <div id="vsb-flyer-hl" class="vs-highlights"></div>
+      </div>
+    </div>
+    <div class="vs-footer">
+      <div class="vs-footer-line"></div>
+      <div style="font-family:'Space Mono',monospace;font-size:9px;color:rgba(240,237,232,.35)">@khiphophouse · 힙합하우스</div>
+    </div>
+  </div>
+
   <!-- MULTI-RELEASE FLYER -->
   <div id="mr-flyer" style="display:none">
     <div class="mr-bg" id="mr-fbg"><img id="mr-fbg-img" alt=""></div>
@@ -1309,7 +1679,14 @@ var G=function(id){return document.getElementById(id)},V=function(id){var e=G(id
 
 /* ══ TAB SWITCHING ══ */
 function switchTab(n,btn){
-  ['cn','cr','cmr','cbd'].forEach(function(id,i){G(id).style.display=['news','release','multi','birthday'][i]===n?'block':'none'});
+  ['cn','cr','cmr','cbd','cvs'].forEach(function(id,i){G(id).style.display=['news','release','multi','birthday','versus'][i]===n?'block':'none'});
+  /* reset VS flyers when switching to Various */
+  if(n==='versus'){
+    G('vs-flyer').style.display='block';
+    G('vsa-flyer').style.display='none';
+    G('vsb-flyer').style.display='none';
+    G('plbl').textContent='VERSUS — 1080×1350';
+  }
   document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('on')});btn.classList.add('on');
   /* news: show either news-flyer or n-info-flyer depending on layout */
   if(n==='news'){
@@ -1328,8 +1705,8 @@ function switchTab(n,btn){
   else{G('release-flyer').style.display='none';G('mv-flyer').style.display='none';}
   G('mr-flyer').style.display=n==='multi'?'block':'none';
   G('bd-flyer').style.display=n==='birthday'?'block':'none';
-  var lbl={news:'NEWS — 1080×1350',release:rMode==='v'?'MV — 1080×1920 (9:16)':'RELEASE — 1080×1350',multi:'MULTI RELEASE — 1080×1350',birthday:'BIRTHDAY — 1080×1350'};
-  G('plbl').textContent=lbl[n]||'';
+  var lbl={news:'NEWS — 1080×1350',release:rMode==='v'?'MV — 1080×1920 (9:16)':'RELEASE — 1080×1350',multi:'MULTI RELEASE — 1080×1350',birthday:'BIRTHDAY — 1080×1350',versus:'VERSUS — 1080×1350'};
+  if(n!=='versus') G('plbl').textContent=lbl[n]||'';
 }
 
 /* ══ MULTI-RELEASE ══ */
@@ -1899,6 +2276,152 @@ function loadNImg(inp){
 
 /* ══ RELEASE ══ */
 var rMode='s',rCS='sq',rCover=null,rFont2='hv';
+var vsCoverSrc = {a:null, b:null};
+var vsTab = 'vs';
+
+function switchVSTab(t, btn){
+  vsTab = t;
+  document.querySelectorAll('.vs-stab').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  document.querySelectorAll('.vs-subpanel').forEach(function(p){p.classList.remove('on');});
+  G('vsp-'+t).classList.add('on');
+  G('vs-flyer').style.display  = t==='vs' ? 'block' : 'none';
+  G('vsa-flyer').style.display = t==='a'  ? 'flex'  : 'none';
+  G('vsb-flyer').style.display = t==='b'  ? 'flex'  : 'none';
+  if(t==='a') syncVSToBreakdown('a');
+  if(t==='b') syncVSToBreakdown('b');
+  G('plbl').textContent = t==='vs' ? 'VERSUS — 1080×1350' : (t==='a' ? 'CONTENIDO 1 — 1080×1350' : 'CONTENIDO 2 — 1080×1350');
+}
+
+function syncVSToBreakdown(ab){
+  var fields = ['title','artist','year','label'];
+  fields.forEach(function(f){
+    var src = G('vs'+ab+'-'+f);
+    var dst = G('vs'+ab+'-'+f+'2');
+    if(src && dst && dst.value === dst.defaultValue) dst.value = src.value;
+  });
+}
+
+function syncVSData(ab){
+  var fields = ['title','artist','year','label'];
+  fields.forEach(function(f){
+    var src = G('vs'+ab+'-'+f+'2');
+    var dst = G('vs'+ab+'-'+f);
+    if(src && dst) dst.value = src.value;
+  });
+  updateVS();
+}
+
+function loadVSCover(ab, inp){
+  if(!inp.files||!inp.files[0]) return;
+  var r = new FileReader();
+  r.onload = function(e){
+    vsCoverSrc[ab] = e.target.result;
+    placeCover('vs-cover-'+ab, 'vs-img-'+ab, e.target.result);
+    placeCover('vs'+ab+'-cover-bd', 'vs'+ab+'-img-bd', e.target.result);
+    var lbl = G('vs'+ab+'-cover-lbl');
+    if(lbl) lbl.textContent = 'Cover cargado — cambiar';
+  };
+  r.readAsDataURL(inp.files[0]);
+}
+
+function updateVS(){
+  var cat=(V('vs-cat')||'VERSUS').toUpperCase();
+  var csub=(V('vs-cat-sub')||'KHIPHOPHOUSE').toUpperCase();
+  var fc=G('vs-flyer-cat');if(fc)fc.textContent=cat+(csub?' · '+csub:'');
+  ['a','b'].forEach(function(ab){
+    var t=V('vs'+ab+'-title')||'', ar=V('vs'+ab+'-artist')||'', yr=V('vs'+ab+'-year')||'', lb=V('vs'+ab+'-label')||'';
+    var ti=G('vs-title-'+ab);if(ti)ti.textContent=t;
+    var ai=G('vs-artist-'+ab);if(ai)ai.textContent=ar;
+    var mi=G('vs-meta-'+ab);if(mi)mi.textContent=(yr?yr+' · ':'')+lb.toUpperCase();
+  });
+}
+
+function setVSBadge(ab, val, btn){
+  document.querySelectorAll('#vs'+ab+'-badge-sel .tbtn').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  var el=G('vs'+ab+'-flyer-badge');if(el)el.textContent=val;
+}
+
+function updateVSA(){
+  var t=V('vsa-title2')||V('vsa-title')||'';
+  var ar=V('vsa-artist2')||V('vsa-artist')||'';
+  var yr=V('vsa-year2')||V('vsa-year')||'';
+  var lb=V('vsa-label2')||V('vsa-label')||'';
+  var ctx=V('vsa-ctx')||'';
+  var ctx2=V('vsa-ctx2')||'';
+  var lblEn=V('vsa-about-lbl-en-inp')||'ABOUT — EN';
+  var lblEs=V('vsa-about-lbl-es-inp')||'ABOUT — ES';
+  var tracks=(V('vsa-tracks')||'').split('\n').map(function(t){return t.trim();}).filter(Boolean);
+  var hl=(V('vsa-highlights')||'').trim();
+  var e;
+  e=G('vsa-flyer-title');if(e)e.textContent=t;
+  e=G('vsa-flyer-artist');if(e)e.textContent=ar;
+  e=G('vsa-flyer-meta');if(e)e.textContent=(yr?yr+' · ':'')+lb.toUpperCase()+(tracks.length?' · '+tracks.length+' TRACKS':'');
+  e=G('vsa-about-lbl-en');if(e)e.textContent=lblEn;
+  e=G('vsa-flyer-ctx');if(e)e.textContent=ctx;
+  var cw=G('vsa-ctx-wrap');if(cw)cw.style.display=ctx?'block':'none';
+  e=G('vsa-about-lbl-es');if(e)e.textContent=lblEs;
+  e=G('vsa-flyer-ctx2');if(e)e.textContent=ctx2;
+  var cw2=G('vsa-ctx2-wrap');if(cw2)cw2.style.display=ctx2?'block':'none';
+  var tl=G('vsa-flyer-tracks');
+  if(tl){
+    tl.innerHTML='';
+    tracks.forEach(function(tn,i){
+      var d=document.createElement('div');d.className='vs-track';
+      d.innerHTML='<span class="vs-tnum">'+(i<9?'0':'')+(i+1)+'</span><span class="vs-tname">'+tn+'</span>';
+      tl.appendChild(d);
+    });
+  }
+  var hlw=G('vsa-hl-wrap');var hle=G('vsa-flyer-hl');
+  if(hlw)hlw.style.display=hl?'block':'none';
+  if(hle)hle.textContent=hl;
+  if(vsCoverSrc.a&&G('vsa-img-bd')&&!G('vsa-img-bd').src)placeCover('vsa-cover-bd','vsa-img-bd',vsCoverSrc.a);
+}
+
+function updateVSB(){
+  var t=V('vsb-title2')||V('vsb-title')||'';
+  var ar=V('vsb-artist2')||V('vsb-artist')||'';
+  var yr=V('vsb-year2')||V('vsb-year')||'';
+  var lb=V('vsb-label2')||V('vsb-label')||'';
+  var ctx=V('vsb-ctx')||'';
+  var ctx2=V('vsb-ctx2')||'';
+  var lblEn=V('vsb-about-lbl-en-inp')||'ABOUT — EN';
+  var lblEs=V('vsb-about-lbl-es-inp')||'ABOUT — ES';
+  var tracks=(V('vsb-tracks')||'').split('\n').map(function(t){return t.trim();}).filter(Boolean);
+  var hl=(V('vsb-highlights')||'').trim();
+  var e;
+  e=G('vsb-flyer-title');if(e)e.textContent=t;
+  e=G('vsb-flyer-artist');if(e)e.textContent=ar;
+  e=G('vsb-flyer-meta');if(e)e.textContent=(yr?yr+' · ':'')+lb.toUpperCase()+(tracks.length?' · '+tracks.length+' TRACKS':'');
+  e=G('vsb-about-lbl-en');if(e)e.textContent=lblEn;
+  e=G('vsb-flyer-ctx');if(e)e.textContent=ctx;
+  var cw=G('vsb-ctx-wrap');if(cw)cw.style.display=ctx?'block':'none';
+  e=G('vsb-about-lbl-es');if(e)e.textContent=lblEs;
+  e=G('vsb-flyer-ctx2');if(e)e.textContent=ctx2;
+  var cw2=G('vsb-ctx2-wrap');if(cw2)cw2.style.display=ctx2?'block':'none';
+  var tl=G('vsb-flyer-tracks');
+  if(tl){
+    tl.innerHTML='';
+    tracks.forEach(function(tn,i){
+      var d=document.createElement('div');d.className='vs-track';
+      d.innerHTML='<span class="vs-tnum">'+(i<9?'0':'')+(i+1)+'</span><span class="vs-tname">'+tn+'</span>';
+      tl.appendChild(d);
+    });
+  }
+  var hlw=G('vsb-hl-wrap');var hle=G('vsb-flyer-hl');
+  if(hlw)hlw.style.display=hl?'block':'none';
+  if(hle)hle.textContent=hl;
+  if(vsCoverSrc.b&&G('vsb-img-bd')&&!G('vsb-img-bd').src)placeCover('vsb-cover-bd','vsb-img-bd',vsCoverSrc.b);
+}
+
+function setVSAc(el){
+  document.querySelectorAll('#vs-acd .acd').forEach(function(d){d.classList.remove('on');});
+  el.classList.add('on');
+  var c=el.dataset.c||'#7b1010';
+  document.documentElement.style.setProperty('--vs-acc',c);
+  var bar=G('vs-acc-bar');if(bar)bar.style.background=c;
+}
 var rBadge='ALBUM',rXlInfoText=null,rAccCur='#7b1010';
 var rFonts={hv:"'Helvetica Neue',Arial,sans-serif",syne:"'Syne',sans-serif",bebas:"'Bebas Neue',sans-serif",archivo:"'Archivo Black',sans-serif",playfair:"'Playfair Display',serif",cinzel:"'Cinzel Decorative',serif",quicksand:"'Quicksand',sans-serif",imfell:"'IM Fell English',serif"};
 var rFontW={hv:900,syne:800,bebas:400,archivo:400,playfair:900,cinzel:700,quicksand:700,imfell:400};
@@ -2218,15 +2741,26 @@ async function doDownload(flyerId, dlBtnId, stId, filename) {
   var outW = Math.round(1080 * DL_SCALE);
   var outH = Math.round(1350 * DL_SCALE);
 
-  btn.disabled = true;
-  btn.textContent = 'Generando…';
+  if(btn){ btn.disabled = true; btn.textContent = 'Generando…'; }
   if (st) st.textContent = 'Procesando ' + outW + '×' + outH + 'px…';
 
   /* Track temporary swaps so we can always restore, even on error */
   var fbgSwaps = [];
 
+  /* Track if we had to force-show a hidden flyer */
+  var wasHidden = false;
+  var prevDisplay = '';
+
   try {
     var el = G(flyerId);
+
+    /* If flyer is hidden (display:none), temporarily show it for capture */
+    if(el.style.display === 'none') {
+      wasHidden = true;
+      prevDisplay = el.style.display;
+      /* vsa/vsb use flex layout, vs-flyer uses block */
+      el.style.display = (flyerId==='vsa-flyer'||flyerId==='vsb-flyer') ? 'flex' : 'block';
+    }
 
     /* Use the REAL on-screen size of the flyer (not a hardcoded 405x506),
        so the export always matches what the preview is currently showing. */
@@ -2294,6 +2828,9 @@ async function doDownload(flyerId, dlBtnId, stId, filename) {
       removeContainer: true
     });
 
+    /* Restore visibility */
+    if(wasHidden) el.style.display = prevDisplay;
+
     /* Restore videos */
     el.querySelectorAll('video').forEach(function(v) {
       if(v._captureImg) { v._captureImg.remove(); delete v._captureImg; v.style.display = 'block'; }
@@ -2312,8 +2849,7 @@ async function doDownload(flyerId, dlBtnId, stId, filename) {
       a.href = url; a.download = filename + '_' + outW + 'x' + outH + '.png';
       document.body.appendChild(a); a.click();
       document.body.removeChild(a); URL.revokeObjectURL(url);
-      btn.disabled = false;
-      btn.textContent = '↓ Descargar';
+      if(btn){ btn.disabled = false; btn.textContent = '↓ Descargar'; }
       if(st){
         st.textContent = '✓ Descargado';
         setTimeout(function(){ st.textContent=''; }, 3000);
@@ -2323,12 +2859,12 @@ async function doDownload(flyerId, dlBtnId, stId, filename) {
   } catch(err) {
     console.error('Download error:', err);
     /* Make sure we never leave the DOM in the swapped state on error */
+    if(wasHidden && G(flyerId)) G(flyerId).style.display = prevDisplay;
     fbgSwaps.forEach(function(s) {
       s.img.remove();
       s.bgEl.style.backgroundImage = s.prevBgImage;
     });
-    btn.disabled = false;
-    btn.textContent = '↓ Descargar';
+    if(btn){ btn.disabled = false; btn.textContent = '↓ Descargar'; }
     if(st) st.textContent = 'Error: ' + err.message;
   }
 }
@@ -2969,6 +3505,25 @@ function toggleEditBg(flyerId, btn){
 }
 
 
+
+
+
+
+
+
+
+
+function setAcDebate(el){
+  document.querySelectorAll('#dbt-acd .acd').forEach(function(d){d.classList.remove('on')});
+  el.classList.add('on');
+  var c=el.dataset.c;
+  var dbtTop=G('dbt-flyer-topbar');if(dbtTop)dbtTop.style.background=c;
+  var dbtCat=G('dbt-flyer-cat');if(dbtCat)dbtCat.style.color=c;
+}
+
+/* Init debate quotes on page load */
+
+
 /* ══ DEBATE LAYOUT JS ════════════════════════════════════════════ */
 var dbtLang = 'ES';
 var dbtQuoteData = [];
@@ -2981,6 +3536,7 @@ function setDebateLang(lang, btn){
   if(badge) badge.textContent = lang;
   updateDebate();
 }
+
 
 function buildDebateQuotes(){
   var n = parseInt(G('dbt-count').value)||8;
@@ -3007,9 +3563,22 @@ function buildDebateQuotes(){
   updateDebate();
 }
 
-function escHtml(s){
-  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function loadMRCover(idx,inp){
+  if(!inp.files||!inp.files[0])return;
+  var r=new FileReader(); r.onload=function(e){
+    MR_DATA[idx].coverSrc=e.target.result;
+    /* reset zoom for this slot */
+    delete MR_ZOOM['mr-ci-'+idx];
+    var timg=G('mrthumb-img-'+idx);
+    if(timg){timg.src=e.target.result;timg.style.display='block';var ts=timg.previousElementSibling;if(ts)ts.style.display='none';}
+    G('mrup-lbl-'+idx).textContent='Cambiar';
+    renderMRFlyer();
+  };r.readAsDataURL(inp.files[0]);
 }
+
 
 function dbtInput(el){
   var idx = parseInt(el.dataset.idx);
@@ -3018,6 +3587,7 @@ function dbtInput(el){
   dbtQuoteData[idx][type] = el.value;
   updateDebate();
 }
+
 
 function updateDebate(){
   var title    = (G('dbt-title')?G('dbt-title').value:'') || 'Tema del debate';
@@ -3097,17 +3667,10 @@ function updateDebate(){
   var hEl=G('dbt-hashtags');if(hEl)hEl.textContent='#Debate #힙합 #khiphophouse';
 }
 
-function setAcDebate(el){
-  document.querySelectorAll('#dbt-acd .acd').forEach(function(d){d.classList.remove('on')});
-  el.classList.add('on');
-  var c=el.dataset.c;
-  var dbtTop=G('dbt-flyer-topbar');if(dbtTop)dbtTop.style.background=c;
-  var dbtCat=G('dbt-flyer-cat');if(dbtCat)dbtCat.style.color=c;
-}
 
-/* Init debate quotes on page load */
 function initDebate(){
   buildDebateQuotes();
 }
 
-</script>
+
+</script> 
