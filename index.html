@@ -3117,9 +3117,41 @@ async function doExportMP4() {
       logging: false
     });
 
+    if(tempScrim && tempScrim.parentNode) tempScrim.parentNode.removeChild(tempScrim);
+
+    /* ── Step 1b: Layout C ("Full Video") is full-bleed: the live video
+       covers the ENTIRE flyer, so it would paint over the text/badge/
+       watermark overlay if drawn on top of it every frame. Capture that
+       overlay alone, with a transparent background, so it can be redrawn
+       OVER the video each frame instead of being buried under it. ── */
+    var ovCanvas = null;
+    if(mvLyt === 'c'){
+      var fbgEl = G('mv-fbg'), fovEl = G('mv-fov');
+      var prevFlyerBg  = mvEl.style.background;
+      var prevFbgDisplay = fbgEl ? fbgEl.style.display : '';
+      var prevFovDisplay = fovEl ? fovEl.style.display : '';
+      mvEl.style.background = 'transparent';
+      if(fbgEl) fbgEl.style.display = 'none';
+      if(fovEl) fovEl.style.display = 'none';
+      /* video + placeholder stay hidden (still set from Step 1) */
+
+      ovCanvas = await html2canvas(mvEl, {
+        scale: SCALE,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: null,
+        width: FW,
+        height: FH,
+        logging: false
+      });
+
+      mvEl.style.background = prevFlyerBg;
+      if(fbgEl) fbgEl.style.display = prevFbgDisplay;
+      if(fovEl) fovEl.style.display = prevFovDisplay;
+    }
+
     if(vidEl) vidEl.style.display = prevVidDisplay;
     if(cphEl) cphEl.style.display = prevCphDisplay;
-    if(tempScrim && tempScrim.parentNode) tempScrim.parentNode.removeChild(tempScrim);
 
     /* ── Step 2: Create recording canvas ── */
     var recCanvas = document.createElement('canvas');
@@ -3223,6 +3255,12 @@ async function doExportMP4() {
         rctx.beginPath(); rctx.rect(vx,vy,vw,vh); rctx.clip();
         rctx.drawImage(srcVid,dX,dY,dW,dH);
         rctx.restore();
+      }
+
+      /* 3. Layout C: redraw text/badge/watermark overlay ON TOP of the
+         full-bleed video, otherwise it stays hidden behind it */
+      if(ovCanvas){
+        rctx.drawImage(ovCanvas, 0, 0, OW, OH);
       }
 
       if(elapsed < duration){
