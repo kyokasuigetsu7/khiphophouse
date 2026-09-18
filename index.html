@@ -1432,7 +1432,7 @@ Puede ser en varios idiomas
         <div class="mv-vplay" id="mv-play-c" style="display:none"><svg viewBox="0 0 14 14"><polygon points="3,1 13,7 3,13"/></svg></div>
       </div>
       <!-- Titles + watermark overlay -->
-      <div style="position:absolute;bottom:50px;left:0;right:0;padding:0 28px;z-index:4;display:flex;flex-direction:column;gap:7px">
+      <div id="mv-ov-c" style="position:absolute;bottom:50px;left:0;right:0;padding:0 28px;z-index:4;display:flex;flex-direction:column;gap:7px">
         <div class="mv-tags" style="margin-bottom:2px"><span class="mv-tag" id="mv-type-c" style="border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.6)">MV</span></div>
         <div id="mv-title-c" style="font-size:30px;font-weight:900;color:#f0ede8;line-height:.9;word-break:break-word;text-shadow:0 2px 16px rgba(0,0,0,.95)">NOMBRE DEL TRACK</div>
         <div id="mv-artist-c" style="font-size:15px;color:rgba(240,237,232,.85);font-family:'DM Sans',sans-serif;text-shadow:0 1px 8px rgba(0,0,0,.95)">Nombre Artista</div>
@@ -3119,39 +3119,44 @@ async function doExportMP4() {
 
     if(tempScrim && tempScrim.parentNode) tempScrim.parentNode.removeChild(tempScrim);
 
+    if(vidEl) vidEl.style.display = prevVidDisplay;
+    if(cphEl) cphEl.style.display = prevCphDisplay;
+
     /* ── Step 1b: Layout C ("Full Video") is full-bleed: the live video
        covers the ENTIRE flyer, so it would paint over the text/badge/
        watermark overlay if drawn on top of it every frame. Capture that
-       overlay alone, with a transparent background, so it can be redrawn
-       OVER the video each frame instead of being buried under it. ── */
-    var ovCanvas = null;
+       overlay div DIRECTLY (not the whole flyer) so html2canvas starts
+       from a clean transparent box instead of fighting the flyer's own
+       opaque background — then redraw it OVER the video every frame. ── */
+    var ovCanvas = null, ovX = 0, ovY = 0, ovW = 0, ovH = 0;
+    var topCanvas = null, topX = 0, topY = 0, topW = 0, topH = 0;
     if(mvLyt === 'c'){
-      var fbgEl = G('mv-fbg'), fovEl = G('mv-fov');
-      var prevFlyerBg  = mvEl.style.background;
-      var prevFbgDisplay = fbgEl ? fbgEl.style.display : '';
-      var prevFovDisplay = fovEl ? fovEl.style.display : '';
-      mvEl.style.background = 'transparent';
-      if(fbgEl) fbgEl.style.display = 'none';
-      if(fovEl) fovEl.style.display = 'none';
-      /* video + placeholder stay hidden (still set from Step 1) */
-
-      ovCanvas = await html2canvas(mvEl, {
-        scale: SCALE,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: null,
-        width: FW,
-        height: FH,
-        logging: false
-      });
-
-      mvEl.style.background = prevFlyerBg;
-      if(fbgEl) fbgEl.style.display = prevFbgDisplay;
-      if(fovEl) fovEl.style.display = prevFovDisplay;
+      var flyerRect0 = mvEl.getBoundingClientRect();
+      var ovEl = G('mv-ov-c');
+      if(ovEl){
+        var ovRect = ovEl.getBoundingClientRect();
+        ovX = (ovRect.left - flyerRect0.left) * SCALE;
+        ovY = (ovRect.top  - flyerRect0.top)  * SCALE;
+        ovW = ovRect.width  * SCALE;
+        ovH = ovRect.height * SCALE;
+        ovCanvas = await html2canvas(ovEl, {
+          scale: SCALE, useCORS: true, allowTaint: true,
+          backgroundColor: null, logging: false
+        });
+      }
+      var topEl = G('mv-ftop');
+      if(topEl){
+        var topRect = topEl.getBoundingClientRect();
+        topX = (topRect.left - flyerRect0.left) * SCALE;
+        topY = (topRect.top  - flyerRect0.top)  * SCALE;
+        topW = topRect.width  * SCALE;
+        topH = topRect.height * SCALE;
+        topCanvas = await html2canvas(topEl, {
+          scale: SCALE, useCORS: true, allowTaint: true,
+          backgroundColor: null, logging: false
+        });
+      }
     }
-
-    if(vidEl) vidEl.style.display = prevVidDisplay;
-    if(cphEl) cphEl.style.display = prevCphDisplay;
 
     /* ── Step 2: Create recording canvas ── */
     var recCanvas = document.createElement('canvas');
@@ -3260,7 +3265,10 @@ async function doExportMP4() {
       /* 3. Layout C: redraw text/badge/watermark overlay ON TOP of the
          full-bleed video, otherwise it stays hidden behind it */
       if(ovCanvas){
-        rctx.drawImage(ovCanvas, 0, 0, OW, OH);
+        rctx.drawImage(ovCanvas, ovX, ovY, ovW, ovH);
+      }
+      if(topCanvas){
+        rctx.drawImage(topCanvas, topX, topY, topW, topH);
       }
 
       if(elapsed < duration){
